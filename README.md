@@ -1,36 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎓 Zetoe Academy - Tech Consulting & Certification Platform
 
-## Getting Started
+A comprehensive full-stack web application for tech education, built with Next.js and Supabase.
 
-First, run the development server:
+## 🚀 Features
+
+### Student Portal
+
+- 📚 Browse available courses
+- � Register for courses
+- 📝 Take exams with custom access codes
+- 📊 View scores and results
+- 💰 View payment status and history
+- 🎓 Download certificates upon completion
+
+### Admin Portal
+
+- 👥 Register and manage students
+- 💳 Record and manage payments manually
+- 📋 Create and upload exams
+- ✏️ Edit student information and payment status
+- 📈 View exam results and analytics
+- 🔐 Conduct and monitor exams
+
+### Super Admin Portal
+
+- 🔑 All admin functionalities
+- 👔 Create, edit, and delete admin accounts
+- 🎛️ Full system control
+- 💰 Manage all payments and courses
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15, React, TailwindCSS
+- **Backend**: Next.js API Routes
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Storage**: Supabase Storage
+- **Payments**: Manual/Local (Admin managed)
+- **Deployment**: Vercel
+- **Language**: TypeScript
+
+## 📦 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ and npm
+- A Supabase account ([supabase.com](https://supabase.com))
+
+### Installation
+
+1. **Install dependencies**:
+
+```bash
+npm install
+```
+
+2. **Configure environment variables**:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Then edit `.env.local` with your Supabase credentials.
+
+3. **Set up Supabase database**:
+
+   - Follow the complete guide in [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)
+   - Run the SQL scripts in `supabase/` folder
+
+4. **Run the development server**:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **Test the connection**:
+   - Open [http://localhost:3000/test-connection](http://localhost:3000/test-connection)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+zetoe_academy/
+├── src/
+│   ├── app/              # Next.js app directory
+│   │   ├── api/          # API routes
+│   │   ├── test-connection/ # Connection test page
+│   │   └── page.tsx      # Landing page
+│   ├── lib/              # Utility functions
+│   │   ├── supabase/     # Supabase clients
+│   │   └── auth.ts       # Authentication helpers
+│   └── types/            # TypeScript definitions
+├── supabase/             # Database schema and migrations
+│   ├── schema.sql        # Main database schema
+│   ├── rls-policies.sql  # Row Level Security policies
+│   └── sample-data.sql   # Sample data for testing
+├── middleware.ts         # Next.js middleware
+└── .env.local           # Environment variables (not in git)
+```
 
-## Learn More
+## 🗄️ Database Schema
 
-To learn more about Next.js, take a look at the following resources:
+Tables:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **courses**: Available courses
+- **students**: Student profiles and enrollment
+- **admins**: Admin and super admin accounts
+- **exams**: Exam questions and metadata
+- **scores**: Student exam results
+- **payments**: Payment transactions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See `supabase/schema.sql` for the complete schema.
 
-## Deploy on Vercel
+## 🔐 Authentication & Authorization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### User Roles
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Student**: Can register, enroll, take exams, view results
+2. **Admin**: Can manage students, create exams, view all data
+3. **Super Admin**: Full system access, can manage admins
+
+## 🚢 Deployment
+
+### Deploy to Vercel
+
+```bash
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+vercel
+```
+
+Then add your environment variables in the Vercel dashboard.
+
+## 📝 Development Timeline
+
+- ✅ **Week 1**: Project setup, Supabase integration, Auth
+- 🔄 **Week 2**: Frontend pages, Student dashboard
+- ⏳ **Week 3**: Admin/Super Admin dashboards
+- ⏳ **Week 4**: Testing, deployment, documentation
+
+## 👨‍💻 Author
+
+**Goodness Ukaigwe**
+
+- GitHub: [@Goodnessukaigwe](https://github.com/Goodnessukaigwe)
+
+---
+
+**Built with Next.js** | Powered by Supabase
