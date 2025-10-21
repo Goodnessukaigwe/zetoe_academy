@@ -1,6 +1,5 @@
 # 🎓 Zetoe Academy - Tech Consulting & Certification Platform
 
-A comprehensive full-stack web application for tech education, built with Next.js and Supabase.
 
 ## 🚀 Features
 
