@@ -20,7 +20,9 @@
 }
 
 body {
-  background: #922020;
+  background: whitesmoke;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
