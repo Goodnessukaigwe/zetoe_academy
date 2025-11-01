@@ -75,7 +75,7 @@ const page = () => { const [email, setEmail] = useState('')
              focus:outline-none focus:ring-2 focus:ring-blue-400"
              minLength={8}
              maxLength={12}
-             pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]). {8,}'
+             pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]). (?=.*[@$!%*?&]) {8,} '
              title='password must be 8-12 characters,include uppercase,
              lowercase, and a number.'
              required
