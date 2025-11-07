@@ -18,7 +18,8 @@ const Navbar = () => {
       </div>
     
       <button
-        className="relative font-['Times_New_Roman'] text-white px-5 py-2 rounded-md bg-[#3a0ca3] border border-white hover:bg-white hover:text-[#3a0ca3] transition duration-300 font-bold shadow-sm"
+        className="relative font-['Times_New_Roman'] text-white px-5 py-2 rounded-md
+         bg-[#3a0ca3] border border-white hover:bg-white hover:text-[#3a0ca3] transition duration-300 font-bold shadow-sm"
       >
         Logout
       </button>
