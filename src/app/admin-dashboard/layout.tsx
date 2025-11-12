@@ -1,16 +1,23 @@
-import React from 'react';
-import Navbar from './navbar';
+"use client"
+import React, { useState } from "react";
+import Navbar from "./navbar";
+import Sidebar from "./sidebar";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#f2f2f2] font-['Open_Sans']">
-    
-      <Navbar />
+    <div className="flex h-screen overflow-hidden bg-gray-100 font-sans">
+      {/* Sidebar */}
+      <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
-      <main className="flex-1 ">{children}</main>
+      <div className="flex flex-col flex-1">
+        {/* Navbar */}
+        <Navbar setSidebarOpen={setSidebarOpen} />
 
+        {/* Main Content */}
+        <main className="flex-1 overflow-auto p-6">{children}</main>
+      </div>
     </div>
   );
-};
-
-export default DashboardLayout;
+}
