@@ -10,29 +10,29 @@ const page = () => { const [email, setEmail] = useState('')
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
+    setLoading(true)}
 
-    try {
-      const res = await fetch('/api/auth/signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
+  //   try {
+  //     const res = await fetch('/api/auth/signin', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ email, password }),
+  //     })
 
-      const data = await res.json()
-      if (res.ok) {
-        alert('Login successful!')
-        window.location.href = '/dashboard'
-      } else {
-        alert(data.error || 'Login failed!')
-      }
-    } catch (err) {
-      console.error('Login error:', err)
-      alert('Something went wrong!')
-    } finally {
-      setLoading(false)
-    }
-  }
+  //     const data = await res.json()
+  //     if (res.ok) {
+  //       alert('Login successful!')
+  //       window.location.href = '/dashboard'
+  //     } else {
+  //       alert(data.error || 'Login failed!')
+  //     }
+  //   } catch (err) {
+  //     console.error('Login error:', err)
+  //     alert('Something went wrong!')
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  
 
 
   return (
@@ -47,9 +47,15 @@ const page = () => { const [email, setEmail] = useState('')
             className="rounded-full"/>
         </div>
 
-        <h2 className="text-2xl font-[Roboto Condensed] text-cyan-950
-        font-stretch-50% mb-6">Welcome to Zetoe Citidal Consult</h2>
-      
+        {/* <h2 className="text-2xl font-[Roboto Condensed] text-cyan-950
+        font-stretch-50% mb-6">Welcome to Zetoe Citidal Consult</h2> */}
+      <h2 className='text-2xl font-[Roboto Condensed] font-stretch-extra-expanded 
+      text-center mb-2.5 text-[#3a0ca3]'>
+        Welcome back 👋 
+      </h2>
+      <p className='text-center text-cyan-950 mb-6 font-stretch-ultra-condensed'>
+         Login to your account to continue/access dashboard
+      </p>
         <form onSubmit={handleLogin}
          className="space-y-4  ">
           <input 
@@ -58,10 +64,10 @@ const page = () => { const [email, setEmail] = useState('')
             value={email}
             onChange={(e) =>
               setEmail(e.target.value)}
-
             className="w-full p-3 mb-4 border border-gray-300 rounded-md 
              text-black placeholder-gray-500 bg-white
              focus:outline-none focus:ring-2 focus:ring-blue-400" />
+             
              <div className='relative'>
           <input 
             type={showPassword ?
@@ -71,17 +77,15 @@ const page = () => { const [email, setEmail] = useState('')
             onChange={(e) =>
               setPassword(e.target.value)}
             className="w-full p-3 mb-4 border border-gray-300 rounded-md 
-             text-black placeholder-gray-500 bg-white
+             text-black placeholder-gray-500 
              focus:outline-none focus:ring-2 focus:ring-blue-400"
              minLength={8}
              maxLength={12}
              pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]). (?=.*[@$!%*?&]) {8,} '
              title='password must be 8-12 characters,include uppercase,
              lowercase, and a number.'
-             required
-             />
+             required/>
             {/* 👁️ Eye toggle */}
-          
           <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -89,12 +93,26 @@ const page = () => { const [email, setEmail] = useState('')
               {showPassword ? '👁️' : '🙈'}
               </button>
                 </div>
+           <div>
+            <label className='
+            block text-gray-700 font-semibold mb-2'></label>
+            <select
+            
+            className=' w-full p-3 mb-4 border border-gray-300 rounded-md
+             text-black focus:outline-none focus:ring-2 focus:ring-blue-400'>
+              <option value="student"> Student</option>
+              <option value="admin">Admin</option>
+               <option value="super_admin">Super Admin</option>
+            </select>
+          </div>
+
+
 
           <button
-            type="submit"
+            type="submit" 
             disabled={loading}
             className="relative w-full py-3 rounded-md font-semibold
-             text-white bg-[#6ee7b7] hover:bg-[#1e3a8a] transition duration-300">
+             text-white bg-[#3a0ca3] hover:bg-[#1d0555] transition duration-300">
            {loading ? 'Logging in...' : ' Login'} 
           </button>
         </form>
@@ -107,5 +125,8 @@ const page = () => { const [email, setEmail] = useState('')
       </div>
   )
 }
+
+
+
 
 export default page
