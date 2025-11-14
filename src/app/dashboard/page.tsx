@@ -46,9 +46,8 @@ return (
         <li>Project Management</li>  
       </ul>  
     </div>  
-  </div>  
+  </div> 
 </div>
-
 );
 };
 
