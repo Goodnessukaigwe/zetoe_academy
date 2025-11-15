@@ -11,14 +11,14 @@ export default function ExamUploadForm() {
   });
   const [success, setSuccess] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Simulate upload success
     setSuccess(true);

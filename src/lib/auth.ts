@@ -5,6 +5,7 @@
 
 import { createClient } from '@/lib/supabase/client'
 import { createClient as createServerClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 // ============================================
 // CLIENT-SIDE AUTH FUNCTIONS
@@ -102,7 +103,8 @@ export async function getServerUser() {
  * Check if user is a student
  */
 export async function isStudent(userId: string) {
-  const supabase = await createServerClient()
+  // Use admin client to bypass RLS
+  const supabase = createAdminClient()
   
   const { data, error } = await supabase
     .from('students')
@@ -117,7 +119,8 @@ export async function isStudent(userId: string) {
  * Check if user is an admin
  */
 export async function isAdmin(userId: string) {
-  const supabase = await createServerClient()
+  // Use admin client to bypass RLS
+  const supabase = createAdminClient()
   
   const { data, error } = await supabase
     .from('admins')
@@ -137,30 +140,38 @@ export async function isAdmin(userId: string) {
  * Get user role (student, admin, super_admin)
  */
 export async function getUserRole(userId: string) {
-  const supabase = await createServerClient()
+  // Use admin client to bypass RLS and avoid infinite recursion
+  const supabase = createAdminClient()
+  
+  console.log('Getting role for user:', userId)
   
   // Check if admin first
-  const { data: adminData } = await supabase
+  const { data: adminData, error: adminError } = await supabase
     .from('admins')
     .select('role')
     .eq('user_id', userId)
     .single()
+
+  console.log('Admin check:', { adminData, adminError })
 
   if (adminData) {
     return adminData.role // 'admin' or 'super_admin'
   }
 
   // Check if student
-  const { data: studentData } = await supabase
+  const { data: studentData, error: studentError } = await supabase
     .from('students')
     .select('id')
     .eq('user_id', userId)
     .single()
 
+  console.log('Student check:', { studentData, studentError })
+
   if (studentData) {
     return 'student'
   }
 
+  console.log('No role found for user:', userId)
   return null // No role found
 }
 
@@ -168,7 +179,8 @@ export async function getUserRole(userId: string) {
  * Get student profile
  */
 export async function getStudentProfile(userId: string) {
-  const supabase = await createServerClient()
+  // Use admin client to bypass RLS
+  const supabase = createAdminClient()
   
   const { data, error } = await supabase
     .from('students')
@@ -186,7 +198,8 @@ export async function getStudentProfile(userId: string) {
  * Get admin profile
  */
 export async function getAdminProfile(userId: string) {
-  const supabase = await createServerClient()
+  // Use admin client to bypass RLS
+  const supabase = createAdminClient()
   
   const { data, error } = await supabase
     .from('admins')

@@ -1,88 +1,93 @@
-import React from 'react'
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { Course } from "@/types/database";
 
+const Page = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
 
-
-const page = () => {
-   
-  
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await fetch("/api/courses");
+        const data = await res.json();
+        if (res.ok) {
+          setCourses(data.courses || []);
+        }
+      } catch (error) {
+        console.error("Failed to fetch courses:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCourses();
+  }, []);
 
   return (
     <div>
-                {/* top navigation */}
-        <div className=" sticky top-0 flex  justify-end font-opensans font-bold p-4  text-black text-20 space-x-10 bg-white ">
-                    {/* logo */}
-          <div className=' flex justify-center mr-180 items-center text-blue-700 w-100 h-10 space-x-0 '>
-          <img src="/zetelog.png"  alt="logo" className='  h-30 w-25 ml-10 '/>
-          <h1 className=' text-center font-extrabold  '>ZETEO CITADEL CONSULT  </h1>
-          </div>
-
-          <a className=' hover:text-blue-700 ' href="@link1">HOME</a><a  className=' hover:text-blue-700 ' href="@link2">ALUMNI</a> <a className=' hover:text-blue-700 ' href="@link3">CONTACT</a> <a href="li"  className=' hover:text-blue-700  mr-20'>MAIL</a>
+      {/* top navigation */}
+      <div className="sticky top-0 flex justify-end font-opensans font-bold p-4 text-black text-20 space-x-10 bg-white z-50">
+        {/* logo */}
+        <div className="flex justify-center mr-180 items-center text-blue-700 w-100 h-10 space-x-0">
+          <img src="/zetelog.png" alt="logo" className="h-30 w-25 ml-10" />
+          <h1 className="text-center font-extrabold">
+            ZETEO CITADEL CONSULT
+          </h1>
         </div>
 
-             {/* navigation */}
-        <div className=' sticky top-18 flex justify-between font-opensans font-bold p-3 text-white-700 space-x-10  bg-blue-800 '>
-                       
-             
-                        {/* menus */}
-          <div  className='space-x-15 ml-50 text-white-800  ' > <a className=' hover:text-white hover:border hover:rounded-4xl hover:p-1' href="#">Courses</a> <a href="#" className='hover:text-white hover:border hover:rounded-4xl hover:p-1' >Academic</a> <a className='hover:text-white hover:border hover:rounded-4xl hover:p-1' href="#">About</a> <a href="#" className='hover:text-white hover:border hover:rounded-4xl hover:p-1'>Calender</a> <a href="#" className='hover:text-white hover:border hover:rounded-4xl hover:p-1'>News & Blog</a>
-          </div>
-                          {/* reg and signin */}
-         <div className=' space-x-5 mr-20 ' ><a href="#"  className='text-white rounded-md  bg-red-700 px-4 py-2 hover:bg-blue-700 hover:text-white'>REGISTER NOW</a> <a className=' border-white p-1  text-white-700 hover:border hover:rounded-4xl hover:p-1' href="#">Sign in</a></div> 
+        <a className="hover:text-blue-700" href="#home">
+          HOME
+        </a>
+        <a className="hover:text-blue-700" href="#courses">
+          COURSES
+        </a>
+        <a className="hover:text-blue-700" href="#contact">
+          CONTACT
+        </a>
+        <a href="#mail" className="hover:text-blue-700 mr-20">
+          MAIL
+        </a>
+      </div>
 
-        </div >
-                
-                 {/* HERO SITE */}
-        <div  className='bg-white w-320 m-auto justify-center text-center rounded mt-5 h-130 p-4 rounded-1g shadow  '>
-
-         <img src="/zetelog.png" alt="heroimage" className='  text-center m-auto w-100 h-100 object-cover '/>
-         <h1 className='text-blue-600 font-bold text-4xl'>WELCOME TO ZETEO CITADEL CONSULT IN COLLABORATION WITH UNIVERSITY OF IBADAN(consultancy unit)</h1>
-
-         </div>
-         <br />
-         <hr  className='shadow'/>
-               {/* our vision and mission */}
-               <div className=' bg-white p-10 h-50 flex gap-20'>
-                <div className='w-150 text-black justify-center '>
-                  <h1  className='text-3xl m-3 font-bold font-10 text-black' >our vision</h1>
-                  <p className='text-2xl  font-6 text-black'>To make professionalism an integral part of the organization where the work environment will be conducive for all.</p>
-                </div>
-
-                <div className='w-150 text-black pl-35 border-l-2 border-black h-35 justify-center'>
-                  <h1 className='text-3xl font-bold m-3 font-10 text-black'>our mission</h1>
-                  <p className='text-2xl  font-6 text-black'>To provide superior quality and standard training and services curriculum that meet current trends globally.</p>
-                </div>
-
-               </div>
-
-                      {/* programm */}
-
-      <div className=' justify-center text-center  text-2xl ' >
-         <a href="#"> <h1 className=' text-black font-bold m-10'>Our Programs</h1><p className='text-black'>...</p></a>
-         
-           <div className='flex justify-center text-center '>
-         <div className=' rounded-3xl  text-center mt-10  m-10 bg-white w-80 h-auto p-4 rounded-1g shadow' >
-             <h1 className='text-6xl m-4 border-red-600 rounded-4xl p-3'>🎓</h1>
-          <h3 className='font-semibold mb-2 text-black' >Undergraduate</h3>
-          <hr className='mt-5 mb-5' />
-          <a href="#"  className='text-white rounded-md border bg-blue-700 px-4 py-2 hover:bg-red-700 hover:text-white'>READ MORE</a> 
+      {/* navigation */}
+      <div className="sticky top-18 flex justify-between font-opensans font-bold p-3 text-white-700 space-x-10 bg-blue-800 z-40">
+        {/* menus */}
+        <div className="space-x-15 ml-50 text-white-800">
+          <a
+            className="hover:text-white hover:border hover:rounded-4xl hover:p-1"
+            href="#courses"
+          >
+            Courses
+          </a>
+          <a
+            href="#about"
+            className="hover:text-white hover:border hover:rounded-4xl hover:p-1"
+          >
+            About
+          </a>
+          <a
+            className="hover:text-white hover:border hover:rounded-4xl hover:p-1"
+            href="#contact"
+          >
+            Contact
+          </a>
         </div>
-
-          <div className='  rounded-3xl text-center mt-10  m-10 bg-white w-80 h-auto p-4 rounded-1g shadow' >
-          <h1 className='text-6xl m-4 border-red-600 rounded-4xl p-3'>🎓</h1>
-          <h3 className='font-semibold mb-2 text-black' >Postgraduate</h3>
-          <hr className='mt-5 mb-5' />
-          <a href="#"  className='text-white rounded-md border bg-blue-700 px-4 py-2 hover:bg-red-700 hover:text-white'>READ MORE</a> 
+        {/* reg and signin */}
+        <div className="space-x-5 mr-20">
+          <Link
+            href="/register"
+            className="text-white rounded-md bg-red-700 px-4 py-2 hover:bg-blue-700 hover:text-white"
+          >
+            REGISTER NOW
+          </Link>
+          <Link
+            className="border-white p-1 text-white-700 hover:border hover:rounded-4xl hover:p-1"
+            href="/login"
+          >
+            Sign in
+          </Link>
         </div>
-
-          <div className='  rounded-3xl text-center mt-10 m-10 bg-white w-80 h-auto p-4 rounded-1g shadow' >
-           <h1 className='text-6xl m-4 border-red-600 rounded-4xl p-3'>🎓</h1>
-          <h3 className='font-semibold mb-2 text-black' >Institute of Education</h3>
-          <hr className='mt-5 mb-5' />
-          <a href="#"  className='text-white rounded-md border bg-blue-700 px-4 py-2 hover:bg-red-700 hover:text-white'>READ MORE</a> 
-        </div>
-
-           </div>
-
       </div>
       <hr  className=' rounded-3xl shadow' /><br />
 
@@ -120,35 +125,76 @@ const page = () => {
              <p className='text-black text-center pt-8'>The role of professionalism is key for effective and efficient work delivery. As 21st century organisation, we understand the Dynamics of the time and the ever changing world and as such, our organisation is a cutting-edge for any organisation, person, students, corps members and corporate executive who want to enhance their knowledge in Management and software application. We have seasoned professionals and experts who are passionate towards knowledge delivery alongside coaching, mentorship and consultancy.</p>
              <h6 className='justify-end font-italic text-blue-600'>mrs.naomi</h6>
 
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
           </div>
-          
-             <div className='flex gap-5 w-250 m-auto   pt-5'>
-             <p className='text-black text-center pt-8'>The role of professionalism is key for effective and efficient work delivery. As 21st century organisation, we understand the Dynamics of the time and the ever changing world and as such, our organisation is a cutting-edge for any organisation, person, students, corps members and corporate executive who want to enhance their knowledge in Management and software application. We have seasoned professionals and experts who are passionate towards knowledge delivery alongside coaching, mentorship and consultancy.</p>
-              <h6 className='justify-center  text-blue-600'>mr.adekunle</h6>
-
-          
-
+        ) : courses.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+            {courses.map((course) => (
+              <div
+                key={course.id}
+                className="rounded-3xl text-center bg-white w-full h-auto p-6 shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <h1 className="text-6xl m-4">🎓</h1>
+                <h3 className="font-semibold text-xl mb-2 text-black">
+                  {course.name}
+                </h3>
+                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                  {course.description || "Professional certification program"}
+                </p>
+                <p className="text-blue-700 font-bold text-2xl mb-3">
+                  ₦{course.price.toLocaleString()}
+                </p>
+                <p className="text-gray-500 text-sm mb-4">
+                  {course.duration || "Duration varies"}
+                </p>
+                <hr className="my-4" />
+                <Link
+                  href={`/courses/${course.id}`}
+                  className="inline-block text-white rounded-md bg-blue-700 px-6 py-2 hover:bg-red-700 hover:text-white transition"
+                >
+                  LEARN MORE
+                </Link>
+              </div>
+            ))}
           </div>
+        ) : (
+          <p className="text-gray-500">No courses available at the moment.</p>
+        )}
+      </div>
+      <hr className="rounded-3xl shadow" />
+      <br />
 
-         </div>
-
-         {/* our partner */}
-         <div>
-          <a href="#"><h1 className=' text-3xl font-bold font-10 text-black text-center mt-10'>OUR PARTNERS</h1></a>
-
-          <div className='flex justify-center text-center gap-20'><img className=' w-25 h-25' src="/nysc.png" alt="" /> <img className=' w-25 h-25' src="/arp.png" alt="" /> <img className=' w-25 h-25' src="/simp.png" alt="" /> <img className=' w-25 h-25' src="/ibadanlog.png" alt="" /></div>
-         </div>
+      {/* about us */}
+      <div id="about" className="max-w-6xl mx-auto px-6 py-10">
+        <h1 className="text-3xl font-bold text-black mb-6">ABOUT US</h1>
+        <div className="flex flex-col md:flex-row gap-8 items-center">
+          <img
+            src="/mrlaw.jpg"
+            alt="About us"
+            className="w-full md:w-1/3 h-80 rounded-3xl object-cover shadow-lg"
+          />
+          <p className="text-black text-justify flex-1 leading-relaxed">
+            The role of professionalism is key for effective and efficient work
+            delivery. As a 21st century organisation, we understand the dynamics
+            of the time and the ever changing world. Our organisation is a
+            cutting-edge solution for any organisation, person, students, corps
+            members and corporate executives who want to enhance their knowledge
+            in Management and software applications. We have seasoned
+            professionals and experts who are passionate towards knowledge
+            delivery alongside coaching, mentorship and consultancy.
+          </p>
+        </div>
+      </div>
 
         
 
-          
-                            
-  
-
-    
-      
-                    {/* footer working */}
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-10 mt-16">
+      {/* footer working */}
+      <footer
+        id="contact"
+        className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-10 mt-16"
+      >
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
         
         {/* Brand */}
@@ -230,7 +276,7 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
 
 
 

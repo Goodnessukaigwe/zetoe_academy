@@ -7,7 +7,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     
       <Navbar />
 
-  
       <main className="flex-1 p-6">{children}</main>
     </div>
   );
