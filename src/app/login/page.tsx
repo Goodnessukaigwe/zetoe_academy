@@ -2,15 +2,21 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
-const page = () => { const [email, setEmail] = useState('')
+const LoginPage = () => {
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [role, setRole] = useState('student')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setError('')
 
     try {
       const res = await fetch('/api/auth/signin', {
@@ -20,19 +26,22 @@ const page = () => { const [email, setEmail] = useState('')
       })
 
       const data = await res.json()
+      console.log('Login response:', data)
+      
       if (res.ok) {
-        alert('Login successful!')
-        window.location.href = '/dashboard'
+        // Always redirect to dashboard - it will determine the correct page
+        router.push('/dashboard')
       } else {
-        alert(data.error || 'Login failed!')
+        setError(data.error || 'Login failed!')
       }
     } catch (err) {
       console.error('Login error:', err)
-      alert('Something went wrong!')
+      setError('Something went wrong! Please try again.')
     } finally {
       setLoading(false)
     }
   }
+  
 
 
   return (
@@ -47,10 +56,23 @@ const page = () => { const [email, setEmail] = useState('')
             className="rounded-full"/>
         </div>
 
-        <h2 className="text-2xl font-[Roboto Condensed] text-cyan-950
-        font-stretch-50% mb-6">Welcome to Zetoe Citidal Consult</h2>
+        {/* <h2 className="text-2xl font-[Roboto Condensed] text-cyan-950
+        font-stretch-50% mb-6">Welcome to Zetoe Citidal Consult</h2> */}
+      <h2 className='text-2xl font-[Roboto Condensed] font-stretch-extra-expanded 
+      text-center mb-2.5 text-[#3a0ca3]'>
+        Welcome back 👋 
+      </h2>
+      <p className='text-center text-cyan-950 mb-6 font-stretch-ultra-condensed'>
+         Login to your account to continue/access dashboard
+      </p>
       
-        <form onSubmit={handleLogin}
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
+      
+      <form onSubmit={handleLogin}
          className="space-y-4  ">
           <input 
             type="email "
@@ -58,10 +80,10 @@ const page = () => { const [email, setEmail] = useState('')
             value={email}
             onChange={(e) =>
               setEmail(e.target.value)}
-
             className="w-full p-3 mb-4 border border-gray-300 rounded-md 
              text-black placeholder-gray-500 bg-white
              focus:outline-none focus:ring-2 focus:ring-blue-400" />
+             
              <div className='relative'>
           <input 
             type={showPassword ?
@@ -71,17 +93,10 @@ const page = () => { const [email, setEmail] = useState('')
             onChange={(e) =>
               setPassword(e.target.value)}
             className="w-full p-3 mb-4 border border-gray-300 rounded-md 
-             text-black placeholder-gray-500 bg-white
+             text-black placeholder-gray-500 
              focus:outline-none focus:ring-2 focus:ring-blue-400"
-             minLength={8}
-             maxLength={12}
-             pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]). (?=.*[@$!%*?&]) {8,} '
-             title='password must be 8-12 characters,include uppercase,
-             lowercase, and a number.'
-             required
-             />
+             required/>
             {/* 👁️ Eye toggle */}
-          
           <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -89,18 +104,33 @@ const page = () => { const [email, setEmail] = useState('')
               {showPassword ? '👁️' : '🙈'}
               </button>
                 </div>
+           <div>
+            <label className='
+            block text-gray-700 font-semibold mb-2'>Login As</label>
+            <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className=' w-full p-3 mb-4 border border-gray-300 rounded-md
+             text-black focus:outline-none focus:ring-2 focus:ring-blue-400'>
+              <option value="student"> Student</option>
+              <option value="admin">Admin</option>
+               <option value="super_admin">Super Admin</option>
+            </select>
+          </div>
+
+
 
           <button
-            type="submit"
+            type="submit" 
             disabled={loading}
             className="relative w-full py-3 rounded-md font-semibold
-             text-white bg-[#6ee7b7] hover:bg-[#1e3a8a] transition duration-300">
+             text-white bg-[#3a0ca3] hover:bg-[#1d0555] transition duration-300">
            {loading ? 'Logging in...' : ' Login'} 
           </button>
         </form>
 
         <p className="mt-4 text-black text-sm">
-          Don’t have an account?{' '} <a href="#" className="text-blue-600 
+          Don’t have an account?{' '} <a href="register" className="text-blue-600 
           hover:underline">Register</a>
         </p>
       </div>
@@ -108,4 +138,7 @@ const page = () => { const [email, setEmail] = useState('')
   )
 }
 
-export default page
+
+
+
+export default LoginPage

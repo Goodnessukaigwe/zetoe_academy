@@ -90,7 +90,7 @@ export default function ExamResultsPage() {
               ) : (
                 <tr>
                   <td
-                    colSpan="4"
+                    colSpan={4}
                     className="text-center text-black py-4 italic"
                   >
                     No results found

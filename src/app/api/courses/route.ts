@@ -4,6 +4,7 @@
  * POST /api/courses - Create a course (admin only)
  */
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
@@ -11,9 +12,9 @@ import { NextRequest, NextResponse } from 'next/server'
 // GET all courses (public)
 export async function GET() {
   try {
-    const supabase = await createClient()
+    const adminClient = createAdminClient()
 
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('courses')
       .select('*')
       .order('created_at', { ascending: false })
@@ -35,6 +36,7 @@ export async function GET() {
 // POST create course (admin only)
 export async function POST(request: NextRequest) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -63,7 +65,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('courses')
       .insert({
         name,
