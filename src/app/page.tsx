@@ -32,7 +32,7 @@ const page = () => {
         </div >
                 
                  {/* HERO SITE */}
-        <div  className='bg-amber-500 w-320 m-auto justify-center text-center rounded mt-5 h-130 p-4 rounded-1g shadow  '>
+        <div  className='bg-white w-320 m-auto justify-center text-center rounded mt-5 h-130 p-4 rounded-1g shadow  '>
 
          <img src="/zetelog.png" alt="heroimage" className='  text-center m-auto w-100 h-100 object-cover '/>
          <h1 className='text-blue-600 font-bold text-4xl'>WELCOME TO ZETEO CITADEL CONSULT IN COLLABORATION WITH UNIVERSITY OF IBADAN(consultancy unit)</h1>
@@ -40,6 +40,19 @@ const page = () => {
          </div>
          <br />
          <hr  className='shadow'/>
+               {/* our vision and mission */}
+               <div className=' bg-white p-10 h-50 flex gap-20'>
+                <div className='w-150 text-black justify-center '>
+                  <h1  className='text-3xl m-3 font-bold font-10 text-black' >our vision</h1>
+                  <p className='text-2xl  font-6 text-black'>To make professionalism an integral part of the organization where the work environment will be conducive for all.</p>
+                </div>
+
+                <div className='w-150 text-black pl-35 border-l-2 border-black h-35 justify-center'>
+                  <h1 className='text-3xl font-bold m-3 font-10 text-black'>our mission</h1>
+                  <p className='text-2xl  font-6 text-black'>To provide superior quality and standard training and services curriculum that meet current trends globally.</p>
+                </div>
+
+               </div>
 
                       {/* programm */}
 
@@ -76,14 +89,54 @@ const page = () => {
         {/* about us */}
       <div  className='ml-20 ' >
          <a href="#"><h1 className=' text-3xl font-bold font-10 text-black'>ABOUT US</h1></a>
-          <div className='flex gap-5 w-250 m-auto h-200 pt-5'>
+          <div className='flex gap-5 w-250 m-auto h-90 pt-5'>
              <img src="/mrlaw.jpg" alt="" className='w-100 h-80 rounded-3xl' />
              <p className='text-black text-center pt-8'>The role of professionalism is key for effective and efficient work delivery. As 21st century organisation, we understand the Dynamics of the time and the ever changing world and as such, our organisation is a cutting-edge for any organisation, person, students, corps members and corporate executive who want to enhance their knowledge in Management and software application. We have seasoned professionals and experts who are passionate towards knowledge delivery alongside coaching, mentorship and consultancy.</p>
+          </div>
+          
+             <div className=''>
+              <a href="#"><h1 className=' text-3xl font-bold font-10 text-black'>SERVISE</h1></a>
+            <ul>
+              <li className='text-black text-center pt-8'>Professional Training</li>
+              <li className='text-black text-center pt-8'>Consultancy Services</li>
+              <li className='text-black text-center pt-8'>Corporate Training</li>
+              <li className='text-black text-center pt-8'>E-learning Services</li>
+              <li className='text-black text-center pt-8'>Career Development</li>
+            </ul>
+            
+            
+            
+          
 
-             <h2>jst trying something sh</h2>
+          </div>
+
+         </div>
+     <hr />
+         
+        {/* testimonies */}
+      <div  className='ml-20 ' >
+         <a href="#"><h1 className=' text-3xl font-bold font-10 text-black text-center mt-10'>TESTIMONIES</h1></a>
+          <div className='flex gap-5 w-250 m-auto mb-10 pt-5'>
+             <p className='text-black text-center pt-8'>The role of professionalism is key for effective and efficient work delivery. As 21st century organisation, we understand the Dynamics of the time and the ever changing world and as such, our organisation is a cutting-edge for any organisation, person, students, corps members and corporate executive who want to enhance their knowledge in Management and software application. We have seasoned professionals and experts who are passionate towards knowledge delivery alongside coaching, mentorship and consultancy.</p>
+             <h6 className='justify-end font-italic text-blue-600'>mrs.naomi</h6>
 
           </div>
           
+             <div className='flex gap-5 w-250 m-auto   pt-5'>
+             <p className='text-black text-center pt-8'>The role of professionalism is key for effective and efficient work delivery. As 21st century organisation, we understand the Dynamics of the time and the ever changing world and as such, our organisation is a cutting-edge for any organisation, person, students, corps members and corporate executive who want to enhance their knowledge in Management and software application. We have seasoned professionals and experts who are passionate towards knowledge delivery alongside coaching, mentorship and consultancy.</p>
+              <h6 className='justify-center  text-blue-600'>mr.adekunle</h6>
+
+          
+
+          </div>
+
+         </div>
+
+         {/* our partner */}
+         <div>
+          <a href="#"><h1 className=' text-3xl font-bold font-10 text-black text-center mt-10'>OUR PARTNERS</h1></a>
+
+          <div className='flex justify-center text-center gap-20'><img className=' w-25 h-25' src="/nysc.png" alt="" /> <img className=' w-25 h-25' src="/arp.png" alt="" /> <img className=' w-25 h-25' src="/simp.png" alt="" /> <img className=' w-25 h-25' src="/ibadanlog.png" alt="" /></div>
          </div>
 
         
