@@ -11,11 +11,11 @@ import { NextRequest, NextResponse } from 'next/server'
 // PUT update admin (super admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient()
-    const { id } = params
+    const { id } = await params
 
     // Check authentication
     const {
@@ -81,11 +81,11 @@ export async function PUT(
 // DELETE admin (super admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient()
-    const { id } = params
+    const { id } = await params
 
     // Check authentication
     const {

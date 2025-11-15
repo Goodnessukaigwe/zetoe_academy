@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import Link from "next/link";
+import { Users, BookOpen, FileText, Home } from "lucide-react";
 
 type Props = {
   isOpen: boolean;
@@ -7,10 +9,10 @@ type Props = {
 };
 
 const menuItems = [
-  "Register Student",
-  "Upload Exam",
-  "Edit Student Info",
-  "View Scores",
+  { name: "Dashboard", href: "/admin-dashboard", icon: Home },
+  { name: "Students", href: "/student-management", icon: Users },
+  { name: "Courses", href: "/admin-dashboard/courses", icon: BookOpen },
+  { name: "Exams", href: "/admin-dashboard/exams", icon: FileText },
 ];
 
 const Sidebar = ({ isOpen, setIsOpen }: Props) => {
@@ -30,15 +32,20 @@ const Sidebar = ({ isOpen, setIsOpen }: Props) => {
           md:translate-x-0 md:static md:inset-auto`}
       >
         <nav className="flex flex-col mt-16 md:mt-0 gap-3">
-          {menuItems.map((item) => (
-            <button
-              key={item}
-              className="text-left w-full px-4 py-2 rounded hover:bg-blue-600 text-white font-medium transition"
-              onClick={() => setIsOpen(false)}
-            >
-              {item}
-            </button>
-          ))}
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-3 px-4 py-2 rounded hover:bg-blue-600 text-white font-medium transition"
+              >
+                <Icon size={20} />
+                {item.name}
+              </Link>
+            );
+          })}
         </nav>
       </aside>
     </>

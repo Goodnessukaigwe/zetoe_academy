@@ -21,12 +21,6 @@ const RegisterPage = () => {
       return
     }
 
-    // Validate password length
-    if (password.length < 8) {
-      alert('Password must be at least 8 characters long!')
-      return
-    }
-
     setLoading(true)
 
     try {
@@ -111,7 +105,6 @@ const RegisterPage = () => {
               className="w-full p-3 border border-gray-300 rounded-md 
                text-black placeholder-gray-500 bg-white
                focus:outline-none focus:ring-2 focus:ring-blue-400"
-              minLength={8}
               required
             />
             {/* 👁️ Eye toggle */}
@@ -134,7 +127,6 @@ const RegisterPage = () => {
               className="w-full p-3 border border-gray-300 rounded-md 
                text-black placeholder-gray-500 bg-white
                focus:outline-none focus:ring-2 focus:ring-blue-400"
-              minLength={8}
               required
             />
             {/* 👁️ Eye toggle */}

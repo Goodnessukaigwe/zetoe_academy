@@ -37,9 +37,8 @@ export default function ImageSlider() {
         >
           <Image
             src={src}
-             size={28}
-            
             fill
+            alt={`Slide ${index + 1}`}
             className="object-cover"
           />
         </div>
