@@ -103,7 +103,8 @@ export async function getServerUser() {
  * Check if user is a student
  */
 export async function isStudent(userId: string) {
-  const supabase = await createServerClient()
+  // Use admin client to bypass RLS
+  const supabase = createAdminClient()
   
   const { data, error } = await supabase
     .from('students')
@@ -118,7 +119,8 @@ export async function isStudent(userId: string) {
  * Check if user is an admin
  */
 export async function isAdmin(userId: string) {
-  const supabase = await createServerClient()
+  // Use admin client to bypass RLS
+  const supabase = createAdminClient()
   
   const { data, error } = await supabase
     .from('admins')

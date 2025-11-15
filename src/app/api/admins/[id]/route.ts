@@ -4,6 +4,7 @@
  * DELETE /api/admins/[id] - Delete admin (super admin only)
  */
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
@@ -14,6 +15,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
     const { id } = await params
 
@@ -51,7 +53,7 @@ export async function PUT(
       )
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('admins')
       .update(body)
       .eq('id', id)
@@ -84,6 +86,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
     const { id } = await params
 
@@ -107,7 +110,7 @@ export async function DELETE(
     }
 
     // Get admin to find user_id
-    const { data: admin } = await supabase
+    const { data: admin } = await adminClient
       .from('admins')
       .select('user_id')
       .eq('id', id)
@@ -126,14 +129,16 @@ export async function DELETE(
     }
 
     // Delete admin profile
-    const { error } = await supabase.from('admins').delete().eq('id', id)
+    const { error } = await adminClient.from('admins').delete().eq('id', id)
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 
-    // Delete auth user
-    await supabase.auth.admin.deleteUser(admin.user_id)
+    // Delete auth user if they completed setup
+    if (admin.user_id) {
+      await adminClient.auth.admin.deleteUser(admin.user_id)
+    }
 
     return NextResponse.json(
       { message: 'Admin deleted successfully' },
