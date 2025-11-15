@@ -5,6 +5,7 @@
  * DELETE /api/students/[id] - Delete a student (super admin only)
  */
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
@@ -15,6 +16,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
     const { id } = await params
 
@@ -27,7 +29,7 @@ export async function GET(
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('students')
       .select(`
         *,
@@ -63,6 +65,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
     const { id } = await params
 
@@ -89,7 +92,7 @@ export async function PUT(
     delete body.user_id
     delete body.created_at
 
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('students')
       .update(body)
       .eq('id', id)
@@ -125,6 +128,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
     const { id } = await params
 
@@ -148,7 +152,7 @@ export async function DELETE(
     }
 
     // Get student to find user_id
-    const { data: student } = await supabase
+    const { data: student } = await adminClient
       .from('students')
       .select('user_id')
       .eq('id', id)
@@ -159,14 +163,14 @@ export async function DELETE(
     }
 
     // Delete student profile (will cascade)
-    const { error } = await supabase.from('students').delete().eq('id', id)
+    const { error } = await adminClient.from('students').delete().eq('id', id)
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 
     // Delete auth user
-    await supabase.auth.admin.deleteUser(student.user_id)
+    await adminClient.auth.admin.deleteUser(student.user_id)
 
     return NextResponse.json(
       { message: 'Student deleted successfully' },
