@@ -1,30 +1,30 @@
 "use client";
 import { useState } from "react";
-import { Student } from "@/types/database";
-import { Pencil, Trash2 } from "lucide-react";
-import EditStudentModal from "./editStudentModal";
+import { Course } from "@/types/database";
+import { Pencil, Trash2, BookOpen } from "lucide-react";
+import EditCourseModal from "./editCourseModal";
 
-export default function StudentRow({
-  student,
+export default function CourseCard({
+  course,
   onRefresh,
 }: {
-  student: Student;
+  course: Course;
   onRefresh: () => void;
 }) {
-  const [confirmDelete, setConfirmDelete] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = async () => {
     try {
       setDeleting(true);
-      const res = await fetch(`/api/students/${student.id}`, {
+      const res = await fetch(`/api/courses/${course.id}`, {
         method: "DELETE",
       });
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Failed to delete student");
+        throw new Error(data.error || "Failed to delete course");
       }
 
       onRefresh();
@@ -38,44 +38,53 @@ export default function StudentRow({
 
   return (
     <>
-      <tr className="hover:bg-gray-800/70 transition-colors duration-200">
-        <td className="px-6 py-3">{student.name}</td>
-        <td className="px-6 py-3">{student.email}</td>
-        <td className="px-6 py-3">{student.phone || "N/A"}</td>
-        <td className="px-6 py-3">{student.course?.name || "Not Enrolled"}</td>
-        <td className="px-6 py-3">
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${
-              student.payment_status === "paid"
-                ? "bg-green-600/20 text-green-400"
-                : student.payment_status === "partial"
-                ? "bg-yellow-600/20 text-yellow-400"
-                : "bg-red-600/20 text-red-400"
-            }`}
-          >
-            {student.payment_status.charAt(0).toUpperCase() +
-              student.payment_status.slice(1)}
-          </span>
-        </td>
-        <td className="px-6 py-3 flex items-center justify-center gap-3">
+      <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-[#3a0ca3] transition-all">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-[#3a0ca3]/20 rounded-lg">
+              <BookOpen className="text-[#3a0ca3]" size={24} />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white">
+                {course.name}
+              </h3>
+              <p className="text-sm text-gray-400">{course.duration || "N/A"}</p>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+          {course.description || "No description provided"}
+        </p>
+
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-2xl font-bold text-[#3a0ca3]">
+              ₦{course.price.toLocaleString()}
+            </p>
+            <p className="text-xs text-gray-500">Course Fee</p>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
           <button
             onClick={() => setShowEditModal(true)}
-            className="flex items-center gap-1 px-3 py-1.5 bg-[#3a0ca3] hover:bg-blue-700 rounded-lg text-xs font-medium text-white transition-all"
+            className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-[#3a0ca3] hover:bg-blue-700 rounded-lg text-sm font-medium text-white transition"
           >
-            <Pencil size={14} />
+            <Pencil size={16} />
             Edit
           </button>
           <button
             onClick={() => setConfirmDelete(true)}
-            className="flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 rounded-lg text-xs font-medium text-white transition-all"
+            className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm font-medium text-white transition"
           >
-            <Trash2 size={14} />
+            <Trash2 size={16} />
             Delete
           </button>
-        </td>
-      </tr>
+        </div>
+      </div>
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Confirmation */}
       {confirmDelete && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-gray-900 rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center border border-gray-700">
@@ -84,7 +93,7 @@ export default function StudentRow({
             </h2>
             <p className="text-gray-400 mb-4">
               Are you sure you want to delete{" "}
-              <strong className="text-white">{student.name}</strong>?
+              <strong className="text-white">{course.name}</strong>?
             </p>
             <div className="flex justify-center gap-3">
               <button
@@ -106,10 +115,10 @@ export default function StudentRow({
         </div>
       )}
 
-      {/* Edit Student Modal */}
+      {/* Edit Modal */}
       {showEditModal && (
-        <EditStudentModal
-          student={student}
+        <EditCourseModal
+          course={course}
           onClose={() => setShowEditModal(false)}
           onSuccess={onRefresh}
         />

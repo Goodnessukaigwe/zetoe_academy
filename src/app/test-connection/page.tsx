@@ -3,10 +3,10 @@
  * Access at: http://localhost:3000/test-connection
  */
 
-'use client'
-
-import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 export default function TestConnectionPage() {
   const [status, setStatus] = useState<'testing' | 'success' | 'error'>('testing')
@@ -143,12 +143,12 @@ export default function TestConnectionPage() {
             >
               Test Again
             </button>
-            <a
+            <Link
               href="/"
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition"
             >
               Go to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>
