@@ -1,9 +1,10 @@
 /**
  * API Route: Admins
  * GET /api/admins - Get all admins (admin only)
- * POST /api/admins - Create admin (super admin only)
+ * POST /api/admins - Create admin invitation (super admin only)
  */
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
@@ -11,6 +12,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // GET all admins
 export async function GET() {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -29,7 +31,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('admins')
       .select('*')
       .order('created_at', { ascending: false })
@@ -48,9 +50,10 @@ export async function GET() {
   }
 }
 
-// POST create admin (super admin only)
+// POST create admin invitation (super admin only)
 export async function POST(request: NextRequest) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -72,12 +75,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { email, password, name, role } = await request.json()
+    const { email, name, role } = await request.json()
 
-    // Validate input
-    if (!email || !password || !name) {
+    // Validate input (NO password required - admin will set it themselves)
+    if (!email || !name) {
       return NextResponse.json(
-        { error: 'Email, password, and name are required' },
+        { error: 'Email and name are required' },
         { status: 400 }
       )
     }
@@ -90,49 +93,43 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 1. Create auth user
-    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-      email,
-      password,
-      email_confirm: true,
-      user_metadata: { name },
-    })
+    // Check if email already exists
+    const { data: existingAdmin } = await adminClient
+      .from('admins')
+      .select('email')
+      .eq('email', email)
+      .single()
 
-    if (authError) {
-      return NextResponse.json({ error: authError.message }, { status: 400 })
-    }
-
-    if (!authData.user) {
+    if (existingAdmin) {
       return NextResponse.json(
-        { error: 'Failed to create user' },
-        { status: 500 }
+        { error: 'Admin with this email already exists' },
+        { status: 400 }
       )
     }
 
-    // 2. Create admin profile
-    const { data: adminData, error: adminError } = await supabase
+    // Create admin record WITHOUT user_id (will be set when admin completes setup)
+    const { data: adminData, error: adminError } = await adminClient
       .from('admins')
       .insert({
-        user_id: authData.user.id,
         name,
         email,
         role: role || 'admin',
+        user_id: null, // Will be filled when admin sets password via /admin-invite
       })
       .select()
       .single()
 
     if (adminError) {
-      // Rollback: delete auth user if profile creation fails
-      await supabase.auth.admin.deleteUser(authData.user.id)
+      console.error('Admin creation error:', adminError)
       return NextResponse.json(
-        { error: 'Failed to create admin profile' },
+        { error: 'Failed to create admin invitation' },
         { status: 500 }
       )
     }
 
     return NextResponse.json(
       {
-        message: 'Admin created successfully',
+        message: 'Admin invitation created successfully',
         admin: adminData,
       },
       { status: 201 }
