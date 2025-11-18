@@ -93,7 +93,7 @@ const Page = () => {
       {/* HERO SITE */}
       <div
         id="home"
-        className="bg-gradient-to-r from-amber-400 to-amber-600 w-full m-auto justify-center text-center mt-5 p-8 shadow-xl"
+        className="bg-gradient-to-r from-gray-300 to-gray-600 w-full m-auto justify-center text-center mt-5 p-8 shadow-xl"
       >
         <img
           src="/zetelog.png"
