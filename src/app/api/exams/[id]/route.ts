@@ -3,6 +3,7 @@
  * GET /api/exams/[id] - Get exam by ID (for taking exam)
  */
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -11,6 +12,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -25,7 +27,7 @@ export async function GET(
     const { id: examId } = await params
 
     // Get exam
-    const { data: exam, error: examError } = await supabase
+    const { data: exam, error: examError } = await adminClient
       .from('exams')
       .select(`
         id,
@@ -44,7 +46,7 @@ export async function GET(
     }
 
     // Get student profile
-    const { data: student } = await supabase
+    const { data: student } = await adminClient
       .from('students')
       .select('id, course_id, payment_status')
       .eq('user_id', user.id)
@@ -74,7 +76,7 @@ export async function GET(
     }
 
     // Check if student has already taken this exam
-    const { data: existingScore } = await supabase
+    const { data: existingScore } = await adminClient
       .from('scores')
       .select('id')
       .eq('student_id', student.id)
