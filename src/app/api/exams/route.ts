@@ -4,6 +4,7 @@
  * POST /api/exams - Create exam (admin only)
  */
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin, getUserRole } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
@@ -11,6 +12,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // GET exams
 export async function GET(request: NextRequest) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -26,7 +28,7 @@ export async function GET(request: NextRequest) {
     const courseId = searchParams.get('course_id')
     const includeQuestions = searchParams.get('include_questions') === 'true'
 
-    let query = supabase.from('exams').select(`
+    let query = adminClient.from('exams').select(`
       id,
       course_id,
       title,
@@ -64,6 +66,7 @@ export async function GET(request: NextRequest) {
 // POST create exam (admin only)
 export async function POST(request: NextRequest) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -83,7 +86,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get admin profile
-    const { data: adminData } = await supabase
+    const { data: adminData } = await adminClient
       .from('admins')
       .select('id')
       .eq('user_id', user.id)
@@ -115,7 +118,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if code is unique
-    const { data: existingExam } = await supabase
+    const { data: existingExam } = await adminClient
       .from('exams')
       .select('id')
       .eq('code', code)
@@ -128,7 +131,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('exams')
       .insert({
         course_id,
