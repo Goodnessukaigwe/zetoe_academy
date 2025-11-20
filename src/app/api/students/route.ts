@@ -4,6 +4,7 @@
  * POST /api/students - Create/register a student (admin only)
  */
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
@@ -11,6 +12,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // GET all students (admin only)
 export async function GET() {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -29,7 +31,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('students')
       .select(`
         *,
@@ -54,6 +56,7 @@ export async function GET() {
 // POST create student (admin only)
 export async function POST(request: NextRequest) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -83,7 +86,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 1. Create auth user
-    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+    const { data: authData, error: authError } = await adminClient.auth.admin.createUser({
       email,
       password,
       email_confirm: true, // Auto-confirm email
@@ -102,7 +105,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 2. Create student profile
-    const { data: studentData, error: studentError } = await supabase
+    const { data: studentData, error: studentError } = await adminClient
       .from('students')
       .insert({
         user_id: authData.user.id,
@@ -119,10 +122,14 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (studentError) {
+      console.error('Student profile creation error:', studentError)
       // Rollback: delete auth user if profile creation fails
-      await supabase.auth.admin.deleteUser(authData.user.id)
+      await adminClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
-        { error: 'Failed to create student profile' },
+        { 
+          error: 'Failed to create student profile',
+          details: studentError.message 
+        },
         { status: 500 }
       )
     }

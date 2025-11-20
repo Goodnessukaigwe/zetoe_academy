@@ -2,36 +2,45 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
-const page = () => { const [email, setEmail] = useState('')
+const LoginPage = () => {
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [role, setRole] = useState('student')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)}
+    setLoading(true)
+    setError('')
 
-  //   try {
-  //     const res = await fetch('/api/auth/signin', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ email, password }),
-  //     })
+    try {
+      const res = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
 
-  //     const data = await res.json()
-  //     if (res.ok) {
-  //       alert('Login successful!')
-  //       window.location.href = '/dashboard'
-  //     } else {
-  //       alert(data.error || 'Login failed!')
-  //     }
-  //   } catch (err) {
-  //     console.error('Login error:', err)
-  //     alert('Something went wrong!')
-  //   } finally {
-  //     setLoading(false)
-  //   }
+      const data = await res.json()
+      console.log('Login response:', data)
+      
+      if (res.ok) {
+        // Always redirect to dashboard - it will determine the correct page
+        router.push('/dashboard')
+      } else {
+        setError(data.error || 'Login failed!')
+      }
+    } catch (err) {
+      console.error('Login error:', err)
+      setError('Something went wrong! Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
   
 
 
@@ -56,7 +65,14 @@ const page = () => { const [email, setEmail] = useState('')
       <p className='text-center text-cyan-950 mb-6 font-stretch-ultra-condensed'>
          Login to your account to continue/access dashboard
       </p>
-        <form onSubmit={handleLogin}
+      
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
+      
+      <form onSubmit={handleLogin}
          className="space-y-4  ">
           <input 
             type="email "
@@ -79,11 +95,6 @@ const page = () => { const [email, setEmail] = useState('')
             className="w-full p-3 mb-4 border border-gray-300 rounded-md 
              text-black placeholder-gray-500 
              focus:outline-none focus:ring-2 focus:ring-blue-400"
-             minLength={8}
-             maxLength={12}
-             pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]). (?=.*[@$!%*?&]) {8,} '
-             title='password must be 8-12 characters,include uppercase,
-             lowercase, and a number.'
              required/>
             {/* 👁️ Eye toggle */}
           <button
@@ -95,9 +106,10 @@ const page = () => { const [email, setEmail] = useState('')
                 </div>
            <div>
             <label className='
-            block text-gray-700 font-semibold mb-2'></label>
+            block text-gray-700 font-semibold mb-2'>Login As</label>
             <select
-            
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
             className=' w-full p-3 mb-4 border border-gray-300 rounded-md
              text-black focus:outline-none focus:ring-2 focus:ring-blue-400'>
               <option value="student"> Student</option>
@@ -118,7 +130,7 @@ const page = () => { const [email, setEmail] = useState('')
         </form>
 
         <p className="mt-4 text-black text-sm">
-          Don’t have an account?{' '} <a href="#" className="text-blue-600 
+          Don’t have an account?{' '} <a href="register" className="text-blue-600 
           hover:underline">Register</a>
         </p>
       </div>
@@ -129,4 +141,4 @@ const page = () => { const [email, setEmail] = useState('')
 
 
 
-export default page
+export default LoginPage
