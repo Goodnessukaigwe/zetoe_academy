@@ -89,41 +89,33 @@ const Page = () => {
           </Link>
         </div>
       </div>
-      <hr  className=' rounded-3xl shadow' /><br />
+                
+      {/* HERO SITE */}
+      <div
+        id="home"
+        className="bg-gradient-to-r from-gray-300 to-gray-600 w-full m-auto justify-center text-center mt-5 p-8 shadow-xl"
+      >
+        <img
+          src="/zetelog.png"
+          alt="heroimage"
+          className="text-center m-auto w-32 h-32 object-cover"
+        />
+        <h1 className="text-white font-bold text-4xl mt-4">
+          WELCOME TO ZETEO CITADEL CONSULT
+        </h1>
+        <p className="text-white text-lg mt-2">
+          In collaboration with University of Ibadan (Consultancy Unit)
+        </p>
+      </div>
+      <br />
+      <hr className="shadow" />
 
-        {/* about us */}
-      <div  className='ml-20 ' >
-         <a href="#"><h1 className=' text-3xl font-bold font-10 text-black'>ABOUT US</h1></a>
-          <div className='flex gap-5 w-250 m-auto h-90 pt-5'>
-             <img src="/mrlaw.jpg" alt="" className='w-100 h-80 rounded-3xl' />
-             <p className='text-black text-center pt-8'>The role of professionalism is key for effective and efficient work delivery. As 21st century organisation, we understand the Dynamics of the time and the ever changing world and as such, our organisation is a cutting-edge for any organisation, person, students, corps members and corporate executive who want to enhance their knowledge in Management and software application. We have seasoned professionals and experts who are passionate towards knowledge delivery alongside coaching, mentorship and consultancy.</p>
-          </div>
-          
-             <div className=''>
-              <a href="#"><h1 className=' text-3xl font-bold font-10 text-black'>SERVISE</h1></a>
-            <ul>
-              <li className='text-black text-center pt-8'>Professional Training</li>
-              <li className='text-black text-center pt-8'>Consultancy Services</li>
-              <li className='text-black text-center pt-8'>Corporate Training</li>
-              <li className='text-black text-center pt-8'>E-learning Services</li>
-              <li className='text-black text-center pt-8'>Career Development</li>
-            </ul>
-            
-            
-            
-          
-
-          </div>
-
-         </div>
-     <hr />
-         
-        {/* testimonies */}
-      <div  className='ml-20 ' >
-         <a href="#"><h1 className=' text-3xl font-bold font-10 text-black text-center mt-10'>TESTIMONIES</h1></a>
-          <div className='flex gap-5 w-250 m-auto mb-10 pt-5'>
-             <p className='text-black text-center pt-8'>The role of professionalism is key for effective and efficient work delivery. As 21st century organisation, we understand the Dynamics of the time and the ever changing world and as such, our organisation is a cutting-edge for any organisation, person, students, corps members and corporate executive who want to enhance their knowledge in Management and software application. We have seasoned professionals and experts who are passionate towards knowledge delivery alongside coaching, mentorship and consultancy.</p>
-             <h6 className='justify-end font-italic text-blue-600'>mrs.naomi</h6>
+      {/* COURSES */}
+      <div id="courses" className="justify-center text-center text-2xl py-10">
+        <h1 className="text-black font-bold m-10">Our Courses</h1>
+        <p className="text-gray-600 mb-8">
+          Professional training and certification programs
+        </p>
 
         {loading ? (
           <div className="flex justify-center items-center py-12">
