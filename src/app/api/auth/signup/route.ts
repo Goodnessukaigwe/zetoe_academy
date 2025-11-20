@@ -4,6 +4,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -19,15 +20,15 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient()
+    const adminClient = createAdminClient()
 
-    // 1. Create auth user
-    const { data: authData, error: authError } = await supabase.auth.signUp({
+    // 1. Create auth user with admin client (auto-confirms email)
+    const { data: authData, error: authError } = await adminClient.auth.admin.createUser({
       email,
       password,
-      options: {
-        data: {
-          name,
-        },
+      email_confirm: true, // Auto-confirm email
+      user_metadata: {
+        name,
       },
     })
 
@@ -46,16 +47,25 @@ export async function POST(request: NextRequest) {
     const userRole = role || 'student'
 
     if (userRole === 'student') {
-      const { error: profileError } = await supabase.from('students').insert({
-        user_id: authData.user.id,
-        name,
-        email,
-        payment_status: 'unpaid',
-      })
+      // Use admin client to bypass RLS when creating initial profile
+      const { error: profileError } = await adminClient
+        .from('students')
+        .insert({
+          user_id: authData.user.id,
+          name,
+          email,
+          payment_status: 'unpaid',
+        })
 
       if (profileError) {
+        console.error('Student profile creation error:', profileError)
+        // Try to delete the auth user if profile creation fails
+        await adminClient.auth.admin.deleteUser(authData.user.id).catch(() => {})
         return NextResponse.json(
-          { error: 'Failed to create student profile' },
+          { 
+            error: 'Failed to create student profile',
+            details: profileError.message 
+          },
           { status: 500 }
         )
       }
