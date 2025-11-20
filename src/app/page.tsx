@@ -22,7 +22,7 @@ const Page = () => {
       }
     };
     fetchCourses();
-  }, []);
+  }, );
 
   return (
     <div>
@@ -265,18 +265,11 @@ const Page = () => {
       </div>
       </footer>
 
-      
-      <div/>
-      
-      
       </div>
       
       
-      
-  )
-}
-
-export default Page
+  );
+{"}"}
 
 
-
+export default Page; 
