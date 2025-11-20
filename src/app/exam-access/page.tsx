@@ -22,19 +22,20 @@ function ExamAccessPage() {
       const res = await fetch("/api/exams/access", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: examCode }),
+        body: JSON.stringify({ code: examCode.toUpperCase() }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || "Invalid or expired exam key.");
+        setError(data.error || "Invalid or expired exam key.");
         return;
       }
 
       // Redirect to the exam page
       router.push(`/exam/${data.exam.id}`);
     } catch (err) {
+      console.error('Exam access error:', err);
       setError("Something went wrong. Please try again.");
     }
   };
