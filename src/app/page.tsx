@@ -258,10 +258,8 @@ const Page = () => {
       </footer>
 
       </div>
-      
-      
+    
   );
-{"}"}
+};
 
-
-export default Page; 
+export default Page;
