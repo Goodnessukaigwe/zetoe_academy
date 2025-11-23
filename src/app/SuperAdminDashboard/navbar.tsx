@@ -9,19 +9,21 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isOpen }) => {
   return (
     <nav className="bg-[#3a0ca3] p-4 flex items-center justify-center relative text-white shadow-md">
 
-      {/* Toggle button - visible only on desktop for shifting */}
+      {/* Toggle button (visible on ALL screens) */}
       <button
         onClick={toggleSidebar}
-        className="absolute left-4 text-white text-3xl md:text-2xl md:block hidden"
+        className="absolute left-4 text-white text-3xl md:text-2xl block"
       >
-        {isOpen ? "✖" : "☰"} {/* or use lucide-react icons */}
+        {isOpen ? "✖" : "☰"}
       </button>
 
-      {/* Navbar title */}
-      <h1 className="text-2xl font-bold">Zeteo Citadel Consult</h1>
+      {/* Title - hidden ONLY on mobile */}
+      <h1 className="text-2xl font-bold hidden sm:block md:block">
+        Zeteo Citadel Consult
+      </h1>
 
-      {/* Logout button - optional, positioned top-right */}
-      <button className="absolute right-4 px-5 py-2 border rounded-md hidden md:block">
+      {/* Logout button — now visible on mobile */}
+      <button className="absolute right-4 px-4 py-2 border rounded-md text-sm block">
         Logout
       </button>
     </nav>
