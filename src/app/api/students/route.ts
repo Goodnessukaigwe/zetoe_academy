@@ -8,6 +8,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 // GET all students (admin only)
 export async function GET() {
@@ -45,7 +46,7 @@ export async function GET() {
 
     return NextResponse.json({ students: data }, { status: 200 })
   } catch (error: any) {
-    console.error('Get students error:', error)
+    logger.error('Get students error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -75,7 +76,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const { email, password, name, phone, course_id } = await request.json()
+    const { email, password, name, phone, course_id, payment_status } = await request.json()
 
     // Validate input
     if (!email || !password || !name) {
@@ -111,9 +112,9 @@ export async function POST(request: NextRequest) {
         user_id: authData.user.id,
         name,
         email,
-        phone,
+        phone: phone || null,
         course_id: course_id || null,
-        payment_status: 'unpaid',
+        payment_status: payment_status || 'unpaid',
       })
       .select(`
         *,
@@ -122,7 +123,7 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (studentError) {
-      console.error('Student profile creation error:', studentError)
+      logger.error('Student profile creation error', studentError)
       // Rollback: delete auth user if profile creation fails
       await adminClient.auth.admin.deleteUser(authData.user.id)
       return NextResponse.json(
@@ -142,7 +143,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error: any) {
-    console.error('Create student error:', error)
+    logger.error('Create student error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

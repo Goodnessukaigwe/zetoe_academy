@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { logger } from '@/lib/logger'
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -45,7 +46,7 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
 
       setIsAuthorized(true)
     } catch (error) {
-      console.error('Auth check failed:', error)
+      logger.error('Auth check failed', { error })
       router.push('/login')
     } finally {
       setLoading(false)

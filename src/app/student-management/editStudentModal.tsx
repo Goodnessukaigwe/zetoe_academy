@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Student, Course } from "@/types/database";
 import { X } from "lucide-react";
+import { logger } from '@/lib/logger';
 
 export default function EditStudentModal({
   student,
@@ -33,7 +34,7 @@ export default function EditStudentModal({
           setCourses(data.courses || []);
         }
       } catch (err) {
-        console.error("Failed to fetch courses:", err);
+        logger.error('Failed to fetch courses', err);
       }
     };
     fetchCourses();

@@ -7,6 +7,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { logger } from '@/lib/logger';
 
 export default function TestConnectionPage() {
   const [status, setStatus] = useState<'testing' | 'success' | 'error'>('testing')
@@ -43,16 +44,18 @@ export default function TestConnectionPage() {
       setMessage('✅ Supabase connection successful!')
       setCourses(data || [])
       
-      console.log('Connection test passed:', {
-        coursesFound: data?.length || 0,
-        userAuthenticated: !!user,
-        user: user
+      logger.log('Connection test passed', {
+        context: {
+          coursesFound: data?.length || 0,
+          userAuthenticated: !!user,
+          user: user
+        }
       })
 
     } catch (error: any) {
       setStatus('error')
       setMessage(`❌ Connection failed: ${error.message}`)
-      console.error('Connection test failed:', error)
+      logger.error('Connection test failed', { error })
     }
   }
 
