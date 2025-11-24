@@ -1,4 +1,7 @@
-import React from 'react';
+"use client";
+
+import React from "react";
+import { Menu, X } from "lucide-react";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -8,23 +11,35 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   return (
     <>
-  
+      {/* MOBILE BACKDROP */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-white bg-opacity-40 z-20 "
+          className="fixed inset-0 bg-black bg-opacity-40 z-20 md:hidden"
           onClick={toggleSidebar}
-        > </div>
+        ></div>
       )}
 
       <aside
-        className={`fixed md:fixed inset-y-0 left-0 z-30 bg-gray-900 w-64 transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }  transition-transform duration-300 
-         ease-in-out shadow-lg`}
+        className={`
+          fixed inset-y-0 left-0 bg-gray-900 text-white z-30 shadow-lg
+          w-64 transition-transform duration-300
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          md:${isOpen ? "translate-x-0" : "-translate-x-64"}
+        `}
       >
-    
+        {/* SIDEBAR HEADER WITH TOGGLE */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+          <h2 className="font-bold text-lg">Menu</h2>
+          <button
+            onClick={toggleSidebar}
+            className="text-white p-1 text-2xl md:text-xl"
+          >
+            <X size={20} />
+          </button>
+        </div>
 
-        <ul className="p-4 space-y-2">
+        {/* MENU ITEMS */}
+        <ul className="p-4 space-y-2 text-white">
           <li className="hover:bg-[#3a0ca3] p-2 rounded cursor-pointer">🏠 Dashboard</li>
           <li className="hover:bg-[#3a0ca3] p-2 rounded cursor-pointer">👥 Manage Admins</li>
           <li className="hover:bg-[#3a0ca3] p-2 rounded cursor-pointer">🎓 Manage Students</li>
