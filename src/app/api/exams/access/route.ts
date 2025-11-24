@@ -5,6 +5,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 export async function POST(request: NextRequest) {
   try {
@@ -113,7 +114,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Access exam error:', error)
+    logger.error('Access exam error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { logger } from '@/lib/logger'
 
 const RegisterPage = () => {
   const [name, setName] = useState('')
@@ -43,7 +44,7 @@ const RegisterPage = () => {
         alert(data.error || 'Registration failed!')
       }
     } catch (err) {
-      console.error('Registration error:', err)
+      logger.error('Registration error', err)
       alert('Something went wrong!')
     } finally {
       setLoading(false)

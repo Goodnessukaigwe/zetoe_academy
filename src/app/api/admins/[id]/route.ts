@@ -8,6 +8,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 // PUT update admin (super admin only)
 export async function PUT(
@@ -72,7 +73,7 @@ export async function PUT(
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Update admin error:', error)
+    logger.error('Update admin error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -145,7 +146,7 @@ export async function DELETE(
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Delete admin error:', error)
+    logger.error('Delete admin error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
