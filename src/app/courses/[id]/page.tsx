@@ -41,7 +41,8 @@ export default function CourseDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2
+         border-blue-700"></div>
       </div>
     );
   }
@@ -71,7 +72,8 @@ export default function CourseDetailPage() {
         <div className="max-w-6xl mx-auto px-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-white hover:text-gray-200 mb-6 transition"
+            className="inline-flex items-center gap-2 text-white
+             hover:text-gray-200 mb-6 transition"
           >
             <ArrowLeft size={20} />
             Back to Courses

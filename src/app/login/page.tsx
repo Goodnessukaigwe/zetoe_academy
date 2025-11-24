@@ -3,11 +3,12 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link' 
+import { Eye, EyeOff } from "lucide-react"  
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState('student')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -29,8 +30,7 @@ const LoginPage = () => {
       console.log('Login response:', data)
       
       if (res.ok) {
-        // Always redirect to dashboard - it will determine the correct page
-        router.push('/dashboard')
+        router.push('/dashboard')  // Redirect after login
       } else {
         setError(data.error || 'Login failed!')
       }
@@ -41,104 +41,99 @@ const LoginPage = () => {
       setLoading(false)
     }
   }
-  
-
 
   return (
-      <div className="flex justify-center items-center min-h-screen bg-[#f2f2f2]"> 
+    <div className="flex justify-center items-center min-h-screen bg-[#f2f2f2]">
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md text-center">
+
         <div className="flex justify-center mb-4">
           <Image
             src="/images/zeteo.jpg"
             alt="Zetoe logo"
             width={60}
             height={60}
-            className="rounded-full"/>
+            className="rounded-full"
+          />
         </div>
 
-        {/* <h2 className="text-2xl font-[Roboto Condensed] text-cyan-950
-        font-stretch-50% mb-6">Welcome to Zetoe Citidal Consult</h2> */}
-      <h2 className='text-2xl font-[Roboto Condensed] font-stretch-extra-expanded 
-      text-center mb-2.5 text-[#3a0ca3]'>
-        Welcome back 👋 
-      </h2>
-      <p className='text-center text-cyan-950 mb-6 font-stretch-ultra-condensed'>
-         Login to your account to continue/access dashboard
-      </p>
-      
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          {error}
-        </div>
-      )}
-      
-      <form onSubmit={handleLogin}
-         className="space-y-4  ">
+        <h2 className="text-2xl font-[Roboto Condensed] font-stretch-extra-expanded 
+        text-center mb-2.5 text-[#3a0ca3]">
+          Welcome back 👋 
+        </h2>
+
+        <p className="text-center text-cyan-950 mb-6 font-stretch-ultra-condensed">
+          Login to your account to continue/access dashboard
+        </p>
+
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleLogin} className="space-y-4">
+
           <input 
-            type="email "
-            placeholder="Email "
+            type="email"
+            placeholder="Email"
             value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full p-3 mb-4 border border-gray-300 rounded-md 
              text-black placeholder-gray-500 bg-white
-             focus:outline-none focus:ring-2 focus:ring-blue-400" />
-             
-             <div className='relative'>
-          <input 
-            type={showPassword ?
-              'text' : "password"}
-            placeholder="Password "
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)}
-            className="w-full p-3 mb-4 border border-gray-300 rounded-md 
-             text-black placeholder-gray-500 
              focus:outline-none focus:ring-2 focus:ring-blue-400"
-             required/>
-            {/* 👁️ Eye toggle */}
-          <button
+          />
+
+          <div className="relative">
+            <input 
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 mb-4 border border-gray-300 rounded-md 
+               text-black placeholder-gray-500 
+               focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
+            />
+
+        
+            <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 text-gray-600">
-              {showPassword ? '👁️' : '🙈'}
-              </button>
-                </div>
-           <div>
-            <label className='
-            block text-gray-700 font-semibold mb-2'>Login As</label>
-            <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className=' w-full p-3 mb-4 border border-gray-300 rounded-md
-             text-black focus:outline-none focus:ring-2 focus:ring-blue-400'>
-              <option value="student"> Student</option>
-              <option value="admin">Admin</option>
-               <option value="super_admin">Super Admin</option>
-            </select>
+              className="absolute right-3 top-3 text-gray-600"
+            >
+              {showPassword ? (
+                <Eye className='h-5 w-5 text-black'/>
+              ) : (
+                 <EyeOff className='h-5 w-5 text-black'/>
+              )
+            }
+            </button>
           </div>
 
-
-
           <button
-            type="submit" 
+            type="submit"
             disabled={loading}
             className="relative w-full py-3 rounded-md font-semibold
-             text-white bg-[#3a0ca3] hover:bg-[#1d0555] transition duration-300">
-           {loading ? 'Logging in...' : ' Login'} 
+             text-white bg-[#3a0ca3] hover:bg-[#1d0555] transition duration-300"
+          >
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
         <p className="mt-4 text-black text-sm">
-          Don’t have an account?{' '} <a href="register" className="text-blue-600 
-          hover:underline">Register</a>
+          Don’t have an account?{' '}
+          <a href="register" className="text-blue-600 hover:underline">
+            Register
+          </a>
         </p>
+
+        <p className="mt-3 text-blue-600 hover:underline cursor-pointer text-sm">
+          <Link href="/">Back to Homepage</Link>
+        </p>
+
       </div>
-      </div>
+    </div>
   )
 }
-
-
-
 
 export default LoginPage
