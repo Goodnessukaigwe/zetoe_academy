@@ -1,28 +1,29 @@
-'use client';
-import React, { useState } from 'react';
-import Navbar from './navbar';
-import Sidebar from './sidebar';
+"use client";
+
+import React, { useState } from "react";
+import Navbar from "./navbar";
+import Sidebar from "./sidebar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // DEFAULT OPEN ON DESKTOP
 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  const closeSidebar = () => setIsSidebarOpen(false);
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f2f2f2] font-['Open_Sans']">
+    <div className="min-h-screen flex flex-col bg-[#f2f2f2]">
       {/* Navbar */}
-      <Navbar toggleSidebar={toggleSidebar} />
+      <Navbar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
 
       <div className="flex flex-1 relative">
         {/* Sidebar */}
-        <Sidebar isOpen={isSidebarOpen} toggleSidebar={closeSidebar} />
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-        {/* Main Content */}
+        {/* Content shifts on desktop only */}
         <main
-          className={`flex-1 p-4 transition-all duration-300 ${
-            isSidebarOpen ? 'md:ml-64' : 'md:ml-0'
-          }`}
+          className={`
+    flex-1 p-6 transition-all duration-300
+    md:${isSidebarOpen ? "ml-64" : "ml-0"}  // Only desktop shifts
+  `}
         >
           {children}
         </main>

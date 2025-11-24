@@ -1,47 +1,29 @@
-'use client'
-
-import React from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
 
 interface NavbarProps {
   toggleSidebar: () => void;
+  isOpen: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
-  const router = useRouter()
-
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth/signout', { method: 'POST' })
-      router.push('/login')
-    } catch (error) {
-      console.error('Logout failed:', error)
-    }
-  }
-
+const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isOpen }) => {
   return (
-    <nav className="bg-[#3a0ca3] p-4 flex justify-between items-center text-left
-     shadow-md font-['Open_Sans']">
-    
+    <nav className="bg-[#3a0ca3] p-4 flex items-center justify-center relative text-white shadow-md">
+
+      {/* Toggle button (visible on ALL screens) */}
       <button
         onClick={toggleSidebar}
-        className="text-white text-2xl  focus:outline-none"
+        className="absolute left-4 text-white text-3xl md:text-2xl block"
       >
-        ☰
+        {isOpen ? "✖" : "☰"}
       </button>
 
-    
-      <h1 className="text-2xl font-extrabold text-white ">
-      Zeteo Citadel Consult
+      {/* Title - hidden ONLY on mobile */}
+      <h1 className="text-2xl font-bold hidden sm:block md:block">
+        Zeteo Citadel Consult
       </h1>
 
-      
-      <button
-        onClick={handleLogout}
-        className="font-['Times_New_Roman'] text-white px-5 py-2 rounded-md
-          bg-[#3a0ca3] border border-white hover:bg-white hover:text-[#3a0ca3]
-          transition duration-300 font-bold shadow-sm"
-      >
+      {/* Logout button — now visible on mobile */}
+      <button className="absolute right-4 px-4 py-2 border rounded-md text-sm block">
         Logout
       </button>
     </nav>
