@@ -9,20 +9,20 @@ const features = [
 ];
 
 const team = [
-  { name: "MR LAW", role: "Lead Mentor", image: "/about/teams/mr joseph.jpg" },
+  { name: "MR JOSPEH", role: "Lead Mentor", image: "/about/teams/mr joseph.jpg" },
   { name: "MR FAVOUR", role: "Consultant", image: "/about/teams/mr favour.jpg" },
   { name: "Miss Peace", role: "Chief Admin", image: "/about/teams/miss peace.jpg" },
   { name: "MR JOHN", role: "Consultant", image: "/about/teams/mr john.jpg" },
-    { name: "MR JOHN", role: "Consultant", image: "/about/teams/mr john.jpg" },
-    { name: "MR JOHN", role: "Consultant", image: "/about/teams/mr john.jpg" },
-    { name: "MR JOHN", role: "Consultant", image: "/about/teams/mr john.jpg" },
+    { name: "MR REUBEN BENJAMIN", role: "Consultant", image: "/about/teams/mr reuben benjamin.jpg" },
+    { name: "MR THEOPHLILUS", role: "Consultant", image: "/about/teams/mr theophlilus.jpg" },
+    { name: "MR LAW", role: "Consultant", image: "/about/teams/boss.jpg" },
 ];
 
 const statistics = [
-  { title: "Students Trained", value: "500+" },
-  { title: "Courses Offered", value: "25" },
-  { title: "Mentors", value: "15" },
-  { title: "Projects Completed", value: "120+" },
+  { title: "Students Trained", value: "200+" },
+  { title: "Courses Offered", value: "20" },
+  { title: "Mentors", value: "5" },
+  { title: "Projects Completed", value: "60+" },
 ];
 
 const testimonials = [
@@ -31,15 +31,16 @@ const testimonials = [
 ];
 
 const partners = [
-  { name: "University of Ibadan (Consulting Unit)", logo: "/partners/ibadanlog.png" },
-  { name: "Software and Management Professional Institute (SMP)", logo: "/HeroImages/smpin.jpg" },
-  { name: "National Youth Service Corps", logo: "/partners/ui.png" },
+  { name: "University of Ibadan (Consulting Unit)", logo: "/about/partners/uni ibadan.png" },
+  { name: "Software and Management Professional Institute of Nigeria(SMPIN)",
+     logo: "/HeroImages/smpin.jpg" },
+  { name: "National Youth Service Corps", logo: "/about/partners/nysc.png" },
 ];
 
 const activities = [
   { image: "/about/activities/1.jpg", description: "Workshop at XYZ venue" },
   { image: "/about/activities/2.jpg", description: "Training session for students" },
-  { image: "/about/activities/3.jpg", description: "Leadership mentorship program" },
+  { image: "/HeroImages/7.png", description: "Leadership mentorship program" },
     { image: "/about/activities/2.jpg", description: "Training session for students" },
       { image: "/about/activities/2.jpg", description: "Training session for students" },
 ];
