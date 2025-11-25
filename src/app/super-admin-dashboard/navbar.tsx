@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Menu, LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { logger } from '@/lib/logger';
 
 type Props = {
   setSidebarOpen: (open: boolean) => void;
@@ -16,7 +17,7 @@ const Navbar = ({ setSidebarOpen }: Props) => {
       await fetch('/api/auth/signout', { method: 'POST' });
       router.push('/login');
     } catch (error) {
-      console.error('Logout error:', error);
+      logger.error('Logout error', { error });
     }
   };
 
@@ -39,14 +40,14 @@ const Navbar = ({ setSidebarOpen }: Props) => {
         <div className="relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100"
+            className="flex items-center gap-2 px-4 py-2 rounded text-black border-2 hover:bg-gray-300"
           >
             <User size={20} />
             <span className="hidden md:inline">Super Admin</span>
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+            <div className="absolute right-0 mt-2 w-48 text-black bg-white rounded-md shadow-lg py-1 z-50">
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 w-full px-4 py-2 text-left hover:bg-gray-100"

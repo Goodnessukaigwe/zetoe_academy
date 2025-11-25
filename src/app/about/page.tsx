@@ -9,13 +9,10 @@ const features = [
 ];
 
 const team = [
-  { name: "MR JOSPEH", role: "Lead Mentor", image: "/about/teams/mr joseph.jpg" },
-  { name: "MR FAVOUR", role: "Consultant", image: "/about/teams/mr favour.jpg" },
-  { name: "Miss Peace", role: "Chief Admin", image: "/about/teams/miss peace.jpg" },
-  { name: "MR JOHN", role: "Consultant", image: "/about/teams/mr john.jpg" },
-    { name: "MR REUBEN BENJAMIN", role: "Consultant", image: "/about/teams/mr reuben benjamin.jpg" },
-    { name: "MR THEOPHLILUS", role: "Consultant", image: "/about/teams/mr theophlilus.jpg" },
-    { name: "MR LAW", role: "Consultant", image: "/about/teams/boss.jpg" },
+  { id: 1, name: "MR LAW", role: "Lead Mentor", image: "/about/teams/mr joseph.jpg" },
+  { id: 2, name: "MR FAVOUR", role: "Consultant", image: "/about/teams/mr favour.jpg" },
+  { id: 3, name: "Miss Peace", role: "Chief Admin", image: "/about/teams/miss peace.jpg" },
+  { id: 4, name: "MR JOHN", role: "Consultant", image: "/about/teams/mr john.jpg" },
 ];
 
 const statistics = [
@@ -38,11 +35,9 @@ const partners = [
 ];
 
 const activities = [
-  { image: "/about/activities/1.jpg", description: "Workshop at XYZ venue" },
-  { image: "/about/activities/2.jpg", description: "Training session for students" },
-  { image: "/HeroImages/7.png", description: "Leadership mentorship program" },
-    { image: "/about/activities/2.jpg", description: "Training session for students" },
-      { image: "/about/activities/2.jpg", description: "Training session for students" },
+  { id: 1, image: "/about/activities/1.jpg", description: "Workshop at XYZ venue" },
+  { id: 2, image: "/about/activities/2.jpg", description: "Training session for students" },
+  { id: 3, image: "/about/activities/3.jpg", description: "Leadership mentorship program" },
 ];
 
 export default function AboutPage() {
@@ -120,7 +115,7 @@ export default function AboutPage() {
         scrollbar-hide snap-x ">
           {team.map((member) => (
             <div
-              key={member.name}
+              key={member.id}
               className="min-w-[260px] snap-start bg-white rounded-br-3xl shadow-lg"
             >
               <Image
@@ -200,9 +195,9 @@ export default function AboutPage() {
 
         <div className="flex overflow-x-auto gap-6 py-4 
         scrollbar-hide snap-x snap-mandatory">
-          {activities.map((act, i) => (
+          {activities.map((act) => (
             <div
-              key={i}
+              key={act.id}
               className="min-w-[280px] snap-start bg-white rounded-3xl shadow"
             >
               <Image
@@ -244,9 +239,9 @@ export default function AboutPage() {
         <div>
           <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="/" className="hover:text-white transition">Home</a></li>
-            <li><a href="/courses/id" className="hover:text-white transition">Courses</a></li>
-            <li><a href="/contact" className="hover:text-white transition">Contact</a></li>
+            <li><Link href="/" className="hover:text-white transition">Home</Link></li>
+            <li><Link href="/courses/id" className="hover:text-white transition">Courses</Link></li>
+            <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
           </ul>
         </div>
 

@@ -7,6 +7,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin, getUserRole } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 // GET payments
 export async function GET(request: NextRequest) {
@@ -59,7 +60,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ payments: data }, { status: 200 })
   } catch (error: any) {
-    console.error('Get payments error:', error)
+    logger.error('Get payments error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -153,7 +154,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error: any) {
-    console.error('Create payment error:', error)
+    logger.error('Create payment error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

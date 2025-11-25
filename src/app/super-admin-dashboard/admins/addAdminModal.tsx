@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { X } from 'lucide-react'
+import { logger } from '@/lib/logger'
 
 interface Props {
   onClose: () => void
@@ -34,7 +35,7 @@ export default function AddAdminModal({ onClose, onSuccess }: Props) {
         alert(data.error || 'Failed to add admin')
       }
     } catch (error) {
-      console.error('Error adding admin:', error)
+      logger.error('Error adding admin', { error })
       alert('Error adding admin')
     } finally {
       setLoading(false)

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Course } from "@/types/database";
 import { X } from "lucide-react";
+import { logger } from '@/lib/logger';
 
 export default function AddStudentModal({
   onClose,
@@ -16,6 +17,7 @@ export default function AddStudentModal({
     password: "",
     phone: "",
     course_id: "",
+    payment_status: "unpaid" as "paid" | "unpaid" | "partial",
   });
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(false);
@@ -31,7 +33,7 @@ export default function AddStudentModal({
           setCourses(data.courses || []);
         }
       } catch (err) {
-        console.error("Failed to fetch courses:", err);
+        logger.error('Failed to fetch courses', err);
       }
     };
     fetchCourses();
@@ -165,6 +167,27 @@ export default function AddStudentModal({
                   {course.name}
                 </option>
               ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Payment Status *
+            </label>
+            <select
+              required
+              value={formData.payment_status}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  payment_status: e.target.value as "paid" | "unpaid" | "partial",
+                })
+              }
+              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3a0ca3]"
+            >
+              <option value="unpaid">Unpaid</option>
+              <option value="partial">Partial</option>
+              <option value="paid">Paid</option>
             </select>
           </div>
 

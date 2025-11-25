@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { Student } from "@/types/database";
 import { Pencil, Trash2 } from "lucide-react";
 import EditStudentModal from "./editStudentModal";
@@ -76,7 +77,7 @@ export default function StudentRow({
       </tr>
 
       {/* Delete Confirmation Modal */}
-      {confirmDelete && (
+      {confirmDelete && typeof document !== 'undefined' && createPortal(
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-gray-900 rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center border border-gray-700">
             <h2 className="text-lg font-semibold mb-2 text-white">
@@ -103,16 +104,18 @@ export default function StudentRow({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Edit Student Modal */}
-      {showEditModal && (
+      {showEditModal && typeof document !== 'undefined' && createPortal(
         <EditStudentModal
           student={student}
           onClose={() => setShowEditModal(false)}
           onSuccess={onRefresh}
-        />
+        />,
+        document.body
       )}
     </>
   );
