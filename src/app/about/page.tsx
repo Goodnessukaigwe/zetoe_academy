@@ -16,10 +16,10 @@ const team = [
 ];
 
 const statistics = [
-  { title: "Students Trained", value: "500+" },
-  { title: "Courses Offered", value: "25" },
-  { title: "Mentors", value: "15" },
-  { title: "Projects Completed", value: "120+" },
+  { title: "Students Trained", value: "200+" },
+  { title: "Courses Offered", value: "20" },
+  { title: "Mentors", value: "5" },
+  { title: "Projects Completed", value: "60+" },
 ];
 
 const testimonials = [
@@ -28,9 +28,10 @@ const testimonials = [
 ];
 
 const partners = [
-  { name: "University of Ibadan (Consulting Unit)", logo: "/partners/ibadanlog.png" },
-  { name: "Software and Management Professional Institute (SMP)", logo: "/HeroImages/smpin.jpg" },
-  { name: "National Youth Service Corps", logo: "/partners/ui.png" },
+  { name: "University of Ibadan (Consulting Unit)", logo: "/about/partners/uni ibadan.png" },
+  { name: "Software and Management Professional Institute of Nigeria(SMPIN)",
+     logo: "/HeroImages/smpin.jpg" },
+  { name: "National Youth Service Corps", logo: "/about/partners/nysc.png" },
 ];
 
 const activities = [

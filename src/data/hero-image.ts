@@ -7,35 +7,43 @@ export interface HeroText {
 // ★★★ IMPORTANT ★★★
 // You must manually list the images you want to use.
 export const heroImages: string[] = [
-  "/HeroImages/toyota suv.jpg",
-  "/HeroImages/mm.jpg",
-  "/HeroImages/smpin.jpg",
-    "/HeroImages/pd.jpg",
-     "/HeroImages/tcm.jpg",
-      "/HeroImages/wd.jpg",
-       "/HeroImages/wed d.jpg",
-        "/HeroImages/zeteo(1).jpg",
+ "/HeroImages/12.png",
+  "/HeroImages/6.png",
+  "/HeroImages/4.png",
+    "/HeroImages/3.png",
+     "/HeroImages/5.png",
+      "/HeroImages/7.png",
+       "/HeroImages/6.png",
+      "/HeroImages/8.png",
+      "/HeroImages/9.png",  
+    "/HeroImages/12.png",  
+     "/HeroImages/13.png",  
+    "/HeroImages/14.png", 
+    "/HeroImages/zeto3.png", 
+       "/HeroImages/10.png",
+        
   // Add more images manually here
 ];
 
 // Fixed text for some images
+
 export const imageTexts: Record<string, HeroText> = {
-  "wd.jpg": {
-    title: "Welcome to Zeteo Citadel Consult",
-    subtitle: "Professional training and certification",
+  "zeto3.png": {
+    title: "",
+    subtitle: "",
   },
-  "pd.jpg": {
-    title: "Expert Mentorship",
-    subtitle: "Enhancing skills for corporate success",
+  "10.png": {
+    title: "",
+    subtitle: "",
   },
-  "wed d.jpg": {
-    title: "In collaboration with University of Ibadan (Consultancy Unit)",
-    subtitle: "Learn and Grow",
+  "5.png": {
+    title: "",
+    subtitle: "",
   },
 
-  "smpin.jpg": {
-    title: "Software and Management professional institute Of Nigeria",
-    subtitle: "hhhgui",
+  "8.png": {
+    title: "",
+    subtitle: "",
   },
 
 };
@@ -43,9 +51,9 @@ export const imageTexts: Record<string, HeroText> = {
 // Random texts for images without fixed text
 export const randomTexts: HeroText[] = [
   { title: "", subtitle: "" },
-  { title: "SMPIN", subtitle: "Join our programs today" },
-  { title: "Boost Your Skills", subtitle: "Courses designed for growth" },
-  { title: "Learn Anywhere", subtitle: "" },
-  { title: "Join Our Community", subtitle: "Enhance your knowledge today" },
-  { title: "Expert Coaching", subtitle: "Learn from seasoned professionals" },
+  { title: "", subtitle: "" },
+  { title: "", subtitle: "" },
+  { title: "", subtitle: "" },
+  { title: "", subtitle: "" },
+  { title: "", subtitle: "" },
 ];
