@@ -2,14 +2,21 @@ import { useEffect, useState } from "react";
 import { imageTexts, randomTexts, HeroText } from "../data/hero-image";
 
 const heroImages: string[] = [
-  "/HeroImages/toyota suv.jpg",
-  "/HeroImages/mm.jpg",
-  "/HeroImages/smpin.jpg",
-    "/HeroImages/pd.jpg",
-     "/HeroImages/tcm.jpg",
-      "/HeroImages/wd.jpg",
-       "/HeroImages/wed d.jpg",
-        "/HeroImages/zeteo(1).jpg",
+ "/HeroImages/12.png",
+  "/HeroImages/6.png",
+  "/HeroImages/4.png",
+    "/HeroImages/3.png",
+     "/HeroImages/5.png",
+      "/HeroImages/7.png",
+       "/HeroImages/6.png",
+      "/HeroImages/8.png",
+      "/HeroImages/9.png",  
+    "/HeroImages/12.png",  
+     "/HeroImages/13.png",  
+    "/HeroImages/14.png", 
+    "/HeroImages/zeto3.png", 
+       "/HeroImages/10.png",
+        
 ];
 
 const positions: HeroText["position"][] = ["left", "center", "right"];
@@ -79,12 +86,12 @@ export default function HeroSlider() {
       : "left-8 text-left";
 
   return (
-    <div className="relative w-full h-[100px] md:h-[450px] overflow-hidden mt-3
-     border-t border-8 border-gray-200">
+    <div className="relative  w-full md:h-[400px] overflow-hidden mt-3
+     m-auto border-8 ">
       {/* IMAGE */}
       <img
         src={heroImages[index]}
-        className={`absolute inset-0 w-300 h-full object-cover 
+        className={`absolute inset-0 w-full h-full object-cover
           object-center transition-opacity duration-[2350ms] ${
           fade ? "opacity-100" : "opacity-0"
         }`}
