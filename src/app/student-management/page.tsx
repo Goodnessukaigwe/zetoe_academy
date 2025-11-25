@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { Student } from "@/types/database";
 import { Plus } from "lucide-react";
 import AddStudentModal from "./addStudentModal";
+import { useRouter } from "next/navigation";
+import { logger } from '@/lib/logger';
 
 export default function StudentsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,6 +14,33 @@ export default function StudentsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
+  const router = useRouter();
+
+  // Check if user is admin or super_admin
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    try {
+      const res = await fetch('/api/auth/me');
+      if (!res.ok) {
+        router.push('/login');
+        return;
+      }
+
+      const data = await res.json();
+      if (data.role !== 'admin' && data.role !== 'super_admin') {
+        router.push('/dashboard');
+        return;
+      }
+
+      fetchStudents();
+    } catch (err) {
+      logger.error('Auth check error', err);
+      router.push('/login');
+    }
+  };
 
   // Fetch students from API
   const fetchStudents = async () => {
@@ -32,10 +61,6 @@ export default function StudentsPage() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchStudents();
-  }, []);
 
   // Filter students based on search query
   const filteredStudents = students.filter(

@@ -6,6 +6,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { getUserRole, isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 export async function GET(request: NextRequest) {
   try {
@@ -58,12 +59,15 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query
 
     if (error) {
+      logger.error('Scores query error', { error })
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 
-    return NextResponse.json({ scores: data }, { status: 200 })
+    logger.info('Scores retrieved', { context: { count: data?.length || 0, role } })
+
+    return NextResponse.json({ scores: data || [] }, { status: 200 })
   } catch (error: any) {
-    console.error('Get scores error:', error)
+    logger.error('Get scores error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -6,6 +6,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { getUserRole, getStudentProfile, getAdminProfile } from '@/lib/auth'
 import { NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 export async function GET() {
   try {
@@ -51,7 +52,7 @@ export async function GET() {
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Get user error:', error)
+    logger.error('Get user error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

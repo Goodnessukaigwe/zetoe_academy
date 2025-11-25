@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Course } from "@/types/database";
 import HeroSlider from "@/component/HeroSlider";
+import { logger } from '@/lib/logger';
 
 const Page = () => {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -17,7 +18,7 @@ const Page = () => {
           setCourses(data.courses || []);
         }
       } catch (error) {
-        console.error("Failed to fetch courses:", error);
+        logger.error('Failed to fetch courses', { error });
       } finally {
         setLoading(false);
       }
@@ -271,18 +272,9 @@ const Page = () => {
       </div>
       </footer>
 
-      
-      <div/>
-      
-      
       </div>
-      
-      
-      
-  )
-}
+    
+  );
+};
 
-export default Page
-
-
-
+export default Page;

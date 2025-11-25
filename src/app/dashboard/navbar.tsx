@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { logger } from '@/lib/logger'
 
 const Navbar = () => {
   const router = useRouter()
@@ -12,7 +13,7 @@ const Navbar = () => {
       await fetch('/api/auth/signout', { method: 'POST' })
       router.push('/login')
     } catch (error) {
-      console.error('Logout failed:', error)
+      logger.error('Logout failed', error)
     }
   }
 
