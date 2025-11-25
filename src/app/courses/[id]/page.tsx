@@ -376,9 +376,9 @@ function EnrollmentModal({
         <div>
           <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm">
-               <li><a href="/" className="hover:text-white transition">Home</a></li>
-            <li><a href="/courses/id" className="hover:text-white transition">Course</a></li>
-            <li><a href="/About" className="hover:text-white transition">About</a></li>
+               <li><a href="#" className="hover:text-white transition">Home</a></li>
+            <li><a href="#" className="hover:text-white transition">Course</a></li>
+            <li><a href="#" className="hover:text-white transition">About</a></li>
          
             
           </ul>

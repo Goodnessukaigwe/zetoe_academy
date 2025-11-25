@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { Eye, EyeOff } from 'lucide-react'
 import { logger } from '@/lib/logger'
 
 const RegisterPage = () => {
