@@ -42,48 +42,10 @@ export default function CourseDetailPage() {
   if (loading) {
     return (
       <div>
-    
-    {/* REFINED HEADER / NAVIGATION */}
-    
-      <div className=" sticky top-0 z-50 bg-white shadow-md flex items-center px-0 py-3 ">
-        {/* Logo & Brand */}
-          <img src="/zetelog.png" alt="logo" className="h-18 w-18 object-cover" />
-          <h1 className="text-2xl font-extrabold flex-1 text-blue-700">
-              ZETEO CITADEL CONSULT
-          </h1>
-        
-    
-        {/* Navigation Links */}
-        <nav className="flex-1 space-x-9 font-semibold text-gray-800">
-          <Link href="/" className="hover:text-[#4a03fc] transition">Home</Link>
-          <Link href="/courses/id" className="hover:text-[#4a03fc] transition">Courses</Link>
-          <Link href="/about" className="hover:text-[#4a03fc] transition">About</Link>
-          <Link href="/contact" className="hover:text-[#4a03fc] transition">Contact</Link>
-        </nav>
-    
-         {/* Register / Sign In */}
-        <div className="hidden md:flex space-x-4">
-          <Link
-            href="/register"
-            className=" text-white bg-[#3a0ca3] hover:bg-[#1d0555] transition 
-            duration-300 px-2 py-2 rounded-md " >
-            Register
-          </Link>
-          <Link
-            href="/login"
-            className="border border-blue-700 text-blue-700 px-2 py-2 rounded-md
-             hover:bg-blue-700 hover:text-white transition mr-4"
-          >
-            Sign In
-          </Link>
+        <Header />
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700"></div>
         </div>
-    
-    </div>
-
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2
-         border-blue-700"></div>
-       </div>
       </div>
     );
   }
@@ -117,8 +79,7 @@ export default function CourseDetailPage() {
         <div className="max-w-6xl mx-auto px-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-white
-             hover:text-gray-200 mb-6 transition"
+            className="inline-flex items-center gap-2 text-white hover:text-gray-200 mb-6 transition"
           >
             <ArrowLeft size={20} />
             Back to Courses
