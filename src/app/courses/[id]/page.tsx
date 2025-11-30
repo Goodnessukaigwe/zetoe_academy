@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Course } from "@/types/database";
 import Link from "next/link";
 import { ArrowLeft, Clock, DollarSign, BookOpen, CheckCircle } from "lucide-react";
+import Header from "@/component/Header";
 
 export default function CourseDetailPage() {
   const params = useParams();
@@ -40,8 +41,11 @@ export default function CourseDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700"></div>
+      <div>
+        <Header />
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-700"></div>
+        </div>
       </div>
     );
   }
@@ -66,7 +70,7 @@ export default function CourseDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+      <Header />
       <div className="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-16">
         <div className="max-w-6xl mx-auto px-6">
           <Link
@@ -77,9 +81,7 @@ export default function CourseDetailPage() {
             Back to Courses
           </Link>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">{course.name}</h1>
-          <p className="text-xl text-gray-200">
-            Professional certification and training program
-          </p>
+          <p className="text-xl text-gray-200">Professional certification and training program</p>
         </div>
       </div>
 
