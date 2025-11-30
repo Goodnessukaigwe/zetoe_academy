@@ -58,21 +58,23 @@ export default function StudentRow({
               student.payment_status.slice(1)}
           </span>
         </td>
-        <td className="px-6 py-3 flex items-center justify-center gap-3">
-          <button
-            onClick={() => setShowEditModal(true)}
-            className="flex items-center gap-1 px-3 py-1.5 bg-[#3a0ca3] hover:bg-blue-700 rounded-lg text-xs font-medium text-white transition-all"
-          >
-            <Pencil size={14} />
-            Edit
-          </button>
-          <button
-            onClick={() => setConfirmDelete(true)}
-            className="flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 rounded-lg text-xs font-medium text-white transition-all"
-          >
-            <Trash2 size={14} />
-            Delete
-          </button>
+        <td className="px-6 py-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2">
+            <button
+              onClick={() => setShowEditModal(true)}
+              className="w-full sm:w-auto flex items-center justify-center gap-1 px-3 py-1.5 bg-[#3a0ca3] hover:bg-blue-700 rounded-lg text-xs font-medium text-white transition-all"
+            >
+              <Pencil size={14} />
+              <span className="hidden sm:inline">Edit</span>
+            </button>
+            <button
+              onClick={() => setConfirmDelete(true)}
+              className="w-full sm:w-auto flex items-center justify-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 rounded-lg text-xs font-medium text-white transition-all"
+            >
+              <Trash2 size={14} />
+              <span className="hidden sm:inline">Delete</span>
+            </button>
+          </div>
         </td>
       </tr>
 
