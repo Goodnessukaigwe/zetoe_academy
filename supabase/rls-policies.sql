@@ -91,45 +91,51 @@ CREATE POLICY "Super admins can delete students"
   );
 
 -- ============================================
--- ADMINS POLICIES
+-- ADMINS POLICIES (Fixed - No Recursion)
 -- ============================================
--- Admins can view all admins
-CREATE POLICY "Admins can view all admins"
+-- Admins can only view their own record
+CREATE POLICY "Admins can view own record"
   ON admins FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM admins
-      WHERE user_id = auth.uid()
-    )
-  );
+  USING (user_id = auth.uid());
 
--- Only super admins can insert admins
+-- Allow viewing pending invites (when user_id is null)
+CREATE POLICY "Allow viewing pending invites"
+  ON admins FOR SELECT
+  USING (user_id IS NULL);
+
+-- Super admins can insert admins
 CREATE POLICY "Super admins can insert admins"
   ON admins FOR INSERT
   WITH CHECK (
     EXISTS (
       SELECT 1 FROM admins
-      WHERE user_id = auth.uid() AND role = 'super_admin'
+      WHERE user_id = auth.uid() 
+      AND role = 'super_admin'
+      LIMIT 1
     )
   );
 
--- Only super admins can update admins
+-- Super admins can update admins
 CREATE POLICY "Super admins can update admins"
   ON admins FOR UPDATE
   USING (
     EXISTS (
       SELECT 1 FROM admins
-      WHERE user_id = auth.uid() AND role = 'super_admin'
+      WHERE user_id = auth.uid() 
+      AND role = 'super_admin'
+      LIMIT 1
     )
   );
 
--- Only super admins can delete admins
+-- Super admins can delete admins
 CREATE POLICY "Super admins can delete admins"
   ON admins FOR DELETE
   USING (
     EXISTS (
       SELECT 1 FROM admins
-      WHERE user_id = auth.uid() AND role = 'super_admin'
+      WHERE user_id = auth.uid() 
+      AND role = 'super_admin'
+      LIMIT 1
     )
   );
 

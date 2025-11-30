@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Shield } from 'lucide-react'
+import { logger } from '@/lib/logger'
 
 function AdminInviteContent() {
   const [email, setEmail] = useState('')
@@ -50,7 +51,7 @@ function AdminInviteContent() {
         setError(data.error || 'Failed to complete setup')
       }
     } catch (err) {
-      console.error('Setup error:', err)
+      logger.error('Setup error', err)
       setError('Something went wrong! Please try again.')
     } finally {
       setLoading(false)
@@ -66,86 +67,85 @@ function AdminInviteContent() {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-center mb-2 text-[#3a0ca3]">
-          Admin Account Setup
+        <h2 className="text-2xl font-bold text-center mb-2 text-gray-800">
+          Complete Admin Setup
         </h2>
-        <p className="text-center text-gray-600 mb-6">
-          Complete your admin account setup by setting your password
+        <p className="text-center text-gray-600 mb-6 text-sm">
+          Set your password to activate your admin account
         </p>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-sm">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email Address
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md text-black placeholder-gray-500 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter your admin email"
+              className="w-full p-3 border border-gray-300 rounded-md text-black bg-gray-50"
               required
+              readOnly={!!searchParams.get('email')}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
             </label>
-            <div className="relative">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-md text-black placeholder-gray-500 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-                placeholder="Create a password"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-gray-600"
-              >
-                {showPassword ? '👁️' : '🙈'}
-              </button>
-            </div>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-md text-black"
+              required
+              minLength={8}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Minimum 8 characters, include uppercase, lowercase, and numbers
+            </p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Confirm Password
             </label>
             <input
               type={showPassword ? 'text' : 'password'}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md text-black placeholder-gray-500 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Confirm your password"
+              className="w-full p-3 border border-gray-300 rounded-md text-black"
               required
             />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="showPassword"
+              checked={showPassword}
+              onChange={(e) => setShowPassword(e.target.checked)}
+              className="w-4 h-4"
+            />
+            <label htmlFor="showPassword" className="text-sm text-gray-700">
+              Show passwords
+            </label>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-md font-semibold text-white bg-[#3a0ca3] hover:bg-[#1d0555] transition duration-300 disabled:opacity-50"
+            className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-md font-semibold transition disabled:bg-gray-400"
           >
             {loading ? 'Setting up...' : 'Complete Setup'}
           </button>
         </form>
-
-        <p className="mt-4 text-gray-600 text-sm text-center">
-          Already have an account?{' '}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Login
-          </a>
-        </p>
       </div>
     </div>
   )
@@ -154,8 +154,11 @@ function AdminInviteContent() {
 export default function AdminInvitePage() {
   return (
     <Suspense fallback={
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3a0ca3]"></div>
+      <div className="flex justify-center items-center min-h-screen bg-[#f2f2f2]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent mx-auto mb-4"></div>
+          <p className="text-gray-700">Loading...</p>
+        </div>
       </div>
     }>
       <AdminInviteContent />

@@ -2,6 +2,7 @@
 import React from "react";
 import { Menu } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { logger } from '@/lib/logger';
 
 type Props = {
   setSidebarOpen: (open: boolean) => void;
@@ -15,7 +16,7 @@ const Navbar = ({ setSidebarOpen }: Props) => {
       await fetch('/api/auth/signout', { method: 'POST' })
       router.push('/login')
     } catch (error) {
-      console.error('Logout failed:', error)
+      logger.error('Logout failed', { error })
     }
   }
 
