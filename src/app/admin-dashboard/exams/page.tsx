@@ -4,6 +4,7 @@ import { Exam, Course } from "@/types/database";
 import { Plus, Search } from "lucide-react";
 import ExamCard from "./examCard";
 import CreateExamModal from "./createExamModal";
+import { logger } from '@/lib/logger';
 
 export default function ExamManagementPage() {
   const [exams, setExams] = useState<Exam[]>([]);
@@ -38,13 +39,11 @@ export default function ExamManagementPage() {
       const data = await res.json();
       if (res.ok) {
         setCourses(data.courses || []);
+        }
+      } catch (err) {
+        logger.error('Failed to fetch courses', err);
       }
-    } catch (err) {
-      console.error("Failed to fetch courses:", err);
-    }
-  };
-
-  useEffect(() => {
+    };  useEffect(() => {
     fetchExams();
     fetchCourses();
   }, []);

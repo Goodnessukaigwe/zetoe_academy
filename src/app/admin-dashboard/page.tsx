@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import DashboardCard from "./dashboardcard";
 import { useRouter } from "next/navigation";
+import { logger } from '@/lib/logger';
 
 interface DashboardStats {
   totalExams: number;
@@ -70,7 +71,7 @@ export default function AdminDashboardPage() {
       }
 
     } catch (error) {
-      console.error('Error fetching dashboard stats:', error);
+      logger.error('Error fetching dashboard stats', { error });
     } finally {
       setLoading(false);
     }

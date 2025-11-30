@@ -6,6 +6,7 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 export async function POST(request: NextRequest) {
   try {
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (authError || !authData.user) {
-      console.error('Auth user creation error:', authError)
+      logger.error('Auth user creation error', authError)
       return NextResponse.json(
         { error: authError?.message || 'Failed to create auth user' },
         { status: 500 }
@@ -69,7 +70,7 @@ export async function POST(request: NextRequest) {
       .eq('id', adminRecord.id)
 
     if (updateError) {
-      console.error('Admin update error:', updateError)
+      logger.error('Admin update error', updateError)
       // Try to delete the auth user if update fails
       await adminClient.auth.admin.deleteUser(authData.user.id).catch(() => {})
       return NextResponse.json(
@@ -86,7 +87,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Admin invite error:', error)
+    logger.error('Admin invite error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

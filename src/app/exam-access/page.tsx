@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { logger } from '@/lib/logger';
 
 function ExamAccessPage() {
   const [examCode, setExamCode] = useState("");
@@ -34,7 +35,7 @@ function ExamAccessPage() {
 
       router.push(`/exam/${data.exam.id}`);
     } catch (err) {
-      console.error("Exam access error:", err);
+      logger.error('Exam access error', err);
       setError("Something went wrong. Please try again.");
     }
   };

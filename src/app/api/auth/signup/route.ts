@@ -6,18 +6,60 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { NextRequest, NextResponse } from 'next/server'
+import { validateEmail, validatePassword, sanitizeString } from '@/lib/validation'
+import { rateLimit, RateLimitPresets, createRateLimitResponse } from '@/lib/rate-limit'
+import { logger } from '@/lib/logger'
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting
+    const rateLimitResult = rateLimit(request, RateLimitPresets.AUTH)
+    
+    if (rateLimitResult.limited) {
+      logger.warn('Rate limit exceeded for signup attempt', {
+        context: {
+          retryAfter: rateLimitResult.retryAfter,
+        },
+      })
+      return createRateLimitResponse(rateLimitResult)
+    }
+
     const { email, password, name, role } = await request.json()
 
-    // Validate input
-    if (!email || !password || !name) {
+    // Validate email
+    const emailValidation = validateEmail(email)
+    if (!emailValidation.valid) {
       return NextResponse.json(
-        { error: 'Email, password, and name are required' },
+        { error: emailValidation.error },
         { status: 400 }
       )
     }
+
+    // Validate password strength
+    const passwordValidation = validatePassword(password)
+    if (!passwordValidation.valid) {
+      return NextResponse.json(
+        { error: passwordValidation.error },
+        { status: 400 }
+      )
+    }
+
+    // Validate and sanitize name
+    if (!name || name.trim().length === 0) {
+      return NextResponse.json(
+        { error: 'Name is required' },
+        { status: 400 }
+      )
+    }
+
+    if (name.length > 100) {
+      return NextResponse.json(
+        { error: 'Name must be less than 100 characters' },
+        { status: 400 }
+      )
+    }
+
+    const sanitizedName = sanitizeString(name, 100)
 
     const supabase = await createClient()
     const adminClient = createAdminClient()
@@ -28,11 +70,14 @@ export async function POST(request: NextRequest) {
       password,
       email_confirm: true, // Auto-confirm email
       user_metadata: {
-        name,
+        name: sanitizedName,
       },
     })
 
     if (authError) {
+      logger.error('Auth user creation failed', authError, {
+        context: { email },
+      })
       return NextResponse.json({ error: authError.message }, { status: 400 })
     }
 
@@ -52,13 +97,15 @@ export async function POST(request: NextRequest) {
         .from('students')
         .insert({
           user_id: authData.user.id,
-          name,
+          name: sanitizedName,
           email,
           payment_status: 'unpaid',
         })
 
       if (profileError) {
-        console.error('Student profile creation error:', profileError)
+        logger.error('Student profile creation error', profileError, {
+          context: { userId: authData.user.id },
+        })
         // Try to delete the auth user if profile creation fails
         await adminClient.auth.admin.deleteUser(authData.user.id).catch(() => {})
         return NextResponse.json(
@@ -71,6 +118,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    logger.info('User created successfully', {
+      context: {
+        userId: authData.user.id,
+        email: authData.user.email,
+        role: userRole,
+      },
+    })
+
     return NextResponse.json(
       {
         message: 'User created successfully',
@@ -79,7 +134,12 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error: any) {
-    console.error('Signup error:', error)
+    logger.error('Signup error', error, {
+      context: {
+        endpoint: '/api/auth/signup',
+      },
+    })
+    
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

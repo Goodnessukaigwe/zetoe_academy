@@ -8,6 +8,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin, getUserRole } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 // GET exams
 export async function GET(request: NextRequest) {
@@ -55,7 +56,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ exams: data }, { status: 200 })
   } catch (error: any) {
-    console.error('Get exams error:', error)
+    logger.error('Get exams error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -161,7 +162,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error: any) {
-    console.error('Create exam error:', error)
+    logger.error('Create exam error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

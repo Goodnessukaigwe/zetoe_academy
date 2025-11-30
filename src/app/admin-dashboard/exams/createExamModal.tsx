@@ -109,9 +109,9 @@ export default function CreateExamModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-gray-900 rounded-lg shadow-xl w-full max-w-3xl border border-gray-700 my-8">
-        <div className="flex justify-between items-center p-6 border-b border-gray-700 sticky top-0 bg-gray-900 z-10">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+      <div className="bg-gray-900 rounded-lg shadow-xl w-full max-w-3xl border border-gray-700 max-h-[90vh] flex flex-col">
+        <div className="flex justify-between items-center p-6 border-b border-gray-700 bg-gray-900 flex-shrink-0">
           <h2 className="text-xl font-semibold text-white">Create New Exam</h2>
           <button
             onClick={onClose}
@@ -121,7 +121,8 @@ export default function CreateExamModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+          <div className="p-6 space-y-6 overflow-y-auto flex-1">
           {error && (
             <div className="p-3 bg-red-900/20 border border-red-500 rounded text-red-400 text-sm">
               {error}
@@ -280,9 +281,13 @@ export default function CreateExamModal({
                     placeholder="Enter question text"
                   />
 
+                  <div className="mb-3">
+                    <p className="text-sm text-gray-400 mb-2">Select the correct answer:</p>
+                  </div>
+
                   <div className="space-y-2">
                     {q.options?.map((opt, oIndex) => (
-                      <div key={oIndex} className="flex items-center gap-2">
+                      <div key={oIndex} className="flex items-center gap-3 bg-gray-900 p-3 rounded-lg border border-gray-700">
                         <input
                           type="radio"
                           name={`correct_${qIndex}`}
@@ -290,8 +295,11 @@ export default function CreateExamModal({
                           onChange={() =>
                             updateQuestion(qIndex, "correct_answer", oIndex)
                           }
-                          className="w-4 h-4 accent-[#3a0ca3]"
+                          className="w-5 h-5 accent-green-500 cursor-pointer"
                         />
+                        <label className="text-sm font-medium text-gray-400 min-w-[70px]">
+                          Option {oIndex + 1}:
+                        </label>
                         <input
                           type="text"
                           required
@@ -299,8 +307,8 @@ export default function CreateExamModal({
                           onChange={(e) =>
                             updateOption(qIndex, oIndex, e.target.value)
                           }
-                          className="flex-1 px-3 py-1.5 bg-gray-900 border border-gray-600 rounded text-white text-sm focus:outline-none focus:border-[#3a0ca3]"
-                          placeholder={`Option ${oIndex + 1}`}
+                          className="flex-1 px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white text-sm focus:outline-none focus:border-[#3a0ca3]"
+                          placeholder={`Enter option ${oIndex + 1}`}
                         />
                       </div>
                     ))}
@@ -309,8 +317,9 @@ export default function CreateExamModal({
               ))}
             </div>
           </div>
+          </div>
 
-          <div className="flex gap-3 pt-4 sticky bottom-0 bg-gray-900 pb-2">
+          <div className="flex gap-3 p-6 border-t border-gray-700 bg-gray-900 flex-shrink-0">
             <button
               type="button"
               onClick={onClose}

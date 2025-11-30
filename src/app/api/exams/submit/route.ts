@@ -3,11 +3,14 @@
  * POST /api/exams/submit - Submit exam answers and calculate score
  */
 
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 export async function POST(request: NextRequest) {
   try {
+    const adminClient = createAdminClient()
     const supabase = await createClient()
 
     // Check authentication
@@ -28,8 +31,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Get student profile
-    const { data: student } = await supabase
+    // Get student profile using admin client
+    const { data: student } = await adminClient
       .from('students')
       .select('id')
       .eq('user_id', user.id)
@@ -43,7 +46,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if already submitted
-    const { data: existingScore } = await supabase
+    const { data: existingScore } = await adminClient
       .from('scores')
       .select('id')
       .eq('student_id', student.id)
@@ -58,7 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get exam with correct answers
-    const { data: exam, error: examError } = await supabase
+    const { data: exam, error: examError } = await adminClient
       .from('exams')
       .select('questions, passing_score')
       .eq('id', exam_id)
@@ -75,15 +78,15 @@ export async function POST(request: NextRequest) {
 
     for (let i = 0; i < exam.questions.length; i++) {
       const question = exam.questions[i]
-      const studentAnswer = answers.find((a: any) => a.question_id === question.id)
+      const studentAnswer = answers[question.id] // answers is now an object
 
-      if (studentAnswer) {
-        const isCorrect = studentAnswer.selected_answer === question.correct_answer
+      if (studentAnswer !== undefined && studentAnswer !== -1) {
+        const isCorrect = studentAnswer === question.correct_answer
         if (isCorrect) correctAnswers++
 
         studentAnswers.push({
           question_id: question.id,
-          selected_answer: studentAnswer.selected_answer,
+          selected_answer: studentAnswer,
           is_correct: isCorrect,
         })
       }
@@ -93,8 +96,8 @@ export async function POST(request: NextRequest) {
     const percentage = (correctAnswers / totalQuestions) * 100
     const status = percentage >= exam.passing_score ? 'passed' : 'failed'
 
-    // Save score
-    const { data: scoreData, error: scoreError } = await supabase
+    // Save score using admin client
+    const { data: scoreData, error: scoreError } = await adminClient
       .from('scores')
       .insert({
         student_id: student.id,
@@ -132,7 +135,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error: any) {
-    console.error('Submit exam error:', error)
+    logger.error('Submit exam error', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

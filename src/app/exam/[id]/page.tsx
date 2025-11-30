@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { ChevronLeft, ChevronRight, Clock, AlertCircle } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Clock, AlertCircle, Lock } from 'lucide-react'
+import { logger } from '@/lib/logger'
 
 interface Question {
   id: string
@@ -18,6 +19,7 @@ interface ExamData {
   duration_minutes: number
   passing_score: number
   questions: Question[]
+  code: string
 }
 
 interface Answer {
@@ -34,13 +36,61 @@ export default function ExamPage() {
   const [answers, setAnswers] = useState<Answer[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [timeRemaining, setTimeRemaining] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [accessCode, setAccessCode] = useState('')
+  const [isUnlocked, setIsUnlocked] = useState(false)
+  const [verifyingCode, setVerifyingCode] = useState(false)
+  const [codeError, setCodeError] = useState('')
 
   useEffect(() => {
-    fetchExamData()
-  }, [examId])
+    if (isUnlocked) {
+      fetchExamData()
+    }
+  }, [examId, isUnlocked])
+
+  const verifyAccessCode = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setCodeError('')
+    setVerifyingCode(true)
+
+    try {
+      const res = await fetch(`/api/exams/${examId}`)
+      
+      if (!res.ok) {
+        const data = await res.json()
+        setCodeError(data.error || 'Failed to verify code')
+        setVerifyingCode(false)
+        return
+      }
+
+      const data = await res.json()
+      
+      // Check if exam data and code exist
+      if (!data.exam || !data.exam.code) {
+        setCodeError('Unable to verify access code. Please try again.')
+        setVerifyingCode(false)
+        return
+      }
+      
+      // Verify the access code matches
+      if (data.exam.code.toUpperCase() !== accessCode.toUpperCase()) {
+        setCodeError('Invalid access code. Please try again.')
+        setVerifyingCode(false)
+        return
+      }
+
+      // Code is correct, unlock the exam
+      setIsUnlocked(true)
+      setVerifyingCode(false)
+      setLoading(false) // Ensure loading is set to false
+    } catch (err) {
+      logger.error('Error verifying access code', err)
+      setCodeError('Failed to verify access code')
+      setVerifyingCode(false)
+    }
+  }
 
   useEffect(() => {
     if (timeRemaining <= 0) return
@@ -65,6 +115,14 @@ export default function ExamPage() {
       
       if (!res.ok) {
         const data = await res.json()
+        
+        // If already taken, redirect to results
+        if (data.error === 'You have already taken this exam') {
+          alert('You have already completed this exam. Redirecting to your results...')
+          router.push(`/exam/${examId}/results`)
+          return
+        }
+        
         setError(data.error || 'Failed to load exam')
         return
       }
@@ -80,7 +138,7 @@ export default function ExamPage() {
       }))
       setAnswers(initialAnswers)
     } catch (err) {
-      console.error('Error fetching exam:', err)
+      logger.error('Error fetching exam', err)
       setError('Failed to load exam')
     } finally {
       setLoading(false)
@@ -128,28 +186,106 @@ export default function ExamPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          examId: exam.id,
-          answers: answers.map(a => ({
-            questionId: a.questionId,
-            selectedOption: a.selectedOption
-          }))
+          exam_id: exam.id,
+          answers: answers.reduce((acc, a) => {
+            acc[a.questionId] = a.selectedOption
+            return acc
+          }, {} as Record<string, number>)
         })
       })
 
       const data = await res.json()
 
-      if (res.ok) {
-        // Redirect to results page
-        router.push(`/exam/${exam.id}/results?score=${data.score.id}`)
-      } else {
-        setError(data.error || 'Failed to submit exam')
-        setSubmitting(false)
+      if (!res.ok) {
+        // If exam already submitted, redirect to dashboard with message
+        if (data.error === 'Exam already submitted') {
+          alert('You have already submitted this exam. Check your scores in the dashboard.')
+          router.push('/dashboard')
+          return
+        }
+        throw new Error(data.error || 'Failed to submit exam')
       }
-    } catch (err) {
-      console.error('Error submitting exam:', err)
-      setError('Failed to submit exam')
+
+      // Redirect to results page with score ID if available
+      if (data.data && data.data.id) {
+        router.push(`/exam/${exam.id}/results?score=${data.data.id}`)
+      } else {
+        // Fallback to dashboard if no score ID
+        alert('Exam submitted successfully!')
+        router.push('/dashboard')
+      }
+    } catch (err: any) {
+      logger.error('Error submitting exam', err)
+      alert(err.message || 'Failed to submit exam')
+    } finally {
       setSubmitting(false)
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
+          <p className="text-gray-700 font-medium">Loading exam...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!isUnlocked) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
+          <div className="text-center mb-6">
+            <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lock className="text-blue-600" size={40} />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Exam Access Required</h2>
+            <p className="text-gray-800">Enter the access code to start this exam</p>
+          </div>
+
+          <form onSubmit={verifyAccessCode} className="space-y-4">
+            {codeError && (
+              <div className="bg-red-50 border border-red-300 text-red-800 px-4 py-3 rounded-lg text-sm">
+                {codeError}
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Access Code
+              </label>
+              <input
+                type="text"
+                value={accessCode}
+                onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
+                placeholder="Enter code (e.g., EXAM2024)"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-lg uppercase text-gray-900"
+                required
+                disabled={verifyingCode}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={verifyingCode || !accessCode}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {verifyingCode ? 'Verifying...' : 'Start Exam'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => router.push('/dashboard')}
+              className="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 rounded-lg font-semibold transition"
+            >
+              Back to Dashboard
+            </button>
+          </form>
+        </div>
+      </div>
+    )
   }
 
   const formatTime = (seconds: number) => {

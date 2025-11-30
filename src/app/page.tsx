@@ -3,18 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Course } from "@/types/database";
-=======
->>>>>>> Stashed changes
-
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Header from "@/component/Header";
 import HeroSlider from "@/component/HeroSlider";
-import { Course } from "@/types/database";
-import { logger } from "@/lib/logger";
+import { logger } from '@/lib/logger';
 
-export default function Page() {
+const Page = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,11 +18,7 @@ export default function Page() {
         const data = await res.json();
         if (res.ok) setCourses(data.courses || []);
       } catch (error) {
-<<<<<<< Updated upstream
-        console.error("Failed to fetch courses:", error);
-=======
-        logger.error("Failed to fetch courses", { error });
->>>>>>> Stashed changes
+        logger.error('Failed to fetch courses', { error });
       } finally {
         setLoading(false);
       }
@@ -41,195 +29,172 @@ export default function Page() {
   return (
 <<<<<<< Updated upstream
     <div>
-      {/* top navigation */}
-      <div className="sticky top-0 flex justify-end font-opensans font-bold p-4 text-black text-20 space-x-10 bg-white z-50">
-        {/* logo */}
-        <div className="flex justify-center mr-180 items-center text-blue-700 w-100 h-10 space-x-0">
-          <img src="/zetelog.png" alt="logo" className="h-30 w-25 ml-10" />
-          <h1 className="text-center font-extrabold">
-            ZETEO CITADEL CONSULT
-          </h1>
-        </div>
+      
+    {/* REFINED HEADER / NAVIGATION */}
+ <header className="sticky top-0 z-50 bg-white shadow-md">
+  <div className="flex items-center px-0 py-3 ">
+    {/* Logo & Brand */}
+      <img src="/zetelog.png" alt="logo" className="h-18 w-18 object-cover" />
+      <h1 className="text-2xl font-extrabold flex-1 text-blue-700">
+          ZETEO CITADEL CONSULT
+      </h1>
+    
 
-        <a className="hover:text-blue-700" href="#home">
-          HOME
-        </a>
-        <a className="hover:text-blue-700" href="#courses">
-          COURSES
-        </a>
-        <a className="hover:text-blue-700" href="#contact">
-          CONTACT
-        </a>
-        <a href="#mail" className="hover:text-blue-700 mr-20">
-          MAIL
-        </a>
-      </div>
+    {/* Navigation Links */}
+    <nav className="flex-1 space-x-9 font-semibold text-gray-800">
+      <Link href="/" className="hover:text-[#4a03fc] transition">Home</Link>
+      <Link href="/courses/id" className="hover:text-[#4a03fc] transition">Courses</Link>
+      <Link href="/about" className="hover:text-[#4a03fc] transition">About</Link>
+      <Link href="/contact" className="hover:text-[#4a03fc] transition">Contact</Link>
+    </nav>
 
-      {/* navigation */}
-      <div className="sticky top-18 flex justify-between font-opensans font-bold p-3 text-white-700 space-x-10 bg-blue-800 z-40">
-        {/* menus */}
-        <div className="space-x-15 ml-50 text-white-800">
-          <a
-            className="hover:text-white hover:border hover:rounded-4xl hover:p-1"
-            href="#courses"
-          >
-            Courses
-          </a>
-          <a
-            href="#about"
-            className="hover:text-white hover:border hover:rounded-4xl hover:p-1"
-          >
-            About
-          </a>
-          <a
-            className="hover:text-white hover:border hover:rounded-4xl hover:p-1"
-            href="#contact"
-          >
-            Contact
-          </a>
-        </div>
-        {/* reg and signin */}
-        <div className="space-x-5 mr-20">
-          <Link
-            href="/register"
-            className="text-white rounded-md bg-red-700 px-4 py-2 hover:bg-blue-700 hover:text-white"
-          >
-            REGISTER NOW
-          </Link>
-          <Link
-            className="border-white p-1 text-white-700 hover:border hover:rounded-4xl hover:p-1"
-            href="/login"
-          >
-            Sign in
-          </Link>
-        </div>
-      </div>
-                
-      {/* HERO SITE */}
-      <div
-        id="home"
-        className="bg-gradient-to-r from-gray-300 to-gray-600 w-full m-auto justify-center text-center mt-5 p-8 shadow-xl"
+    {/* Register / Sign In */}
+    <div className="hidden md:flex space-x-4">
+      <Link
+        href="/register"
+        className=" text-white bg-[#3a0ca3] hover:bg-[#1d0555] transition 
+        duration-300 px-2 py-2 rounded-md " >
+        Register
+      </Link>
+      <Link
+        href="/login"
+        className="border border-blue-700 text-blue-700 px-2 py-2 rounded-md
+         hover:bg-blue-700 hover:text-white transition mr-4"
       >
-        <img
-          src="/zetelog.png"
-          alt="heroimage"
-          className="text-center m-auto w-32 h-32 object-cover"
-        />
-        <h1 className="text-white font-bold text-4xl mt-4">
-          WELCOME TO ZETEO CITADEL CONSULT
-        </h1>
-        <p className="text-white text-lg mt-2">
-          In collaboration with University of Ibadan (Consultancy Unit)
-        </p>
-      </div>
-      <br />
-      <hr className="shadow" />
+        Sign In
+      </Link>
+    </div>
 
-      {/* COURSES */}
-      <div id="courses" className="justify-center text-center text-2xl py-10">
-        <h1 className="text-black font-bold m-10">Our Courses</h1>
-        <p className="text-gray-600 mb-8">
-=======
-    <div className="overflow-x-hidden">
-      <Header />
+    {/* Mobile Hamburger Menu */}
+    <div className="md:hidden">
+      <button className="text-gray-800 focus:outline-none">☰</button>
+    </div>
+  </div>
+</header>
 
-      {/* ================= HERO ================= */}
-      <HeroSlider />
+    
+     
+      {/* HERO SITE */}
+    
+ < HeroSlider />
+    
+       
+ {/* COURSES PREVIEW SECTION */}
+ <div id="courses" className="justify-center text-center py-14 bg-gray-50">
+  <h1 className="text-black font-bold text-3xl mb-3">Our Courses</h1>
+  <p className="text-gray-600 mb-10">
+    Professional training and certification programs
+  </p>
 
-      {/* ================= COURSES ================= */}
-      <section className="py-16 bg-gray-50 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Our Courses</h2>
-        <p className="text-gray-600 mb-10 text-sm sm:text-base">
->>>>>>> Stashed changes
-          Professional training and certification programs
-        </p>
+  {loading ? (
+    // LOADER
+    <div className="flex justify-center items-center py-12">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
+    </div>
+  ) : courses.length > 0 ? (
+    <>
+      {/* SHOW ONLY FEW COURSES (E.g., 6) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+        {courses.slice(0, 6).map((course) => (
+          <div
+            key={course.id}
+            className="rounded-3xl text-center bg-white w-full h-auto p-6 shadow-md hover:shadow-xl transition-shadow"
+          >
+            <h1 className="text-6xl m-4">🎓</h1>
 
-        {loading ? (
-<<<<<<< Updated upstream
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
+            <h3 className="font-semibold text-xl mb-2 text-black">
+              {course.name}
+            </h3>
+
+            <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+              {course.description || "Professional certification program"}
+            </p>
+
+            <p className="text-blue-700 font-bold text-2xl mb-3">
+              ₦{course.price.toLocaleString()}
+            </p>
+
+            <p className="text-gray-500 text-sm mb-4">
+              {course.duration || "Duration varies"}
+            </p>
+
+            <hr className="my-4" />
+
+            <Link
+              href={`/courses/${course.id}`}
+              className="inline-block text-white rounded-md bg-blue-700 px-6 py-2 hover:bg-red-700 hover:text-white transition"
+            >
+              LEARN MORE
+            </Link>
           </div>
-        ) : courses.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
-            {courses.map((course) => (
-              <div
-                key={course.id}
-                className="rounded-3xl text-center bg-white w-full h-auto p-6 shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <h1 className="text-6xl m-4">🎓</h1>
-                <h3 className="font-semibold text-xl mb-2 text-black">
-                  {course.name}
-                </h3>
-                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                  {course.description || "Professional certification program"}
-                </p>
-                <p className="text-blue-700 font-bold text-2xl mb-3">
-                  ₦{course.price.toLocaleString()}
-                </p>
-                <p className="text-gray-500 text-sm mb-4">
-                  {course.duration || "Duration varies"}
-                </p>
-                <hr className="my-4" />
-                <Link
-                  href={`/courses/${course.id}`}
-                  className="inline-block text-white rounded-md bg-blue-700 px-6 py-2 hover:bg-red-700 hover:text-white transition"
-                >
-                  LEARN MORE
-=======
-          <div className="flex justify-center py-10">
-            <div className="animate-spin w-12 h-12 border-b-2 border-indigo-700 rounded-full"></div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-            {courses.slice(0, 6).map((course) => (
-              <div key={course.id} className="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <div className="text-5xl mb-3">🎓</div>
-                <h3 className="font-semibold text-lg">{course.name}</h3>
-                <p className="text-sm text-gray-600 line-clamp-2 mt-2">
-                  {course.description}
-                </p>
-                <p className="font-bold text-indigo-700 text-xl mt-3">
-                  ₦{course.price.toLocaleString()}
-                </p>
-                <Link
-                  href={`/courses/${course.id}`}
-                  className="mt-4 inline-block bg-indigo-700 text-white px-5 py-2 rounded-md"
-                >
-                  Learn More
->>>>>>> Stashed changes
-                </Link>
-              </div>
-            ))}
-          </div>
-<<<<<<< Updated upstream
-        ) : (
-          <p className="text-gray-500">No courses available at the moment.</p>
-        )}
+        ))}
       </div>
-      <hr className="rounded-3xl shadow" />
-      <br />
+    </>
+  ) : (
+    <p className="text-gray-500">No courses available at the moment.</p>
+  )}
+</div>
 
-      {/* about us */}
-      <div id="about" className="max-w-6xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold text-black mb-6">ABOUT US</h1>
-        <div className="flex flex-col md:flex-row gap-8 items-center">
-          <img
-            src="/mrlaw.jpg"
-            alt="About us"
-            className="w-full md:w-1/3 h-80 rounded-3xl object-cover shadow-lg"
-          />
-          <p className="text-black text-justify flex-1 leading-relaxed">
-            The role of professionalism is key for effective and efficient work
-            delivery. As a 21st century organisation, we understand the dynamics
-            of the time and the ever changing world. Our organisation is a
-            cutting-edge solution for any organisation, person, students, corps
-            members and corporate executives who want to enhance their knowledge
-            in Management and software applications. We have seasoned
-            professionals and experts who are passionate towards knowledge
-            delivery alongside coaching, mentorship and consultancy.
-          </p>
-        </div>
+<hr className="my-10" />
+
+     {/* ABOUT */}
+<div id="about" className="max-w-6xl mx-auto px-6 py-16">
+  {/* Section Heading */}
+  <h1 className="text-4xl md:text-4xl font-extrabold text-black mb-10 
+  relative inline-block">
+    ABOUT US
+    <span className="absolute left-0 -bottom-2 w-17 h-1
+     bg-blue-700 rounded-full"></span>
+  </h1>
+
+  <div className="flex flex-col md:flex-row items-center gap-10">
+    
+    <div className="w-full md:w-1/3">
+      <img
+        src="/mrlaw.jpg"
+        alt="About us"
+        className="w-full h-80 md:h-[28rem] rounded-3xl object-cover shadow-2xl 
+        transition-transform duration-500 hover:scale-105"
+      />
+    </div>
+
+    
+    <div className="flex-1 text-black text-justify space-y-4 leading-relaxed">
+      <p>
+        The role of professionalism is key for effective and efficient work
+        delivery. As a 21st-century organisation, we understand the dynamics
+        of the time and the ever-changing world.
+      </p>
+      <p>
+        Our organisation is a cutting-edge solution for organisations, students,
+        corps members, and corporate executives who want to enhance their
+        knowledge in Management and software applications.
+      </p>
+      <p>
+        We have seasoned professionals and experts who are passionate about
+        knowledge delivery alongside coaching, mentorship, and consultancy.
+      </p>
+
+      {/* Optional Highlights */}
+      <div className="mt-6 flex flex-wrap gap-4">
+        <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full 
+        text-sm font-semibold">Mentorship</span>
+        <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full 
+        text-sm font-semibold">Professionalism</span>
+        <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full 
+        text-sm font-semibold">Consultancy</span>
       </div>
+      <Link
+        href="/about"
+        className="bg-amber-300 text-blue-700 px-2 py-2 rounded-full text-sm
+         font-bold mt-4 inline-block transition-transform duration-500 hover:scale-105"
+      >
+        Read More
+      </Link>
+
+    </div>
+  </div>
+</div>
 
         
 
@@ -295,7 +260,7 @@ export default function Page() {
           <ul className="space-y-2 text-sm">
             <li><a href="#" className="hover:text-white transition">Home</a></li>
             <li><a href="#" className="hover:text-white transition">About</a></li>
-            <li><a href="#" className="hover:text-white transition">Services</a></li>
+            <li><a href="#" className="hover:text-white transition">Courses</a></li>
             <li><a href="#" className="hover:text-white transition">Contact</a></li>
           </ul>
         </div>
@@ -350,25 +315,10 @@ export default function Page() {
           © {new Date().getFullYear()} ZETEO CITADEL CONSULT
         </p>
       </footer>
-<<<<<<< Updated upstream
 
-      
-      <div/>
-      
-      
       </div>
-      
-      
-      
-  )
-}
-
-export default Page
-
-
-
-=======
-    </div>
+    
   );
-}
->>>>>>> Stashed changes
+};
+
+export default Page;

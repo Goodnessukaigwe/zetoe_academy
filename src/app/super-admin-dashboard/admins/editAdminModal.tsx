@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { X } from 'lucide-react'
+import { logger } from '@/lib/logger'
 
 interface Admin {
   id: string
@@ -42,7 +43,7 @@ export default function EditAdminModal({ admin, onClose, onSuccess }: Props) {
         alert(data.error || 'Failed to update admin')
       }
     } catch (error) {
-      console.error('Error updating admin:', error)
+      logger.error('Error updating admin', { error })
       alert('Error updating admin')
     } finally {
       setLoading(false)
