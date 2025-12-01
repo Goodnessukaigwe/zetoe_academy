@@ -71,7 +71,7 @@ export default function Page() {
       </section>
 
       {/* ================= ABOUT ================= */}
-      <section className="py-16 max-w-6xl mx-auto px-4">
+      <section className="py-16 max-w-6xl mx-auto px-4 ">
         <h2 className="text-3xl font-extrabold mb-10">About Us</h2>
 
         <div className="flex flex-col md:flex-row gap-10 items-center">
