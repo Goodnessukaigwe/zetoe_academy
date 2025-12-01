@@ -8,6 +8,8 @@ import AddStudentModal from "./addStudentModal";
 import { useRouter } from "next/navigation";
 import { logger } from '@/lib/logger';
 
+import AdminShell from "@/component/AdminShell";
+
 export default function StudentsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [students, setStudents] = useState<Student[]>([]);
@@ -71,48 +73,50 @@ export default function StudentsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-gray-950 text-gray-100 p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-semibold">Student Management</h1>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-[#3a0ca3] hover:bg-[#4c1d95] text-white rounded-lg font-medium transition"
-        >
-          <Plus size={20} />
-          Add Student
-        </button>
+    <AdminShell>
+      <div className="min-h-screen bg-gray-950 text-gray-100 p-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <h1 className="text-2xl sm:text-3xl font-semibold">Student Management</h1>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-[#3a0ca3] hover:bg-[#4c1d95] text-white rounded-lg font-medium transition"
+          >
+            <Plus size={20} />
+            Add Student
+          </button>
+        </div>
+
+        {/* Search Field */}
+        <div className="mb-6">
+          <div className="w-full sm:w-1/2">
+            <SearchBar onSearch={setSearchQuery} />
+          </div>
+        </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mb-4 p-4 bg-red-900/20 border border-red-500 rounded-lg text-red-400">
+            {error}
+          </div>
+        )}
+
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3a0ca3]"></div>
+          </div>
+        ) : (
+          <StudentsTable data={filteredStudents} onRefresh={fetchStudents} />
+        )}
+
+        {/* Add Student Modal */}
+        {showAddModal && (
+          <AddStudentModal
+            onClose={() => setShowAddModal(false)}
+            onSuccess={fetchStudents}
+          />
+        )}
       </div>
-
-      {/* Search Field */}
-      <div className="mb-6">
-        <div className="w-full sm:w-1/2">
-          <SearchBar onSearch={setSearchQuery} />
-        </div>
-      </div>
-
-      {/* Error Message */}
-      {error && (
-        <div className="mb-4 p-4 bg-red-900/20 border border-red-500 rounded-lg text-red-400">
-          {error}
-        </div>
-      )}
-
-      {/* Loading State */}
-      {loading ? (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3a0ca3]"></div>
-        </div>
-      ) : (
-        <StudentsTable data={filteredStudents} onRefresh={fetchStudents} />
-      )}
-
-      {/* Add Student Modal */}
-      {showAddModal && (
-        <AddStudentModal
-          onClose={() => setShowAddModal(false)}
-          onSuccess={fetchStudents}
-        />
-      )}
-    </main>
+    </AdminShell>
   );
 }
