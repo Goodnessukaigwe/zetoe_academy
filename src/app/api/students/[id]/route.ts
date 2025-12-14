@@ -9,6 +9,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 // GET single student
 export async function GET(
@@ -51,7 +52,7 @@ export async function GET(
 
     return NextResponse.json({ student: data }, { status: 200 })
   } catch (error: any) {
-    console.error('Get student error:', error)
+    logger.error('Get student error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -92,6 +93,10 @@ export async function PUT(
     delete body.user_id
     delete body.created_at
 
+    // Convert empty strings to null for optional fields
+    if (body.phone === '') body.phone = null
+    if (body.course_id === '') body.course_id = null
+
     const { data, error } = await adminClient
       .from('students')
       .update(body)
@@ -114,7 +119,7 @@ export async function PUT(
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Update student error:', error)
+    logger.error('Update student error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -177,7 +182,7 @@ export async function DELETE(
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Delete student error:', error)
+    logger.error('Delete student error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -6,6 +6,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 export async function GET(
   request: NextRequest,
@@ -33,6 +34,7 @@ export async function GET(
         id,
         title,
         description,
+        code,
         duration_minutes,
         passing_score,
         questions,
@@ -103,13 +105,14 @@ export async function GET(
         id: exam.id,
         title: exam.title,
         description: exam.description,
+        code: exam.code,
         duration_minutes: exam.duration_minutes,
         passing_score: exam.passing_score,
         questions: examQuestions,
       },
     })
   } catch (error: any) {
-    console.error('Get exam error:', error)
+    logger.error('Get exam error', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

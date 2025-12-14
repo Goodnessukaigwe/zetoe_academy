@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Plus, Pencil, Trash2, Shield, UserCog } from 'lucide-react'
 import AddAdminModal from './addAdminModal'
 import EditAdminModal from './editAdminModal'
+import { logger } from '@/lib/logger'
 
 interface Admin {
   id: string
@@ -44,7 +45,7 @@ export default function AdminManagementPage() {
 
       fetchAdmins()
     } catch (error) {
-      console.error('Auth check error:', error)
+      logger.error('Auth check error', { error })
       router.push('/login')
     }
   }
@@ -58,7 +59,7 @@ export default function AdminManagementPage() {
         setAdmins(data.admins || [])
       }
     } catch (error) {
-      console.error('Error fetching admins:', error)
+      logger.error('Error fetching admins', { error })
     } finally {
       setLoading(false)
     }
@@ -78,7 +79,7 @@ export default function AdminManagementPage() {
         alert('Failed to delete admin')
       }
     } catch (error) {
-      console.error('Error deleting admin:', error)
+      logger.error('Error deleting admin', { error })
       alert('Error deleting admin')
     }
   }

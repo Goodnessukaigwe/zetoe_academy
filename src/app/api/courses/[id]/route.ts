@@ -8,6 +8,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 // GET single course
 export async function GET(
@@ -30,7 +31,7 @@ export async function GET(
 
     return NextResponse.json({ course: data }, { status: 200 })
   } catch (error: any) {
-    console.error('Get course error:', error)
+    logger.error('Get course error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -84,7 +85,7 @@ export async function PUT(
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Update course error:', error)
+    logger.error('Update course error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -131,7 +132,7 @@ export async function DELETE(
       { status: 200 }
     )
   } catch (error: any) {
-    console.error('Delete course error:', error)
+    logger.error('Delete course error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
