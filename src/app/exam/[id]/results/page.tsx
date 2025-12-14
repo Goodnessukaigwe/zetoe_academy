@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, useParams } from 'next/navigation'
 import { CheckCircle, XCircle, Trophy, TrendingUp, Clock } from 'lucide-react'
+import { logger } from '@/lib/logger'
 
 interface Score {
   id: string
@@ -20,7 +21,9 @@ interface Score {
 
 export default function ExamResultsPage() {
   const router = useRouter()
+  const params = useParams()
   const searchParams = useSearchParams()
+  const examId = params.id as string
   const scoreId = searchParams.get('score')
 
   const [result, setResult] = useState<Score | null>(null)
@@ -28,26 +31,46 @@ export default function ExamResultsPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (scoreId) {
-      fetchResults()
-    }
-  }, [scoreId])
+    fetchResults()
+  }, [scoreId, examId])
 
   const fetchResults = async () => {
     try {
       setLoading(true)
-      const res = await fetch(`/api/scores?scoreId=${scoreId}`)
       
-      if (!res.ok) {
-        setError('Failed to load results')
-        return
-      }
+      // If we have a scoreId, fetch that specific score
+      if (scoreId) {
+        const res = await fetch(`/api/scores?scoreId=${scoreId}`)
+        
+        if (!res.ok) {
+          setError('Failed to load results')
+          return
+        }
 
-      const data = await res.json()
-      setResult(data.scores[0])
+        const data = await res.json()
+        setResult(data.scores[0])
+      } else {
+        // Otherwise, fetch all scores and find the one for this exam
+        const res = await fetch('/api/scores')
+        
+        if (!res.ok) {
+          setError('Failed to load results')
+          return
+        }
+
+        const data = await res.json()
+        // Find the score for this specific exam
+        const examScore = data.scores?.find((s: any) => s.exam_id === examId)
+        
+        if (examScore) {
+          setResult(examScore)
+        } else {
+          setError('No results found for this exam')
+        }
+      }
     } catch (err) {
-      console.error('Error fetching results:', err)
-      setError('Failed to load results')
+      logger.error('Error fetching results', err)
+      setError('Failed to load exam results')
     } finally {
       setLoading(false)
     }

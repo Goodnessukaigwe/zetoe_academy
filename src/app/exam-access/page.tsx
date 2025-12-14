@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { logger } from '@/lib/logger';
 
 function ExamAccessPage() {
   const [examCode, setExamCode] = useState("");
@@ -32,80 +33,72 @@ function ExamAccessPage() {
         return;
       }
 
-      // Redirect to the exam page
       router.push(`/exam/${data.exam.id}`);
     } catch (err) {
-      console.error('Exam access error:', err);
+      logger.error('Exam access error', err);
       setError("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f2f2f2]">
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-4 text-[#3a0ca3] font-['Open_Sans']">
-        <span className="text-sm">🌐 English</span>
-
-        {/* <h1 className="text-2xl font-bold flex items-center gap-2">
-          <span className="text-[#3a0ca3]">exam.</span>
-          <span className="text-black">zetoe</span>
-        </h1> */}
+    <div className="flex justify-center items-center min-h-screen bg-[#f2f2f2]">
+      {/* FORM CONTAINER */}
+      <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md text-center">
         
-
-        <button className="border-2 border-[#3a0ca3] rounded-full p-1">
-          ⏻
-        </button>
-      </nav>
-
-      <div className="flex justify-center mb-4">
+        {/* LOGO INSIDE FORM LIKE FIRST PAGE */}
+        <div className="flex justify-center mb-4">
           <Image
-            src="/zetoe/zetoe-logo.jpeg" // Make sure the image is in the public folder for Next.js
+            src="/zetoe/zetoe-logo.jpeg"
             alt="Zetoe logo"
-            width={60}
-            height={60}
+            width={70}
+            height={70}
             className="rounded-full"
           />
         </div>
 
-      {/* Main Content */}
-      <div className="flex-grow flex items-center justify-center">
-        <div className="bg-white shadow-lg rounded-2xl p-10 w-[90%] max-w-md text-center">
-          <h2 className="flex items-center justify-center text-xl font-semibold mb-4 text-[#3a0ca3] font-['Roboto_Condensed']">
-            🎓 Student
-          </h2>
+        {/* TITLE */}
+        <h2 className="text-2xl font-bold text-center mb-2 text-[#3a0ca3]">
+          Student Exam Access
+        </h2>
+        <p className="text-center text-gray-600 mb-6">
+          Enter your exam key to continue
+        </p>
 
-          <div className="flex rounded-full border-2 border-[#3a0ca3] overflow-hidden mb-3">
+        {/* INPUT FIELD */}
+        <div className="space-y-4">
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Exam Key
+            </label>
             <input
               type="text"
               placeholder="Enter exam key"
               value={examCode}
               onChange={(e) => setExamCode(e.target.value)}
-              className="flex-grow px-4 py-2 outline-none font-['Roboto_Condensed']"
+              className="w-full p-3 border border-gray-300 rounded-md text-black placeholder-gray-500 bg-white
+              focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <button
-              onClick={handleVerify}
-              className="bg-[#3a0ca3] text-white px-6 font-['Times_New_Roman']"
-            >
-              Next
-            </button>
           </div>
 
+          {/* ERROR MESSAGE */}
           {error && (
-            <p className="text-red-500 text-sm mb-2 font-['Roboto_Condensed']">
+            <p className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-sm">
               {error}
             </p>
           )}
 
-          <p className="text-gray-500 text-sm mt-2 font-['Roboto_Condensed']">
-            🛡️ Read more about our cheat-prevention systems
-          </p>
+          {/* SUBMIT BUTTON */}
+          <button
+            onClick={handleVerify}
+            className="w-full py-3 rounded-md font-semibold text-white bg-[#3a0ca3] hover:bg-[#1d0555] 
+            transition duration-300"
+          >
+            Continue
+          </button>
         </div>
-      </div>
 
-      {/* Footer */}
-      <footer className="text-center text-gray-500 py-4 text-sm font-['Open_Sans']">
-        zetoeacademy.com
-      </footer>
+      </div>
     </div>
   );
 }

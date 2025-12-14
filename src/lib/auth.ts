@@ -143,16 +143,12 @@ export async function getUserRole(userId: string) {
   // Use admin client to bypass RLS and avoid infinite recursion
   const supabase = createAdminClient()
   
-  console.log('Getting role for user:', userId)
-  
   // Check if admin first
   const { data: adminData, error: adminError } = await supabase
     .from('admins')
     .select('role')
     .eq('user_id', userId)
     .single()
-
-  console.log('Admin check:', { adminData, adminError })
 
   if (adminData) {
     return adminData.role // 'admin' or 'super_admin'
@@ -165,13 +161,10 @@ export async function getUserRole(userId: string) {
     .eq('user_id', userId)
     .single()
 
-  console.log('Student check:', { studentData, studentError })
-
   if (studentData) {
     return 'student'
   }
 
-  console.log('No role found for user:', userId)
   return null // No role found
 }
 

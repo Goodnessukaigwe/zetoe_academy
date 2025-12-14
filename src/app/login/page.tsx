@@ -4,7 +4,8 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link' 
-import { Eye, EyeOff } from "lucide-react"  
+import { Eye, EyeOff } from "lucide-react"
+import { logger } from '@/lib/logger'  
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')
@@ -27,7 +28,7 @@ const LoginPage = () => {
       })
 
       const data = await res.json()
-      console.log('Login response:', data)
+      logger.log('Login response', { context: { success: res.ok } })
       
       if (res.ok) {
         router.push('/dashboard')  // Redirect after login
@@ -35,7 +36,7 @@ const LoginPage = () => {
         setError(data.error || 'Login failed!')
       }
     } catch (err) {
-      console.error('Login error:', err)
+      logger.error('Login error', err)
       setError('Something went wrong! Please try again.')
     } finally {
       setLoading(false)
@@ -108,6 +109,12 @@ const LoginPage = () => {
               )
             }
             </button>
+          </div>
+
+          <div className="text-right mb-4">
+            <Link href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+              Forgot password?
+            </Link>
           </div>
 
           <button

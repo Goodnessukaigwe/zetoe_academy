@@ -8,6 +8,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 // GET all admins
 export async function GET() {
@@ -42,7 +43,7 @@ export async function GET() {
 
     return NextResponse.json({ admins: data }, { status: 200 })
   } catch (error: any) {
-    console.error('Get admins error:', error)
+    logger.error('Get admins error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -120,7 +121,7 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (adminError) {
-      console.error('Admin creation error:', adminError)
+      logger.error('Admin creation error', adminError)
       return NextResponse.json(
         { error: 'Failed to create admin invitation' },
         { status: 500 }
@@ -135,7 +136,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error: any) {
-    console.error('Create admin error:', error)
+    logger.error('Create admin error', { error })
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
