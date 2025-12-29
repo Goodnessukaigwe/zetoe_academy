@@ -108,7 +108,7 @@ test.describe('Form Validation', () => {
     
     // Enter short password
     await page.fill('input[name="password"]', '12')
-    await page.blur('input[name="password"]')
+    await page.locator('input[name="password"]').blur()
     
     // Should show error
     const error = await page.waitForSelector('.error, .validation-error')

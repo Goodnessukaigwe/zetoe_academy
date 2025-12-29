@@ -221,7 +221,7 @@ export default function UploadCertificatePage() {
           
           {/* Certificate Code */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <label className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
               <Hash size={18} />
               Certificate Code *
             </label>
@@ -262,7 +262,7 @@ export default function UploadCertificatePage() {
 
           {/* Student Selection */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <label className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
               <User size={18} />
               Select Student *
             </label>
@@ -326,7 +326,7 @@ export default function UploadCertificatePage() {
 
           {/* Issue Date */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <label className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
               <Calendar size={18} />
               Issue Date *
             </label>
@@ -355,7 +355,7 @@ export default function UploadCertificatePage() {
 
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <label className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
               <Upload size={18} />
               Upload Certificate File *
             </label>

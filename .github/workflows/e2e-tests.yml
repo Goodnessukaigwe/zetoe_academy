@@ -63,4 +63,3 @@ jobs:
         uses: daun/playwright-report-comment@v3
         with:
           report-path: playwright-report
-          report-url: ${{ steps.deploy-report.outputs.url }}
