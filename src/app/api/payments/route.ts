@@ -26,12 +26,20 @@ export async function GET(request: NextRequest) {
     const role = await getUserRole(user.id)
     const { searchParams } = new URL(request.url)
     const studentId = searchParams.get('student_id')
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = 50
 
+    // Optimized: Select only needed columns
     let query = supabase.from('payments').select(`
-      *,
-      student:students(*),
+      id,
+      amount,
+      payment_method,
+      reference,
+      notes,
+      paid_at,
+      student:students(id, name, email, payment_status),
       admin:admins!recorded_by(name, email)
-    `)
+    `, { count: 'exact' })
 
     // Filter based on role
     if (role === 'student') {
@@ -50,15 +58,25 @@ export async function GET(request: NextRequest) {
       query = query.eq('student_id', studentId)
     }
 
-    query = query.order('paid_at', { ascending: false })
+    // Add ordering and pagination
+    const from = (page - 1) * limit
+    const to = from + limit - 1
+    query = query
+      .order('paid_at', { ascending: false })
+      .range(from, to)
 
-    const { data, error } = await query
+    const { data, error, count } = await query
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 
-    return NextResponse.json({ payments: data }, { status: 200 })
+    return NextResponse.json({ 
+      payments: data || [],
+      total: count,
+      page,
+      totalPages: Math.ceil((count || 0) / limit)
+    }, { status: 200 })
   } catch (error: any) {
     logger.error('Get payments error', { error })
     return NextResponse.json(
