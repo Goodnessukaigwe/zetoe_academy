@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getUserRole } from '@/lib/auth'
-import { adminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { logger } from '@/lib/logger'
 
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient()
+    const adminClient = createAdminClient()
 
     // Check authentication
     const { data: { user } } = await supabase.auth.getUser()
