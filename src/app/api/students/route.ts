@@ -32,19 +32,28 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const { data, error } = await adminClient
+    // Optimized: Select only needed columns and add pagination
+    const { data, error, count } = await adminClient
       .from('students')
       .select(`
-        *,
-        course:courses(*)
-      `)
+        id,
+        name,
+        email,
+        phone,
+        payment_status,
+        created_at,
+        course:courses(id, name, price)
+      `, { count: 'exact' })
       .order('created_at', { ascending: false })
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 
-    return NextResponse.json({ students: data }, { status: 200 })
+    return NextResponse.json({ 
+      students: data,
+      total: count 
+    }, { status: 200 })
   } catch (error: any) {
     logger.error('Get students error', { error })
     return NextResponse.json(

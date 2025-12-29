@@ -9,20 +9,30 @@ import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
+import { withCache, CACHE_TTL, cache } from '@/lib/cache'
 
-// GET all courses (public)
+// GET all courses (public, cached for 10 minutes)
 export async function GET() {
   try {
     const adminClient = createAdminClient()
 
-    const { data, error } = await adminClient
-      .from('courses')
-      .select('*')
-      .order('created_at', { ascending: false })
+    // Use cache for courses list (rarely changes)
+    const data = await withCache(
+      'courses:list',
+      CACHE_TTL.TEN_MINUTES,
+      async () => {
+        const { data, error } = await adminClient
+          .from('courses')
+          .select('*')
+          .order('created_at', { ascending: false })
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 })
-    }
+        if (error) {
+          throw new Error(error.message)
+        }
+
+        return data
+      }
+    )
 
     return NextResponse.json({ courses: data }, { status: 200 })
   } catch (error: any) {
@@ -80,6 +90,9 @@ export async function POST(request: NextRequest) {
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
+
+    // Invalidate courses cache after creating new course
+    cache.invalidate('courses:list')
 
     return NextResponse.json(
       {

@@ -7,6 +7,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
+import { cache } from '@/lib/cache'
 
 export async function POST(request: NextRequest) {
   try {
@@ -119,6 +120,10 @@ export async function POST(request: NextRequest) {
     if (scoreError) {
       return NextResponse.json({ error: scoreError.message }, { status: 400 })
     }
+
+    // Invalidate scores cache for this student
+    cache.invalidatePattern(`scores.*userId=${user.id}`)
+    cache.invalidatePattern(`scores.*studentId=${student.id}`)
 
     return NextResponse.json(
       {

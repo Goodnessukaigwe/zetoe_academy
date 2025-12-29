@@ -17,6 +17,7 @@ export default function Header() {
           <Link href="/courses/id">Courses</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
+          <Link href="/verify-certificate">Verify Certificate</Link>
         </nav>
 
         {/* Desktop Register / Sign In */}

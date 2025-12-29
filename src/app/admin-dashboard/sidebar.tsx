@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { Users, BookOpen, FileText, Home } from "lucide-react";
+import { Users, BookOpen, FileText, Home, Award } from "lucide-react";
 
 type Props = {
   isOpen: boolean;
@@ -13,6 +13,7 @@ const menuItems = [
   { name: "Students", href: "/student-management", icon: Users },
   { name: "Courses", href: "/admin-dashboard/courses", icon: BookOpen },
   { name: "Exams", href: "/admin-dashboard/exams", icon: FileText },
+  { name: "Certificates", href: "/admin-dashboard/certificates", icon: Award },
 ];
 
 const Sidebar = ({ isOpen, setIsOpen }: Props) => {
