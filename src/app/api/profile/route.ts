@@ -8,6 +8,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
+import { validatePhone } from '@/lib/validation'
 
 // GET current student's profile
 export async function GET() {
@@ -40,7 +41,7 @@ export async function GET() {
       .single()
 
     if (error) {
-      logger.error('Get profile error', { error, userId: user.id })
+      logger.error('Get profile error', { error, context: { userId: user.id } })
       return NextResponse.json({ error: 'Profile not found' }, { status: 404 })
     }
 
@@ -80,6 +81,17 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    // Validate phone number if provided
+    if (phone && phone.trim() !== '') {
+      const phoneValidation = validatePhone(phone)
+      if (!phoneValidation.valid) {
+        return NextResponse.json(
+          { error: phoneValidation.error },
+          { status: 400 }
+        )
+      }
+    }
+
     // Get current student ID
     const { data: currentStudent } = await adminClient
       .from('students')
@@ -96,7 +108,7 @@ export async function PUT(request: NextRequest) {
       .from('students')
       .update({
         name: name.trim(),
-        phone: phone ? phone.trim() : null,
+        phone: phone && phone.trim() !== '' ? phone.trim() : null,
       })
       .eq('user_id', user.id)
       .select(`
@@ -111,7 +123,7 @@ export async function PUT(request: NextRequest) {
       .single()
 
     if (error) {
-      logger.error('Update profile error', { error, userId: user.id })
+      logger.error('Update profile error', { error, context: { userId: user.id } })
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 

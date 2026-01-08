@@ -31,7 +31,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verify current password
+    // Verify current password by attempting sign in
+    // Note: Supabase doesn't provide a dedicated password verification API
+    // This will create a new session, but it's the recommended approach
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email: user.email!,
       password: currentPassword,

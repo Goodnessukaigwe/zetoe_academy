@@ -115,18 +115,28 @@ export default function StudentProfilePage() {
   }
 
   const handleUpdatePassword = async () => {
+    if (!passwordForm.currentPassword) {
+      showToast("Current password is required")
+      return
+    }
+
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
       showToast("Passwords don't match!")
       return
     }
 
+    // Validate password strength (matching server-side rules)
     if (passwordForm.newPassword.length < 8) {
       showToast("Password must be at least 8 characters")
       return
     }
 
-    if (!passwordForm.currentPassword) {
-      showToast("Current password is required")
+    const hasUpperCase = /[A-Z]/.test(passwordForm.newPassword)
+    const hasLowerCase = /[a-z]/.test(passwordForm.newPassword)
+    const hasNumber = /[0-9]/.test(passwordForm.newPassword)
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+      showToast("Password must contain uppercase, lowercase, and numbers")
       return
     }
 
