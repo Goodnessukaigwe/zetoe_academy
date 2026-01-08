@@ -62,7 +62,10 @@ export async function POST(request: NextRequest) {
 
     if (error) {
       logger.error('Update password error', { error, context: { userId: user.id } })
-      return NextResponse.json({ error: error.message }, { status: 400 })
+      return NextResponse.json(
+        { error: 'Failed to update password. Please try again.' },
+        { status: 400 }
+      )
     }
 
     logger.info('Password updated successfully', { context: { userId: user.id } })

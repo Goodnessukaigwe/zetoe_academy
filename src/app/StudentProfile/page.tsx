@@ -256,7 +256,7 @@ export default function StudentProfilePage() {
                       <tr key={score.id} className="hover:bg-green-100">
                         <td className="px-4 py-2">{score.exam?.title || 'N/A'}</td>
                         <td className="px-4 py-2">{formatDate(score.submitted_at)}</td>
-                        <td className="px-4 py-2">{score.percentage?.toFixed(0)}%</td>
+                        <td className="px-4 py-2">{(score.percentage ?? 0).toFixed(0)}%</td>
                         <td className="px-4 py-2">{score.status || 'Completed'}</td>
                       </tr>
                     ))

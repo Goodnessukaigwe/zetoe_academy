@@ -124,7 +124,10 @@ export async function PUT(request: NextRequest) {
 
     if (error) {
       logger.error('Update profile error', { error, context: { userId: user.id } })
-      return NextResponse.json({ error: error.message }, { status: 400 })
+      return NextResponse.json(
+        { error: 'Failed to update profile. Please try again.' },
+        { status: 400 }
+      )
     }
 
     logger.info('Profile updated successfully', { context: { userId: user.id } })
