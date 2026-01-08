@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 const Toast = ({ message, onClose }: any) => (
   <div className="fixed top-5 right-5 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg animate-slide-in">
@@ -9,14 +10,156 @@ const Toast = ({ message, onClose }: any) => (
   </div>
 )
 
+interface Profile {
+  id: string
+  name: string
+  email: string
+  phone: string | null
+  course: {
+    id: string
+    name: string
+    price: number
+  } | null
+}
+
+interface Score {
+  id: string
+  exam: {
+    title: string
+  }
+  submitted_at: string
+  percentage: number
+  status: string
+}
+
 export default function StudentProfilePage() {
+  const router = useRouter()
   const [showEditModal, setShowEditModal] = useState(false)
   const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [toast, setToast] = useState("")
+  const [profile, setProfile] = useState<Profile | null>(null)
+  const [scores, setScores] = useState<Score[]>([])
+  const [loading, setLoading] = useState(true)
+  const [editForm, setEditForm] = useState({ name: "", phone: "" })
+  const [passwordForm, setPasswordForm] = useState({ 
+    currentPassword: "", 
+    newPassword: "", 
+    confirmPassword: "" 
+  })
 
   const showToast = (msg: string) => {
     setToast(msg)
     setTimeout(() => setToast(""), 2500)
+  }
+
+  // Fetch profile data on mount
+  useEffect(() => {
+    fetchProfile()
+    fetchScores()
+  }, [])
+
+  const fetchProfile = async () => {
+    try {
+      const response = await fetch('/api/profile')
+      if (response.ok) {
+        const data = await response.json()
+        setProfile(data.profile)
+        setEditForm({
+          name: data.profile.name,
+          phone: data.profile.phone || ""
+        })
+      } else {
+        showToast("Failed to load profile")
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error)
+      showToast("Error loading profile")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchScores = async () => {
+    try {
+      const response = await fetch('/api/scores')
+      if (response.ok) {
+        const data = await response.json()
+        setScores(data.scores || [])
+      }
+    } catch (error) {
+      console.error('Error fetching scores:', error)
+    }
+  }
+
+  const handleUpdateProfile = async () => {
+    try {
+      const response = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editForm)
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setProfile(data.profile)
+        setShowEditModal(false)
+        showToast("Profile updated successfully!")
+      } else {
+        const errorData = await response.json()
+        showToast(errorData.error || "Failed to update profile")
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error)
+      showToast("Error updating profile")
+    }
+  }
+
+  const handleUpdatePassword = async () => {
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      showToast("Passwords don't match!")
+      return
+    }
+
+    if (passwordForm.newPassword.length < 6) {
+      showToast("Password must be at least 6 characters")
+      return
+    }
+
+    try {
+      const response = await fetch('/api/auth/update-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword 
+        })
+      })
+
+      if (response.ok) {
+        setShowPasswordModal(false)
+        setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" })
+        showToast("Password updated successfully!")
+      } else {
+        const errorData = await response.json()
+        showToast(errorData.error || "Failed to update password")
+      }
+    } catch (error) {
+      console.error('Error updating password:', error)
+      showToast("Error updating password")
+    }
+  }
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f2f2f2] flex items-center justify-center">
+        <div className="text-xl text-[#3a0ca3]">Loading...</div>
+      </div>
+    )
   }
 
   return (
@@ -31,7 +174,7 @@ export default function StudentProfilePage() {
         <p className="text-gray-700 mt-2">Manage your personal information and credentials.</p>
 
          <button
-         
+          onClick={() => router.push('/dashboard')}
           className="mt-4 inline-block bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-900 transition"
         >
           ← Back to Dashboard
@@ -46,10 +189,10 @@ export default function StudentProfilePage() {
           <h3 className="font-semibold mb-4 text-xl text-[#3a0ca3] text-center">Personal Information</h3>
 
           <div className="space-y-3 text-gray-800">
-            <p><span className="font-bold">Name:</span> --- dddddddddddddddddd</p>
-            <p><span className="font-bold">Email:</span> --- ssssssssss</p>
-            <p><span className="font-bold">Phone:</span> ---ssssssssssssssssa</p>
-            <p><span className="font-bold">Course:</span> --- dfghy6tfgju765t </p>
+            <p><span className="font-bold">Name:</span> {profile?.name || 'N/A'}</p>
+            <p><span className="font-bold">Email:</span> {profile?.email || 'N/A'}</p>
+            <p><span className="font-bold">Phone:</span> {profile?.phone || 'Not provided'}</p>
+            <p><span className="font-bold">Course:</span> {profile?.course?.name || 'No course assigned'}</p>
           </div>
 
           <button
@@ -92,20 +235,23 @@ export default function StudentProfilePage() {
                   </tr>
                 </thead>
 
-                <tbody className="  bg-yellow-100">
-                  <tr className="  hover:bg-green-100">
-                    <td className=" px-4 py-2">Mid-Semester Test</td>
-                    <td className=" px-4 py-2">12 Jan 2025</td>
-                    <td className=" px-4 py-2">85%</td>
-                    <td className=" px-4 py-2">Passed</td>
-                  </tr>
-
-                  <tr className="hover:bg-green-100">
-                    <td className=" px-4 py-2">Final Exam</td>
-                    <td className=" px-4 py-2">10 May 2025</td>
-                    <td className=" px-4 py-2">Pending</td>
-                    <td className=" px-4 py-2">Not Released</td>
-                  </tr>
+                <tbody className="bg-yellow-100">
+                  {scores.length > 0 ? (
+                    scores.map((score) => (
+                      <tr key={score.id} className="hover:bg-green-100">
+                        <td className="px-4 py-2">{score.exam?.title || 'N/A'}</td>
+                        <td className="px-4 py-2">{formatDate(score.submitted_at)}</td>
+                        <td className="px-4 py-2">{score.percentage?.toFixed(0)}%</td>
+                        <td className="px-4 py-2">{score.status || 'Completed'}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr className="hover:bg-green-100">
+                      <td colSpan={4} className="px-4 py-2 text-center text-gray-500">
+                        No exam history yet
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
           </div>
@@ -137,9 +283,20 @@ export default function StudentProfilePage() {
           <div className="bg-white w-full text-black max-w-md p-6 rounded-xl shadow-lg animate-pop">
             <h3 className="text-lg font-bold text-[#3a0ca3] mb-4 text-center">Edit Personal Information</h3>
 
-            <input type="text" placeholder="Full Name" className="w-full p-3 border rounded-lg mb-3"/>
-            <input type="email" placeholder="Email" className="w-full p-3 border rounded-lg mb-3"/>
-            <input type="text" placeholder="Phone Number" className="w-full p-3 border rounded-lg mb-3"/>
+            <input 
+              type="text" 
+              placeholder="Full Name" 
+              value={editForm.name}
+              onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+              className="w-full p-3 border rounded-lg mb-3"
+            />
+            <input 
+              type="text" 
+              placeholder="Phone Number" 
+              value={editForm.phone}
+              onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+              className="w-full p-3 border rounded-lg mb-3"
+            />
 
             <div className="flex gap-3 mt-4">
               <button
@@ -150,10 +307,7 @@ export default function StudentProfilePage() {
               </button>
               <button
                 className="flex-1 bg-[#3a0ca3] text-white py-2 rounded-lg"
-                onClick={() => {
-                  setShowEditModal(false)
-                  showToast("Profile updated successfully!")
-                }}
+                onClick={handleUpdateProfile}
               >
                 Save
               </button>
@@ -168,12 +322,27 @@ export default function StudentProfilePage() {
           rounded-xl shadow-lg animate-pop">
             <h3 className="text-lg font-bold text-[#3a0ca3] mb-4 text-center">Change Password</h3>
 
-            <input type="password" placeholder="Current Password" className="w-full
-             p-3 border rounded-lg mb-3"/>
-            <input type="password" placeholder="New Password" className="w-full p-3
-             border rounded-lg mb-3"/>
-            <input type="password" placeholder="Confirm New Password" className="w-full
-             p-3 border rounded-lg mb-3"/>
+            <input 
+              type="password" 
+              placeholder="Current Password" 
+              value={passwordForm.currentPassword}
+              onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
+              className="w-full p-3 border rounded-lg mb-3"
+            />
+            <input 
+              type="password" 
+              placeholder="New Password" 
+              value={passwordForm.newPassword}
+              onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
+              className="w-full p-3 border rounded-lg mb-3"
+            />
+            <input 
+              type="password" 
+              placeholder="Confirm New Password" 
+              value={passwordForm.confirmPassword}
+              onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
+              className="w-full p-3 border rounded-lg mb-3"
+            />
 
             <div className="flex gap-3 mt-4">
               <button
@@ -184,10 +353,7 @@ export default function StudentProfilePage() {
               </button>
               <button
                 className="flex-1 bg-[#3a0ca3] text-white py-2 rounded-lg"
-                onClick={() => {
-                  setShowPasswordModal(false)
-                  showToast("Password updated successfully!")
-                }}
+                onClick={handleUpdatePassword}
               >
                 Update
               </button>
