@@ -6,6 +6,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
+import { validatePassword } from '@/lib/validation'
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,12 +21,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
-    const { newPassword } = await request.json()
+    const { currentPassword, newPassword } = await request.json()
 
-    // Validate input
-    if (!newPassword || newPassword.length < 6) {
+    // Validate current password is provided
+    if (!currentPassword) {
       return NextResponse.json(
-        { error: 'Password must be at least 6 characters' },
+        { error: 'Current password is required' },
+        { status: 400 }
+      )
+    }
+
+    // Verify current password
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: user.email!,
+      password: currentPassword,
+    })
+
+    if (signInError) {
+      return NextResponse.json(
+        { error: 'Current password is incorrect' },
+        { status: 401 }
+      )
+    }
+
+    // Validate new password using the validation utility
+    const validation = validatePassword(newPassword)
+    if (!validation.valid) {
+      return NextResponse.json(
+        { error: validation.error },
         { status: 400 }
       )
     }
@@ -36,7 +59,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (error) {
-      logger.error('Update password error', { error, userId: user.id })
+      logger.error('Update password error', { error, context: { userId: user.id } })
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 

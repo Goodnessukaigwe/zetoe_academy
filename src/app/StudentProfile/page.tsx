@@ -120,8 +120,13 @@ export default function StudentProfilePage() {
       return
     }
 
-    if (passwordForm.newPassword.length < 6) {
-      showToast("Password must be at least 6 characters")
+    if (passwordForm.newPassword.length < 8) {
+      showToast("Password must be at least 8 characters")
+      return
+    }
+
+    if (!passwordForm.currentPassword) {
+      showToast("Current password is required")
       return
     }
 
