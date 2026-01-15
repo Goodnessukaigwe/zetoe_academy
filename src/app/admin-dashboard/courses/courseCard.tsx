@@ -7,9 +7,11 @@ import EditCourseModal from "./editCourseModal";
 export default function CourseCard({
   course,
   onRefresh,
+  userRole,
 }: {
   course: Course;
   onRefresh: () => void;
+  userRole: string | null;
 }) {
   const [showEditModal, setShowEditModal] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -74,13 +76,15 @@ export default function CourseCard({
             <Pencil size={16} />
             Edit
           </button>
-          <button
-            onClick={() => setConfirmDelete(true)}
-            className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm font-medium text-white transition"
-          >
-            <Trash2 size={16} />
-            Delete
-          </button>
+          {userRole === 'super_admin' && (
+            <button
+              onClick={() => setConfirmDelete(true)}
+              className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm font-medium text-white transition"
+            >
+              <Trash2 size={16} />
+              Delete
+            </button>
+          )}
         </div>
       </div>
 
