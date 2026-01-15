@@ -25,10 +25,12 @@ export default function ExamCard({
         throw new Error(data.error || "Failed to delete exam");
       }
 
+      const data = await res.json();
+      alert(data.message || "Exam deleted successfully!");
       onRefresh();
       setConfirmDelete(false);
     } catch (error: any) {
-      alert(error.message);
+      alert(error.message || "An error occurred while deleting the exam");
     } finally {
       setDeleting(false);
     }
