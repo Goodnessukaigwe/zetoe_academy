@@ -119,3 +119,125 @@ export async function GET(
     )
   }
 }
+
+/**
+ * DELETE /api/exams/[id] - Delete exam (Admin/Super Admin only)
+ */
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const adminClient = createAdminClient()
+    const supabase = await createClient()
+
+    // Check authentication
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+    }
+
+    // Get user role
+    const { data: userData } = await adminClient
+      .from('auth.users')
+      .select('raw_user_meta_data')
+      .eq('id', user.id)
+      .single()
+
+    const userRole = userData?.raw_user_meta_data?.role || 'student'
+
+    // Only admin and super_admin can delete exams
+    if (userRole !== 'admin' && userRole !== 'super_admin') {
+      return NextResponse.json(
+        { error: 'Unauthorized. Only admins can delete exams.' },
+        { status: 403 }
+      )
+    }
+
+    const { id: examId } = await params
+
+    // Check if exam exists
+    const { data: exam, error: examError } = await adminClient
+      .from('exams')
+      .select('id, title')
+      .eq('id', examId)
+      .single()
+
+    if (examError || !exam) {
+      return NextResponse.json({ error: 'Exam not found' }, { status: 404 })
+    }
+
+    // Check if there are any scores for this exam
+    const { data: scores, error: scoresError } = await adminClient
+      .from('scores')
+      .select('id')
+      .eq('exam_id', examId)
+      .limit(1)
+
+    if (scoresError) {
+      logger.error('Error checking exam scores', scoresError)
+      return NextResponse.json(
+        { error: 'Failed to check exam dependencies' },
+        { status: 500 }
+      )
+    }
+
+    // If there are scores, prevent deletion
+    if (scores && scores.length > 0) {
+      return NextResponse.json(
+        {
+          error: 'Cannot delete exam. Students have already taken this exam. Please archive it instead.',
+        },
+        { status: 400 }
+      )
+    }
+
+    // Delete the exam
+    const { error: deleteError } = await adminClient
+      .from('exams')
+      .delete()
+      .eq('id', examId)
+
+    if (deleteError) {
+      logger.error('Error deleting exam', deleteError)
+      return NextResponse.json(
+        { error: 'Failed to delete exam' },
+        { status: 500 }
+      )
+    }
+
+    logger.info('Exam deleted successfully', {
+      context: {
+        examId,
+        examTitle: exam.title,
+        deletedBy: user.id,
+        userRole,
+      },
+    })
+
+    return NextResponse.json(
+      {
+        message: 'Exam deleted successfully',
+        deletedExam: {
+          id: exam.id,
+          title: exam.title,
+        },
+      },
+      { status: 200 }
+    )
+  } catch (error: any) {
+    logger.error('Delete exam error', error, {
+      context: {
+        endpoint: '/api/exams/[id]',
+        method: 'DELETE',
+      },
+    })
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
