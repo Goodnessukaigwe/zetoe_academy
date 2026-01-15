@@ -1,6 +1,11 @@
 /**
- * API Route: Sign Up
+ * API Route: Sign Up (Admin-Created Users)
  * POST /api/auth/signup
+ * 
+ * This route is for admin-created student accounts.
+ * Users created through this route are automatically verified (email_confirm: true).
+ * 
+ * For self-registration with email verification, use /api/auth/register instead.
  */
 
 import { createClient } from '@/lib/supabase/server'

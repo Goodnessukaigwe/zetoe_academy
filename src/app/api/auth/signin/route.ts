@@ -61,6 +61,28 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 401 })
     }
 
+    // Check if email is verified
+    if (!data.user.email_confirmed_at) {
+      logger.warn('Login attempt with unverified email', {
+        context: {
+          userId: data.user.id,
+          email: data.user.email,
+        },
+      })
+
+      // Sign out the user immediately
+      await supabase.auth.signOut()
+
+      return NextResponse.json(
+        {
+          error: 'Please verify your email address before logging in.',
+          requiresVerification: true,
+          email: data.user.email,
+        },
+        { status: 403 }
+      )
+    }
+
     logger.info('User signed in successfully', {
       context: {
         userId: data.user?.id,
