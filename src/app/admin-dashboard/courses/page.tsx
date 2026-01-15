@@ -11,6 +11,19 @@ export default function CourseManagementPage() {
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  const fetchUserRole = async () => {
+    try {
+      const res = await fetch("/api/auth/me");
+      if (res.ok) {
+        const data = await res.json();
+        setUserRole(data.role);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user role:", error);
+    }
+  };
 
   const fetchCourses = async () => {
     try {
@@ -32,6 +45,7 @@ export default function CourseManagementPage() {
   };
 
   useEffect(() => {
+    fetchUserRole();
     fetchCourses();
   }, []);
 
@@ -85,7 +99,7 @@ export default function CourseManagementPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCourses.length > 0 ? (
             filteredCourses.map((course) => (
-              <CourseCard key={course.id} course={course} onRefresh={fetchCourses} />
+              <CourseCard key={course.id} course={course} onRefresh={fetchCourses} userRole={userRole} />
             ))
           ) : (
             <div className="col-span-full text-center py-12 text-gray-500">
