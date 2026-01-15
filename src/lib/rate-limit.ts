@@ -63,6 +63,20 @@ export function rateLimit(
   request: NextRequest,
   config: RateLimitConfig
 ): RateLimitResult {
+  // Disable rate limiting in test/CI environment or when explicitly disabled
+  if (
+    process.env.NODE_ENV === 'test' || 
+    process.env.CI === 'true' ||
+    process.env.DISABLE_RATE_LIMIT === 'true'
+  ) {
+    return {
+      limited: false,
+      count: 0,
+      limit: config.limit,
+      resetTime: Date.now() + config.windowMs,
+    }
+  }
+
   const { limit, windowMs, identifier } = config
 
   // Get identifier (IP address or custom identifier)

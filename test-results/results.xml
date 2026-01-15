@@ -1,0 +1,2457 @@
+<testsuites id="" name="" tests="66" failures="59" skipped="0" errors="0" time="301.943663">
+<testsuite name="admin-workflow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="chromium" tests="5" failures="5" skipped="0" time="75.964" errors="0">
+<testcase name="Admin Workflow › Complete admin flow: Create student → Assign course → Set payment" classname="admin-workflow.spec.ts" time="15.42">
+<failure message="admin-workflow.spec.ts:23:7 Complete admin flow: Create student → Assign course → Set payment" type="FAILURE">
+<![CDATA[  [chromium] › admin-workflow.spec.ts:23:7 › Admin Workflow › Complete admin flow: Create student → Assign course → Set payment 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:19:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-chromium/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can view all students" classname="admin-workflow.spec.ts" time="15.517">
+<failure message="admin-workflow.spec.ts:138:7 Admin can view all students" type="FAILURE">
+<![CDATA[  [chromium] › admin-workflow.spec.ts:138:7 › Admin Workflow › Admin can view all students ─────────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:19:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-all-students-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-all-students-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-all-students-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-all-students-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-all-students-chromium/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-all-students-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can search students" classname="admin-workflow.spec.ts" time="15.385">
+<failure message="admin-workflow.spec.ts:152:7 Admin can search students" type="FAILURE">
+<![CDATA[  [chromium] › admin-workflow.spec.ts:152:7 › Admin Workflow › Admin can search students ───────────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:19:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-search-students-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-search-students-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workflow-Admin-can-search-students-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-search-students-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-search-students-chromium/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-search-students-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can create exam" classname="admin-workflow.spec.ts" time="15.418">
+<failure message="admin-workflow.spec.ts:168:7 Admin can create exam" type="FAILURE">
+<![CDATA[  [chromium] › admin-workflow.spec.ts:168:7 › Admin Workflow › Admin can create exam ───────────────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:19:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-create-exam-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-create-exam-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workflow-Admin-can-create-exam-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-create-exam-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-create-exam-chromium/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-create-exam-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can view student scores" classname="admin-workflow.spec.ts" time="14.224">
+<failure message="admin-workflow.spec.ts:206:7 Admin can view student scores" type="FAILURE">
+<![CDATA[  [chromium] › admin-workflow.spec.ts:206:7 › Admin Workflow › Admin can view student scores ───────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:19:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-student-scores-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-student-scores-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-student-scores-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-student-scores-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-student-scores-chromium/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-student-scores-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="authentication.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="chromium" tests="8" failures="4" skipped="0" time="122.363" errors="0">
+<testcase name="Authentication &amp; Security › Invalid login shows error message" classname="authentication.spec.ts" time="5.296">
+</testcase>
+<testcase name="Authentication &amp; Security › Empty credentials show validation error" classname="authentication.spec.ts" time="5.154">
+<failure message="authentication.spec.ts:31:7 Empty credentials show validation error" type="FAILURE">
+<![CDATA[  [chromium] › authentication.spec.ts:31:7 › Authentication & Security › Empty credentials show validation error 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      36 |     // Should show validation errors
+      37 |     const errors = await page.$$('.error, .validation-error')
+    > 38 |     expect(errors.length).toBeGreaterThan(0)
+         |                           ^
+      39 |   })
+      40 |
+      41 |   test('Unauthenticated user redirected to login', async ({ page }) => {
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:38:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-70a21-tials-show-validation-error-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-70a21-tials-show-validation-error-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Authenticat-70a21-tials-show-validation-error-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-70a21-tials-show-validation-error-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-70a21-tials-show-validation-error-chromium/video.webm]]
+
+[[ATTACHMENT|authentication-Authenticat-70a21-tials-show-validation-error-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Unauthenticated user redirected to login" classname="authentication.spec.ts" time="9">
+<failure message="authentication.spec.ts:41:7 Unauthenticated user redirected to login" type="FAILURE">
+<![CDATA[  [chromium] › authentication.spec.ts:41:7 › Authentication & Security › Unauthenticated user redirected to login 
+
+    TimeoutError: page.waitForURL: Timeout 5000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+      navigated to "http://localhost:3000/dashboard"
+    ============================================================
+
+      44 |     
+      45 |     // Should redirect to login
+    > 46 |     await page.waitForURL(/.*login/, { timeout: 5000 })
+         |                ^
+      47 |     expect(page.url()).toContain('login')
+      48 |   })
+      49 |
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:46:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-eec15-ed-user-redirected-to-login-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-eec15-ed-user-redirected-to-login-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Authenticat-eec15-ed-user-redirected-to-login-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-eec15-ed-user-redirected-to-login-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-eec15-ed-user-redirected-to-login-chromium/video.webm]]
+
+[[ATTACHMENT|authentication-Authenticat-eec15-ed-user-redirected-to-login-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Student cannot access admin dashboard" classname="authentication.spec.ts" time="18.281">
+<failure message="authentication.spec.ts:50:7 Student cannot access admin dashboard" type="FAILURE">
+<![CDATA[  [chromium] › authentication.spec.ts:50:7 › Authentication & Security › Student cannot access admin dashboard 
+
+    Error: expect(received).not.toContain(expected) // indexOf
+
+    Expected substring: not "admin-dashboard"
+    Received string:        "http://localhost:3000/admin-dashboard"
+
+      59 |     await page.waitForTimeout(2000)
+      60 |     const url = page.url()
+    > 61 |     expect(url).not.toContain('admin-dashboard')
+         |                     ^
+      62 |   })
+      63 |
+      64 |   test('Successful login persists across page reloads', async ({ page }) => {
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:61:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-ff874-nnot-access-admin-dashboard-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-ff874-nnot-access-admin-dashboard-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Authenticat-ff874-nnot-access-admin-dashboard-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-ff874-nnot-access-admin-dashboard-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-ff874-nnot-access-admin-dashboard-chromium/video.webm]]
+
+[[ATTACHMENT|authentication-Authenticat-ff874-nnot-access-admin-dashboard-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Successful login persists across page reloads" classname="authentication.spec.ts" time="16.757">
+</testcase>
+<testcase name="Authentication &amp; Security › Logout clears session" classname="authentication.spec.ts" time="29.15">
+</testcase>
+<testcase name="Form Validation › Email field validates format" classname="authentication.spec.ts" time="7.961">
+</testcase>
+<testcase name="Form Validation › Password field enforces minimum length" classname="authentication.spec.ts" time="30.764">
+<failure message="authentication.spec.ts:106:7 Password field enforces minimum length" type="FAILURE">
+<![CDATA[  [chromium] › authentication.spec.ts:106:7 › Form Validation › Password field enforces minimum length 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[name="password"]')
+        - waiting for" http://localhost:3000/signup" navigation to finish...
+        - navigated to "http://localhost:3000/signup"
+
+
+      108 |     
+      109 |     // Enter short password
+    > 110 |     await page.fill('input[name="password"]', '12')
+          |                ^
+      111 |     await page.locator('input[name="password"]').blur()
+      112 |     
+      113 |     // Should show error
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:110:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Form-Valida-09aa4-eld-enforces-minimum-length-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Form-Valida-09aa4-eld-enforces-minimum-length-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Form-Valida-09aa4-eld-enforces-minimum-length-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Form-Valida-09aa4-eld-enforces-minimum-length-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Form-Valida-09aa4-eld-enforces-minimum-length-chromium/video.webm]]
+
+[[ATTACHMENT|authentication-Form-Valida-09aa4-eld-enforces-minimum-length-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="student-exam-flow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="chromium" tests="4" failures="4" skipped="0" time="116.055" errors="0">
+<testcase name="Student Exam Flow › Complete flow: Login → Access Exam → Submit → View Results" classname="student-exam-flow.spec.ts" time="19.572">
+<failure message="student-exam-flow.spec.ts:20:7 Complete flow: Login → Access Exam → Submit → View Results" type="FAILURE">
+<![CDATA[  [chromium] › student-exam-flow.spec.ts:20:7 › Student Exam Flow › Complete flow: Login → Access Exam → Submit → View Results › Student sees dashboard 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected substring: "Test Student"
+    Received string:    "Zeteo Citadel Consult"
+
+      35 |       // Verify student name is displayed
+      36 |       const name = await dashboardPage.getStudentName()
+    > 37 |       expect(name).toContain('Test Student')
+         |                    ^
+      38 |     })
+      39 |
+      40 |     // Step 3: Access exam with code
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:37:20
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:32:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-chromium/video.webm]]
+
+[[ATTACHMENT|student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Student cannot access exam twice" classname="student-exam-flow.spec.ts" time="30.725">
+<failure message="student-exam-flow.spec.ts:114:7 Student cannot access exam twice" type="FAILURE">
+<![CDATA[  [chromium] › student-exam-flow.spec.ts:114:7 › Student Exam Flow › Student cannot access exam twice › Try to access already taken exam 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[name="code"]')
+        - waiting for" http://localhost:3000/exams/access" navigation to finish...
+        - navigated to "http://localhost:3000/exams/access"
+
+
+      120 |     await test.step('Try to access already taken exam', async () => {
+      121 |       await page.goto('/exams/access')
+    > 122 |       await page.fill('input[name="code"]', 'TEST-EXAM-001')
+          |                  ^
+      123 |       await page.click('button:has-text("Start")')
+      124 |       
+      125 |       // Should show error message
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:122:18
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:120:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-chromium/video.webm]]
+
+[[ATTACHMENT|student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Student cannot submit without answering all questions" classname="student-exam-flow.spec.ts" time="32.585">
+<failure message="student-exam-flow.spec.ts:134:7 Student cannot submit without answering all questions" type="FAILURE">
+<![CDATA[  [chromium] › student-exam-flow.spec.ts:134:7 › Student Exam Flow › Student cannot submit without answering all questions › Student logs in and accesses exam 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[name="code"], input[placeholder*="code"]')
+        2 × waiting for" http://localhost:3000/exams/access" navigation to finish...
+          - navigated to "http://localhost:3000/exams/access"
+
+
+       at ../fixtures/helpers.ts:107
+
+      105 |
+      106 |   async enterExamCode(code: string) {
+    > 107 |     await this.page.fill('input[name="code"], input[placeholder*="code"]', code)
+          |                     ^
+      108 |     await this.page.click('button:has-text("Start"), button:has-text("Access")')
+      109 |     
+      110 |     // Wait for exam to load
+        at ExamPage.enterExamCode (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:107:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:140:22
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:135:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--8b5cf-out-answering-all-questions-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--8b5cf-out-answering-all-questions-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/student-exam-flow-Student--8b5cf-out-answering-all-questions-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--8b5cf-out-answering-all-questions-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--8b5cf-out-answering-all-questions-chromium/video.webm]]
+
+[[ATTACHMENT|student-exam-flow-Student--8b5cf-out-answering-all-questions-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Exam timer works correctly" classname="student-exam-flow.spec.ts" time="33.173">
+<failure message="student-exam-flow.spec.ts:156:7 Exam timer works correctly" type="FAILURE">
+<![CDATA[  [chromium] › student-exam-flow.spec.ts:156:7 › Student Exam Flow › Exam timer works correctly › Student starts timed exam 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[name="code"], input[placeholder*="code"]')
+        4 × waiting for" http://localhost:3000/exams/access" navigation to finish...
+          - navigated to "http://localhost:3000/exams/access"
+
+
+       at ../fixtures/helpers.ts:107
+
+      105 |
+      106 |   async enterExamCode(code: string) {
+    > 107 |     await this.page.fill('input[name="code"], input[placeholder*="code"]', code)
+          |                     ^
+      108 |     await this.page.click('button:has-text("Start"), button:has-text("Access")')
+      109 |     
+      110 |     // Wait for exam to load
+        at ExamPage.enterExamCode (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:107:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:162:22
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:157:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--68c58--Exam-timer-works-correctly-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--68c58--Exam-timer-works-correctly-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/student-exam-flow-Student--68c58--Exam-timer-works-correctly-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--68c58--Exam-timer-works-correctly-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--68c58--Exam-timer-works-correctly-chromium/video.webm]]
+
+[[ATTACHMENT|student-exam-flow-Student--68c58--Exam-timer-works-correctly-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="super-admin-workflow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="chromium" tests="5" failures="5" skipped="0" time="115.207" errors="0">
+<testcase name="Super Admin Workflow › Complete super-admin flow: Create admin → Admin logs in → Admin performs action" classname="super-admin-workflow.spec.ts" time="10.997">
+<failure message="super-admin-workflow.spec.ts:18:7 Complete super-admin flow: Create admin → Admin logs in → Admin performs action" type="FAILURE">
+<![CDATA[  [chromium] › super-admin-workflow.spec.ts:18:7 › Super Admin Workflow › Complete super-admin flow: Create admin → Admin logs in → Admin performs action › Super admin logs in 
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /.*admin-dashboard/
+    Received string:  "http://localhost:3000/login"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        5 × unexpected value "http://localhost:3000/dashboard"
+        4 × unexpected value "http://localhost:3000/login"
+
+
+      26 |       
+      27 |       // Verify super admin dashboard
+    > 28 |       await expect(page).toHaveURL(/.*admin-dashboard/)
+         |                          ^
+      29 |       await page.screenshot({ path: 'test-results/superadmin-dashboard.png' })
+      30 |     })
+      31 |
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:28:26
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:23:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-8f964--in-→-Admin-performs-action-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-8f964--in-→-Admin-performs-action-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-8f964--in-→-Admin-performs-action-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-8f964--in-→-Admin-performs-action-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-8f964--in-→-Admin-performs-action-chromium/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-8f964--in-→-Admin-performs-action-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin can view all admins" classname="super-admin-workflow.spec.ts" time="30.91">
+<failure message="super-admin-workflow.spec.ts:146:7 Super admin can view all admins" type="FAILURE">
+<![CDATA[  [chromium] › super-admin-workflow.spec.ts:146:7 › Super Admin Workflow › Super admin can view all admins › Login and view admins 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('a[href*="admin"]')
+
+
+      149 |       await loginPage.login(TEST_USERS.superAdmin.email, TEST_USERS.superAdmin.password)
+      150 |       
+    > 151 |       await page.click('a[href*="admin"]')
+          |                  ^
+      152 |       
+      153 |       // Wait for admins list
+      154 |       await page.waitForSelector('table, .admins-list')
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:151:18
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:147:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-chromium/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin can delete admin" classname="super-admin-workflow.spec.ts" time="30.636">
+<failure message="super-admin-workflow.spec.ts:162:7 Super admin can delete admin" type="FAILURE">
+<![CDATA[  [chromium] › super-admin-workflow.spec.ts:162:7 › Super Admin Workflow › Super admin can delete admin › Super admin creates temporary admin 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('a[href*="admin"]')
+
+
+      167 |       await loginPage.login(TEST_USERS.superAdmin.email, TEST_USERS.superAdmin.password)
+      168 |       
+    > 169 |       await page.click('a[href*="admin"]')
+          |                  ^
+      170 |       await page.click('button:has-text("Create Admin"), button:has-text("Invite")')
+      171 |       
+      172 |       await page.fill('input[name="name"]', 'Temporary Admin')
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:169:18
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:165:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-81422-uper-admin-can-delete-admin-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-81422-uper-admin-can-delete-admin-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-81422-uper-admin-can-delete-admin-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-81422-uper-admin-can-delete-admin-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-81422-uper-admin-can-delete-admin-chromium/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-81422-uper-admin-can-delete-admin-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Regular admin cannot create super admin" classname="super-admin-workflow.spec.ts" time="30.559">
+<failure message="super-admin-workflow.spec.ts:201:7 Regular admin cannot create super admin" type="FAILURE">
+<![CDATA[  [chromium] › super-admin-workflow.spec.ts:201:7 › Super Admin Workflow › Regular admin cannot create super admin › Try to create super admin (should fail or option not available) 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('a[href*="admin"]')
+
+
+      206 |
+      207 |     await test.step('Try to create super admin (should fail or option not available)', async () => {
+    > 208 |       await page.click('a[href*="admin"]')
+          |                  ^
+      209 |       await page.click('button:has-text("Create Admin"), button:has-text("Invite")')
+      210 |       
+      211 |       // Check if super_admin option exists in role dropdown
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:208:18
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:207:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-chromium/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin has access to all features" classname="super-admin-workflow.spec.ts" time="12.105">
+<failure message="super-admin-workflow.spec.ts:223:7 Super admin has access to all features" type="FAILURE">
+<![CDATA[  [chromium] › super-admin-workflow.spec.ts:223:7 › Super Admin Workflow › Super admin has access to all features › Verify all navigation items visible 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('a[href*="student"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('a[href*="student"]')
+
+
+      227 |       
+      228 |       // Check all nav items are visible
+    > 229 |       await expect(page.locator('a[href*="student"]')).toBeVisible()
+          |                                                        ^
+      230 |       await expect(page.locator('a[href*="course"]')).toBeVisible()
+      231 |       await expect(page.locator('a[href*="exam"]')).toBeVisible()
+      232 |       await expect(page.locator('a[href*="payment"]')).toBeVisible()
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:229:56
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:224:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-27e73--has-access-to-all-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-27e73--has-access-to-all-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-27e73--has-access-to-all-features-chromium/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-27e73--has-access-to-all-features-chromium/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-27e73--has-access-to-all-features-chromium/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-27e73--has-access-to-all-features-chromium/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="admin-workflow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="firefox" tests="5" failures="5" skipped="0" time="106.307" errors="0">
+<testcase name="Admin Workflow › Complete admin flow: Create student → Assign course → Set payment" classname="admin-workflow.spec.ts" time="21.192">
+<failure message="admin-workflow.spec.ts:23:7 Complete admin flow: Create student → Assign course → Set payment" type="FAILURE">
+<![CDATA[  [firefox] › admin-workflow.spec.ts:23:7 › Admin Workflow › Complete admin flow: Create student → Assign course → Set payment 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:19:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-firefox/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can view all students" classname="admin-workflow.spec.ts" time="20.946">
+<failure message="admin-workflow.spec.ts:138:7 Admin can view all students" type="FAILURE">
+<![CDATA[  [firefox] › admin-workflow.spec.ts:138:7 › Admin Workflow › Admin can view all students ──────────
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /.*admin-dashboard/
+    Received string:  "http://localhost:3000/dashboard"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        9 × unexpected value "http://localhost:3000/dashboard"
+
+
+      18 |     await loginPage.goto()
+      19 |     await loginPage.login(TEST_USERS.admin.email, TEST_USERS.admin.password)
+    > 20 |     await expect(page).toHaveURL(/.*admin-dashboard/)
+         |                        ^
+      21 |   })
+      22 |
+      23 |   test('Complete admin flow: Create student → Assign course → Set payment', async ({ page }) => {
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:20:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-all-students-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-all-students-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-all-students-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-all-students-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-all-students-firefox/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-all-students-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can search students" classname="admin-workflow.spec.ts" time="19.588">
+<failure message="admin-workflow.spec.ts:152:7 Admin can search students" type="FAILURE">
+<![CDATA[  [firefox] › admin-workflow.spec.ts:152:7 › Admin Workflow › Admin can search students ────────────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:19:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-search-students-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-search-students-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workflow-Admin-can-search-students-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-search-students-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-search-students-firefox/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-search-students-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can create exam" classname="admin-workflow.spec.ts" time="22.231">
+<failure message="admin-workflow.spec.ts:168:7 Admin can create exam" type="FAILURE">
+<![CDATA[  [firefox] › admin-workflow.spec.ts:168:7 › Admin Workflow › Admin can create exam ────────────────
+
+    Error: expect(page).toHaveURL(expected) failed
+
+    Expected pattern: /.*admin-dashboard/
+    Received string:  "http://localhost:3000/dashboard"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toHaveURL" with timeout 5000ms
+        8 × unexpected value "http://localhost:3000/dashboard"
+
+
+      18 |     await loginPage.goto()
+      19 |     await loginPage.login(TEST_USERS.admin.email, TEST_USERS.admin.password)
+    > 20 |     await expect(page).toHaveURL(/.*admin-dashboard/)
+         |                        ^
+      21 |   })
+      22 |
+      23 |   test('Complete admin flow: Create student → Assign course → Set payment', async ({ page }) => {
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:20:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-create-exam-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-create-exam-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workflow-Admin-can-create-exam-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-create-exam-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-create-exam-firefox/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-create-exam-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can view student scores" classname="admin-workflow.spec.ts" time="22.35">
+<failure message="admin-workflow.spec.ts:206:7 Admin can view student scores" type="FAILURE">
+<![CDATA[  [firefox] › admin-workflow.spec.ts:206:7 › Admin Workflow › Admin can view student scores ────────
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+      navigated to "http://localhost:3000/login"
+      navigated to "http://localhost:3000/login"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:19:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-student-scores-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-student-scores-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-student-scores-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-student-scores-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-student-scores-firefox/video.webm]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-student-scores-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="authentication.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="firefox" tests="8" failures="5" skipped="0" time="173.757" errors="0">
+<testcase name="Authentication &amp; Security › Invalid login shows error message" classname="authentication.spec.ts" time="9.046">
+</testcase>
+<testcase name="Authentication &amp; Security › Empty credentials show validation error" classname="authentication.spec.ts" time="14.826">
+<failure message="authentication.spec.ts:31:7 Empty credentials show validation error" type="FAILURE">
+<![CDATA[  [firefox] › authentication.spec.ts:31:7 › Authentication & Security › Empty credentials show validation error 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      36 |     // Should show validation errors
+      37 |     const errors = await page.$$('.error, .validation-error')
+    > 38 |     expect(errors.length).toBeGreaterThan(0)
+         |                           ^
+      39 |   })
+      40 |
+      41 |   test('Unauthenticated user redirected to login', async ({ page }) => {
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:38:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-70a21-tials-show-validation-error-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-70a21-tials-show-validation-error-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Authenticat-70a21-tials-show-validation-error-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-70a21-tials-show-validation-error-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-70a21-tials-show-validation-error-firefox/video.webm]]
+
+[[ATTACHMENT|authentication-Authenticat-70a21-tials-show-validation-error-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Unauthenticated user redirected to login" classname="authentication.spec.ts" time="17.37">
+</testcase>
+<testcase name="Authentication &amp; Security › Student cannot access admin dashboard" classname="authentication.spec.ts" time="24.461">
+<failure message="authentication.spec.ts:50:7 Student cannot access admin dashboard" type="FAILURE">
+<![CDATA[  [firefox] › authentication.spec.ts:50:7 › Authentication & Security › Student cannot access admin dashboard 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:53:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-ff874-nnot-access-admin-dashboard-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-ff874-nnot-access-admin-dashboard-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Authenticat-ff874-nnot-access-admin-dashboard-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-ff874-nnot-access-admin-dashboard-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-ff874-nnot-access-admin-dashboard-firefox/video.webm]]
+
+[[ATTACHMENT|authentication-Authenticat-ff874-nnot-access-admin-dashboard-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Successful login persists across page reloads" classname="authentication.spec.ts" time="31.18">
+<failure message="authentication.spec.ts:64:7 Successful login persists across page reloads" type="FAILURE">
+<![CDATA[  [firefox] › authentication.spec.ts:64:7 › Authentication & Security › Successful login persists across page reloads 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.reload: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for navigation until "load"
+        - navigated to "http://localhost:3000/dashboard"
+
+
+      67 |     
+      68 |     // Reload page
+    > 69 |     await page.reload()
+         |                ^
+      70 |     
+      71 |     // Should still be logged in
+      72 |     await page.waitForTimeout(1000)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:69:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-9f3f4-ersists-across-page-reloads-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-9f3f4-ersists-across-page-reloads-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Authenticat-9f3f4-ersists-across-page-reloads-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-9f3f4-ersists-across-page-reloads-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-9f3f4-ersists-across-page-reloads-firefox/video.webm]]
+
+[[ATTACHMENT|authentication-Authenticat-9f3f4-ersists-across-page-reloads-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Logout clears session" classname="authentication.spec.ts" time="30.502">
+<failure message="authentication.spec.ts:77:7 Logout clears session" type="FAILURE">
+<![CDATA[  [firefox] › authentication.spec.ts:77:7 › Authentication & Security › Logout clears session ──────
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/dashboard", waiting until "load"
+
+
+      83 |     
+      84 |     // Try to access dashboard
+    > 85 |     await page.goto('/dashboard')
+         |                ^
+      86 |     
+      87 |     // Should redirect to login
+      88 |     await page.waitForURL(/.*login/)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:85:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authentication-Security-Logout-clears-session-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authentication-Security-Logout-clears-session-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Authentication-Security-Logout-clears-session-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authentication-Security-Logout-clears-session-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authentication-Security-Logout-clears-session-firefox/video.webm]]
+
+[[ATTACHMENT|authentication-Authentication-Security-Logout-clears-session-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Form Validation › Email field validates format" classname="authentication.spec.ts" time="14.65">
+</testcase>
+<testcase name="Form Validation › Password field enforces minimum length" classname="authentication.spec.ts" time="31.722">
+<failure message="authentication.spec.ts:106:7 Password field enforces minimum length" type="FAILURE">
+<![CDATA[  [firefox] › authentication.spec.ts:106:7 › Form Validation › Password field enforces minimum length 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.fill: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for locator('input[name="password"]')
+        - waiting for navigation to finish...
+        2 × waiting for" http://localhost:3000/signup" navigation to finish...
+          - navigated to "http://localhost:3000/signup"
+
+
+      108 |     
+      109 |     // Enter short password
+    > 110 |     await page.fill('input[name="password"]', '12')
+          |                ^
+      111 |     await page.locator('input[name="password"]').blur()
+      112 |     
+      113 |     // Should show error
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:110:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Form-Valida-09aa4-eld-enforces-minimum-length-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Form-Valida-09aa4-eld-enforces-minimum-length-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/authentication-Form-Valida-09aa4-eld-enforces-minimum-length-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Form-Valida-09aa4-eld-enforces-minimum-length-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Form-Valida-09aa4-eld-enforces-minimum-length-firefox/video.webm]]
+
+[[ATTACHMENT|authentication-Form-Valida-09aa4-eld-enforces-minimum-length-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="student-exam-flow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="firefox" tests="4" failures="4" skipped="0" time="94.632" errors="0">
+<testcase name="Student Exam Flow › Complete flow: Login → Access Exam → Submit → View Results" classname="student-exam-flow.spec.ts" time="16.005">
+<failure message="student-exam-flow.spec.ts:20:7 Complete flow: Login → Access Exam → Submit → View Results" type="FAILURE">
+<![CDATA[  [firefox] › student-exam-flow.spec.ts:20:7 › Student Exam Flow › Complete flow: Login → Access Exam → Submit → View Results › Student sees dashboard 
+
+    Error: page.goto: NS_BINDING_ABORTED; maybe frame was detached?
+    Call log:
+      - navigating to "http://localhost:3000/dashboard", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:82
+
+      80 |
+      81 |   async goto() {
+    > 82 |     await this.page.goto('/dashboard')
+         |                     ^
+      83 |   }
+      84 |
+      85 |   async getStudentName() {
+        at StudentDashboardPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:82:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:33:27
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:32:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-firefox/video.webm]]
+
+[[ATTACHMENT|student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Student cannot access exam twice" classname="student-exam-flow.spec.ts" time="24.888">
+<failure message="student-exam-flow.spec.ts:114:7 Student cannot access exam twice" type="FAILURE">
+<![CDATA[  [firefox] › student-exam-flow.spec.ts:114:7 › Student Exam Flow › Student cannot access exam twice › Try to access already taken exam 
+
+    Error: page.goto: NS_BINDING_ABORTED; maybe frame was detached?
+    Call log:
+      - navigating to "http://localhost:3000/exams/access", waiting until "load"
+
+
+      119 |
+      120 |     await test.step('Try to access already taken exam', async () => {
+    > 121 |       await page.goto('/exams/access')
+          |                  ^
+      122 |       await page.fill('input[name="code"]', 'TEST-EXAM-001')
+      123 |       await page.click('button:has-text("Start")')
+      124 |       
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:121:18
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:120:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-firefox/video.webm]]
+
+[[ATTACHMENT|student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Student cannot submit without answering all questions" classname="student-exam-flow.spec.ts" time="30.377">
+<failure message="student-exam-flow.spec.ts:134:7 Student cannot submit without answering all questions" type="FAILURE">
+<![CDATA[  [firefox] › student-exam-flow.spec.ts:134:7 › Student Exam Flow › Student cannot submit without answering all questions › Student logs in and accesses exam 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.goto: Test timeout of 30000ms exceeded.
+    Call log:
+      - navigating to "http://localhost:3000/exams/access", waiting until "load"
+
+
+      137 |       await loginPage.login(TEST_USERS.student.email, TEST_USERS.student.password)
+      138 |       
+    > 139 |       await page.goto('/exams/access')
+          |                  ^
+      140 |       await examPage.enterExamCode('TEST-EXAM-002')
+      141 |     })
+      142 |
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:139:18
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:135:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--8b5cf-out-answering-all-questions-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--8b5cf-out-answering-all-questions-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/student-exam-flow-Student--8b5cf-out-answering-all-questions-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--8b5cf-out-answering-all-questions-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--8b5cf-out-answering-all-questions-firefox/video.webm]]
+
+[[ATTACHMENT|student-exam-flow-Student--8b5cf-out-answering-all-questions-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Exam timer works correctly" classname="student-exam-flow.spec.ts" time="23.362">
+<failure message="student-exam-flow.spec.ts:156:7 Exam timer works correctly" type="FAILURE">
+<![CDATA[  [firefox] › student-exam-flow.spec.ts:156:7 › Student Exam Flow › Exam timer works correctly › Student starts timed exam 
+
+    Error: page.goto: NS_BINDING_ABORTED
+    Call log:
+      - navigating to "http://localhost:3000/exams/access", waiting until "load"
+
+
+      159 |       await loginPage.login(TEST_USERS.student.email, TEST_USERS.student.password)
+      160 |       
+    > 161 |       await page.goto('/exams/access')
+          |                  ^
+      162 |       await examPage.enterExamCode('TEST-EXAM-TIMED')
+      163 |       
+      164 |       // Check if timer is visible
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:161:18
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:157:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--68c58--Exam-timer-works-correctly-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--68c58--Exam-timer-works-correctly-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/student-exam-flow-Student--68c58--Exam-timer-works-correctly-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--68c58--Exam-timer-works-correctly-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--68c58--Exam-timer-works-correctly-firefox/video.webm]]
+
+[[ATTACHMENT|student-exam-flow-Student--68c58--Exam-timer-works-correctly-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="super-admin-workflow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="firefox" tests="5" failures="5" skipped="0" time="96.658" errors="0">
+<testcase name="Super Admin Workflow › Complete super-admin flow: Create admin → Admin logs in → Admin performs action" classname="super-admin-workflow.spec.ts" time="20.774">
+<failure message="super-admin-workflow.spec.ts:18:7 Complete super-admin flow: Create admin → Admin logs in → Admin performs action" type="FAILURE">
+<![CDATA[  [firefox] › super-admin-workflow.spec.ts:18:7 › Super Admin Workflow › Complete super-admin flow: Create admin → Admin logs in → Admin performs action › Super admin logs in 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:25:7
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:23:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-8f964--in-→-Admin-performs-action-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-8f964--in-→-Admin-performs-action-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-8f964--in-→-Admin-performs-action-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-8f964--in-→-Admin-performs-action-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-8f964--in-→-Admin-performs-action-firefox/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-8f964--in-→-Admin-performs-action-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin can view all admins" classname="super-admin-workflow.spec.ts" time="19.796">
+<failure message="super-admin-workflow.spec.ts:146:7 Super admin can view all admins" type="FAILURE">
+<![CDATA[  [firefox] › super-admin-workflow.spec.ts:146:7 › Super Admin Workflow › Super admin can view all admins › Login and view admins 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:149:7
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:147:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-firefox/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin can delete admin" classname="super-admin-workflow.spec.ts" time="19.832">
+<failure message="super-admin-workflow.spec.ts:162:7 Super admin can delete admin" type="FAILURE">
+<![CDATA[  [firefox] › super-admin-workflow.spec.ts:162:7 › Super Admin Workflow › Super admin can delete admin › Super admin creates temporary admin 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:167:7
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:165:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-81422-uper-admin-can-delete-admin-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-81422-uper-admin-can-delete-admin-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-81422-uper-admin-can-delete-admin-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-81422-uper-admin-can-delete-admin-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-81422-uper-admin-can-delete-admin-firefox/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-81422-uper-admin-can-delete-admin-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Regular admin cannot create super admin" classname="super-admin-workflow.spec.ts" time="17.906">
+<failure message="super-admin-workflow.spec.ts:201:7 Regular admin cannot create super admin" type="FAILURE">
+<![CDATA[  [firefox] › super-admin-workflow.spec.ts:201:7 › Super Admin Workflow › Regular admin cannot create super admin › Login as regular admin 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+      navigated to "http://localhost:3000/login"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:204:7
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:202:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-firefox/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin has access to all features" classname="super-admin-workflow.spec.ts" time="18.35">
+<failure message="super-admin-workflow.spec.ts:223:7 Super admin has access to all features" type="FAILURE">
+<![CDATA[  [firefox] › super-admin-workflow.spec.ts:223:7 › Super Admin Workflow › Super admin has access to all features › Verify all navigation items visible 
+
+    TimeoutError: page.waitForURL: Timeout 10000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation to "**/dashboard" until "load"
+    ============================================================
+
+       at ../fixtures/helpers.ts:65
+
+      63 |     
+      64 |     // Wait for navigation
+    > 65 |     await this.page.waitForURL('**/dashboard', { timeout: 10000 })
+         |                     ^
+      66 |   }
+      67 |
+      68 |   async isLoggedIn() {
+        at LoginPage.login (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:65:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:226:7
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:224:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-27e73--has-access-to-all-features-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-27e73--has-access-to-all-features-firefox/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-results/super-admin-workflow-Super-27e73--has-access-to-all-features-firefox/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-27e73--has-access-to-all-features-firefox/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-27e73--has-access-to-all-features-firefox/video.webm]]
+
+[[ATTACHMENT|super-admin-workflow-Super-27e73--has-access-to-all-features-firefox/error-context.md]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="admin-workflow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="webkit" tests="5" failures="5" skipped="0" time="12.351" errors="0">
+<testcase name="Admin Workflow › Complete admin flow: Create student → Assign course → Set payment" classname="admin-workflow.spec.ts" time="2.597">
+<failure message="admin-workflow.spec.ts:23:7 Complete admin flow: Create student → Assign course → Set payment" type="FAILURE">
+<![CDATA[  [webkit] › admin-workflow.spec.ts:23:7 › Admin Workflow › Complete admin flow: Create student → Assign course → Set payment 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:18:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workf-29005-Assign-course-→-Set-payment-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can view all students" classname="admin-workflow.spec.ts" time="2.341">
+<failure message="admin-workflow.spec.ts:138:7 Admin can view all students" type="FAILURE">
+<![CDATA[  [webkit] › admin-workflow.spec.ts:138:7 › Admin Workflow › Admin can view all students ───────────
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:18:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-all-students-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-all-students-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-all-students-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-all-students-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can search students" classname="admin-workflow.spec.ts" time="1.767">
+<failure message="admin-workflow.spec.ts:152:7 Admin can search students" type="FAILURE">
+<![CDATA[  [webkit] › admin-workflow.spec.ts:152:7 › Admin Workflow › Admin can search students ─────────────
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:18:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-search-students-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-search-students-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-search-students-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-search-students-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can create exam" classname="admin-workflow.spec.ts" time="2.649">
+<failure message="admin-workflow.spec.ts:168:7 Admin can create exam" type="FAILURE">
+<![CDATA[  [webkit] › admin-workflow.spec.ts:168:7 › Admin Workflow › Admin can create exam ─────────────────
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:18:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-create-exam-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-create-exam-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-create-exam-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-create-exam-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Admin Workflow › Admin can view student scores" classname="admin-workflow.spec.ts" time="2.997">
+<failure message="admin-workflow.spec.ts:206:7 Admin can view student scores" type="FAILURE">
+<![CDATA[  [webkit] › admin-workflow.spec.ts:206:7 › Admin Workflow › Admin can view student scores ─────────
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/admin-workflow.spec.ts:18:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-student-scores-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/admin-workflow-Admin-Workflow-Admin-can-view-student-scores-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-student-scores-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|admin-workflow-Admin-Workflow-Admin-can-view-student-scores-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="authentication.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="webkit" tests="8" failures="8" skipped="0" time="29.946" errors="0">
+<testcase name="Authentication &amp; Security › Invalid login shows error message" classname="authentication.spec.ts" time="5.558">
+<failure message="authentication.spec.ts:16:7 Invalid login shows error message" type="FAILURE">
+<![CDATA[  [webkit] › authentication.spec.ts:16:7 › Authentication & Security › Invalid login shows error message 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:17:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-9cb2a-d-login-shows-error-message-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-9cb2a-d-login-shows-error-message-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-9cb2a-d-login-shows-error-message-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-9cb2a-d-login-shows-error-message-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Empty credentials show validation error" classname="authentication.spec.ts" time="8.07">
+<failure message="authentication.spec.ts:31:7 Empty credentials show validation error" type="FAILURE">
+<![CDATA[  [webkit] › authentication.spec.ts:31:7 › Authentication & Security › Empty credentials show validation error 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:32:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-70a21-tials-show-validation-error-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-70a21-tials-show-validation-error-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-70a21-tials-show-validation-error-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-70a21-tials-show-validation-error-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Unauthenticated user redirected to login" classname="authentication.spec.ts" time="7.943">
+<failure message="authentication.spec.ts:41:7 Unauthenticated user redirected to login" type="FAILURE">
+<![CDATA[  [webkit] › authentication.spec.ts:41:7 › Authentication & Security › Unauthenticated user redirected to login 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/dashboard", waiting until "load"
+
+
+      41 |   test('Unauthenticated user redirected to login', async ({ page }) => {
+      42 |     // Try to access protected route
+    > 43 |     await page.goto('/dashboard')
+         |                ^
+      44 |     
+      45 |     // Should redirect to login
+      46 |     await page.waitForURL(/.*login/, { timeout: 5000 })
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:43:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-eec15-ed-user-redirected-to-login-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-eec15-ed-user-redirected-to-login-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-eec15-ed-user-redirected-to-login-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-eec15-ed-user-redirected-to-login-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Student cannot access admin dashboard" classname="authentication.spec.ts" time="1.93">
+<failure message="authentication.spec.ts:50:7 Student cannot access admin dashboard" type="FAILURE">
+<![CDATA[  [webkit] › authentication.spec.ts:50:7 › Authentication & Security › Student cannot access admin dashboard 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:52:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-ff874-nnot-access-admin-dashboard-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-ff874-nnot-access-admin-dashboard-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-ff874-nnot-access-admin-dashboard-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-ff874-nnot-access-admin-dashboard-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Successful login persists across page reloads" classname="authentication.spec.ts" time="1.7">
+<failure message="authentication.spec.ts:64:7 Successful login persists across page reloads" type="FAILURE">
+<![CDATA[  [webkit] › authentication.spec.ts:64:7 › Authentication & Security › Successful login persists across page reloads 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:65:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-9f3f4-ersists-across-page-reloads-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authenticat-9f3f4-ersists-across-page-reloads-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authenticat-9f3f4-ersists-across-page-reloads-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authenticat-9f3f4-ersists-across-page-reloads-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Authentication &amp; Security › Logout clears session" classname="authentication.spec.ts" time="1.476">
+<failure message="authentication.spec.ts:77:7 Logout clears session" type="FAILURE">
+<![CDATA[  [webkit] › authentication.spec.ts:77:7 › Authentication & Security › Logout clears session ───────
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:78:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authentication-Security-Logout-clears-session-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Authentication-Security-Logout-clears-session-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Authentication-Security-Logout-clears-session-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Authentication-Security-Logout-clears-session-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Form Validation › Email field validates format" classname="authentication.spec.ts" time="1.609">
+<failure message="authentication.spec.ts:93:7 Email field validates format" type="FAILURE">
+<![CDATA[  [webkit] › authentication.spec.ts:93:7 › Form Validation › Email field validates format ──────────
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+      92 | test.describe('Form Validation', () => {
+      93 |   test('Email field validates format', async ({ page }) => {
+    > 94 |     await page.goto('/login')
+         |                ^
+      95 |     
+      96 |     // Enter invalid email
+      97 |     await page.fill('input[type="email"]', 'notanemail')
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:94:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Form-Validation-Email-field-validates-format-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Form-Validation-Email-field-validates-format-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Form-Validation-Email-field-validates-format-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Form-Validation-Email-field-validates-format-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Form Validation › Password field enforces minimum length" classname="authentication.spec.ts" time="1.66">
+<failure message="authentication.spec.ts:106:7 Password field enforces minimum length" type="FAILURE">
+<![CDATA[  [webkit] › authentication.spec.ts:106:7 › Form Validation › Password field enforces minimum length 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/signup", waiting until "load"
+
+
+      105 |
+      106 |   test('Password field enforces minimum length', async ({ page }) => {
+    > 107 |     await page.goto('/signup')
+          |                ^
+      108 |     
+      109 |     // Enter short password
+      110 |     await page.fill('input[name="password"]', '12')
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/authentication.spec.ts:107:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/authentication-Form-Valida-09aa4-eld-enforces-minimum-length-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/authentication-Form-Valida-09aa4-eld-enforces-minimum-length-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|authentication-Form-Valida-09aa4-eld-enforces-minimum-length-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|authentication-Form-Valida-09aa4-eld-enforces-minimum-length-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="student-exam-flow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="webkit" tests="4" failures="4" skipped="0" time="7.4" errors="0">
+<testcase name="Student Exam Flow › Complete flow: Login → Access Exam → Submit → View Results" classname="student-exam-flow.spec.ts" time="2.058">
+<failure message="student-exam-flow.spec.ts:20:7 Complete flow: Login → Access Exam → Submit → View Results" type="FAILURE">
+<![CDATA[  [webkit] › student-exam-flow.spec.ts:20:7 › Student Exam Flow › Complete flow: Login → Access Exam → Submit → View Results › Student logs in 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:23:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:22:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--076e4-xam-→-Submit-→-View-Results-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Student cannot access exam twice" classname="student-exam-flow.spec.ts" time="1.649">
+<failure message="student-exam-flow.spec.ts:114:7 Student cannot access exam twice" type="FAILURE">
+<![CDATA[  [webkit] › student-exam-flow.spec.ts:114:7 › Student Exam Flow › Student cannot access exam twice › Student logs in 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:116:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:115:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--cfe8d-nt-cannot-access-exam-twice-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Student cannot submit without answering all questions" classname="student-exam-flow.spec.ts" time="1.88">
+<failure message="student-exam-flow.spec.ts:134:7 Student cannot submit without answering all questions" type="FAILURE">
+<![CDATA[  [webkit] › student-exam-flow.spec.ts:134:7 › Student Exam Flow › Student cannot submit without answering all questions › Student logs in and accesses exam 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:136:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:135:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--8b5cf-out-answering-all-questions-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--8b5cf-out-answering-all-questions-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--8b5cf-out-answering-all-questions-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--8b5cf-out-answering-all-questions-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Student Exam Flow › Exam timer works correctly" classname="student-exam-flow.spec.ts" time="1.813">
+<failure message="student-exam-flow.spec.ts:156:7 Exam timer works correctly" type="FAILURE">
+<![CDATA[  [webkit] › student-exam-flow.spec.ts:156:7 › Student Exam Flow › Exam timer works correctly › Student starts timed exam 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:158:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/student-exam-flow.spec.ts:157:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--68c58--Exam-timer-works-correctly-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/student-exam-flow-Student--68c58--Exam-timer-works-correctly-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|student-exam-flow-Student--68c58--Exam-timer-works-correctly-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|student-exam-flow-Student--68c58--Exam-timer-works-correctly-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="super-admin-workflow.spec.ts" timestamp="2026-01-08T14:48:43.617Z" hostname="webkit" tests="5" failures="5" skipped="0" time="7.677" errors="0">
+<testcase name="Super Admin Workflow › Complete super-admin flow: Create admin → Admin logs in → Admin performs action" classname="super-admin-workflow.spec.ts" time="1.933">
+<failure message="super-admin-workflow.spec.ts:18:7 Complete super-admin flow: Create admin → Admin logs in → Admin performs action" type="FAILURE">
+<![CDATA[  [webkit] › super-admin-workflow.spec.ts:18:7 › Super Admin Workflow › Complete super-admin flow: Create admin → Admin logs in → Admin performs action › Super admin logs in 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:24:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:23:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-8f964--in-→-Admin-performs-action-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-8f964--in-→-Admin-performs-action-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-8f964--in-→-Admin-performs-action-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-8f964--in-→-Admin-performs-action-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin can view all admins" classname="super-admin-workflow.spec.ts" time="1.931">
+<failure message="super-admin-workflow.spec.ts:146:7 Super admin can view all admins" type="FAILURE">
+<![CDATA[  [webkit] › super-admin-workflow.spec.ts:146:7 › Super Admin Workflow › Super admin can view all admins › Login and view admins 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:148:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:147:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-6d914-r-admin-can-view-all-admins-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin can delete admin" classname="super-admin-workflow.spec.ts" time="1.643">
+<failure message="super-admin-workflow.spec.ts:162:7 Super admin can delete admin" type="FAILURE">
+<![CDATA[  [webkit] › super-admin-workflow.spec.ts:162:7 › Super Admin Workflow › Super admin can delete admin › Super admin creates temporary admin 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:166:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:165:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-81422-uper-admin-can-delete-admin-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-81422-uper-admin-can-delete-admin-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-81422-uper-admin-can-delete-admin-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-81422-uper-admin-can-delete-admin-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Regular admin cannot create super admin" classname="super-admin-workflow.spec.ts" time="1.126">
+<failure message="super-admin-workflow.spec.ts:201:7 Regular admin cannot create super admin" type="FAILURE">
+<![CDATA[  [webkit] › super-admin-workflow.spec.ts:201:7 › Super Admin Workflow › Regular admin cannot create super admin › Login as regular admin 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:203:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:202:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-3cbe6-n-cannot-create-super-admin-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Super Admin Workflow › Super admin has access to all features" classname="super-admin-workflow.spec.ts" time="1.044">
+<failure message="super-admin-workflow.spec.ts:223:7 Super admin has access to all features" type="FAILURE">
+<![CDATA[  [webkit] › super-admin-workflow.spec.ts:223:7 › Super Admin Workflow › Super admin has access to all features › Verify all navigation items visible 
+
+    Error: page.goto: WebKit encountered an internal error
+    Call log:
+      - navigating to "http://localhost:3000/login", waiting until "load"
+
+
+       at ../fixtures/helpers.ts:56
+
+      54 |
+      55 |   async goto() {
+    > 56 |     await this.page.goto('/login')
+         |                     ^
+      57 |   }
+      58 |
+      59 |   async login(email: string, password: string) {
+        at LoginPage.goto (/home/vahalla/Desktop/zetoe_academy/e2e/fixtures/helpers.ts:56:21)
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:225:23
+        at /home/vahalla/Desktop/zetoe_academy/e2e/tests/super-admin-workflow.spec.ts:224:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-27e73--has-access-to-all-features-webkit/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    ../../test-results/super-admin-workflow-Super-27e73--has-access-to-all-features-webkit/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|super-admin-workflow-Super-27e73--has-access-to-all-features-webkit/test-failed-1.png]]
+
+[[ATTACHMENT|super-admin-workflow-Super-27e73--has-access-to-all-features-webkit/video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

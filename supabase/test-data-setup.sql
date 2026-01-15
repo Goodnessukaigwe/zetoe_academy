@@ -2,92 +2,160 @@
 -- Run this in Supabase SQL Editor
 -- WARNING: Only run this in development/test environments!
 
+-- Note: For Supabase, it's recommended to create users through the Dashboard or Auth API
+-- This script provides SQL for reference, but you should use Supabase Auth API for production
+
+-- Delete existing test users if they exist (optional - comment out if you want to keep them)
+-- DELETE FROM auth.users WHERE email IN ('student.test@zetoe.com', 'admin.test@zetoe.com', 'superadmin@zetoe.com');
+
 -- Create test student
-INSERT INTO auth.users (
-  id,
-  email,
-  encrypted_password,
-  email_confirmed_at,
-  created_at,
-  updated_at,
-  raw_app_meta_data,
-  raw_user_meta_data,
-  is_super_admin
-)
-VALUES (
-  gen_random_uuid(),
-  'student.test@zetoe.com',
-  crypt('TestPassword123!', gen_salt('bf')),
-  NOW(),
-  NOW(),
-  NOW(),
-  '{"provider":"email","providers":["email"]}',
-  '{"full_name":"Test Student"}',
-  false
-)
-ON CONFLICT (email) DO NOTHING;
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'student.test@zetoe.com') THEN
+    INSERT INTO auth.users (
+      instance_id,
+      id,
+      aud,
+      role,
+      email,
+      encrypted_password,
+      email_confirmed_at,
+      recovery_sent_at,
+      last_sign_in_at,
+      raw_app_meta_data,
+      raw_user_meta_data,
+      created_at,
+      updated_at,
+      confirmation_token,
+      email_change,
+      email_change_token_new,
+      recovery_token
+    )
+    VALUES (
+      '00000000-0000-0000-0000-000000000000',
+      gen_random_uuid(),
+      'authenticated',
+      'authenticated',
+      'student.test@zetoe.com',
+      crypt('TestPassword123!', gen_salt('bf')),
+      NOW(),
+      NOW(),
+      NOW(),
+      '{"provider":"email","providers":["email"]}',
+      '{"full_name":"Test Student"}',
+      NOW(),
+      NOW(),
+      '',
+      '',
+      '',
+      ''
+    );
+  END IF;
+END $$;
 
 -- Create test admin
-INSERT INTO auth.users (
-  id,
-  email,
-  encrypted_password,
-  email_confirmed_at,
-  created_at,
-  updated_at,
-  raw_app_meta_data,
-  raw_user_meta_data,
-  is_super_admin
-)
-VALUES (
-  gen_random_uuid(),
-  'admin.test@zetoe.com',
-  crypt('AdminPassword123!', gen_salt('bf')),
-  NOW(),
-  NOW(),
-  NOW(),
-  '{"provider":"email","providers":["email"],"role":"admin"}',
-  '{"full_name":"Test Admin","role":"admin"}',
-  false
-)
-ON CONFLICT (email) DO NOTHING;
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'admin.test@zetoe.com') THEN
+    INSERT INTO auth.users (
+      instance_id,
+      id,
+      aud,
+      role,
+      email,
+      encrypted_password,
+      email_confirmed_at,
+      recovery_sent_at,
+      last_sign_in_at,
+      raw_app_meta_data,
+      raw_user_meta_data,
+      created_at,
+      updated_at,
+      confirmation_token,
+      email_change,
+      email_change_token_new,
+      recovery_token
+    )
+    VALUES (
+      '00000000-0000-0000-0000-000000000000',
+      gen_random_uuid(),
+      'authenticated',
+      'authenticated',
+      'admin.test@zetoe.com',
+      crypt('AdminPassword123!', gen_salt('bf')),
+      NOW(),
+      NOW(),
+      NOW(),
+      '{"provider":"email","providers":["email"],"role":"admin"}',
+      '{"full_name":"Test Admin","role":"admin"}',
+      NOW(),
+      NOW(),
+      '',
+      '',
+      '',
+      ''
+    );
+  END IF;
+END $$;
 
 -- Create test super admin
-INSERT INTO auth.users (
-  id,
-  email,
-  encrypted_password,
-  email_confirmed_at,
-  created_at,
-  updated_at,
-  raw_app_meta_data,
-  raw_user_meta_data,
-  is_super_admin
-)
-VALUES (
-  gen_random_uuid(),
-  'superadmin@zetoe.com',
-  crypt('SuperAdminPassword123!', gen_salt('bf')),
-  NOW(),
-  NOW(),
-  NOW(),
-  '{"provider":"email","providers":["email"],"role":"super_admin"}',
-  '{"full_name":"Super Admin","role":"super_admin"}',
-  true
-)
-ON CONFLICT (email) DO NOTHING;
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'superadmin@zetoe.com') THEN
+    INSERT INTO auth.users (
+      instance_id,
+      id,
+      aud,
+      role,
+      email,
+      encrypted_password,
+      email_confirmed_at,
+      recovery_sent_at,
+      last_sign_in_at,
+      raw_app_meta_data,
+      raw_user_meta_data,
+      created_at,
+      updated_at,
+      confirmation_token,
+      email_change,
+      email_change_token_new,
+      recovery_token,
+      is_super_admin
+    )
+    VALUES (
+      '00000000-0000-0000-0000-000000000000',
+      gen_random_uuid(),
+      'authenticated',
+      'authenticated',
+      'superadmin@zetoe.com',
+      crypt('SuperAdminPassword123!', gen_salt('bf')),
+      NOW(),
+      NOW(),
+      NOW(),
+      '{"provider":"email","providers":["email"],"role":"super_admin"}',
+      '{"full_name":"Super Admin","role":"super_admin"}',
+      NOW(),
+      NOW(),
+      '',
+      '',
+      '',
+      '',
+      true
+    );
+  END IF;
+END $$;
 
 -- Create test course
 INSERT INTO public.courses (
   id,
-  title,
+  name,
   description,
   price,
   duration,
   created_at,
   updated_at
 )
-VALUES (
+SELECT
   gen_random_uuid(),
   'E2E Test Course',
   'This is a test course for end-to-end testing',
@@ -95,12 +163,13 @@ VALUES (
   '30 days',
   NOW(),
   NOW()
-)
-ON CONFLICT DO NOTHING;
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.courses WHERE name = 'E2E Test Course'
+);
 
 -- Create test exam
 WITH course AS (
-  SELECT id FROM public.courses WHERE title = 'E2E Test Course' LIMIT 1
+  SELECT id FROM public.courses WHERE name = 'E2E Test Course' LIMIT 1
 )
 INSERT INTO public.exams (
   id,
@@ -109,7 +178,8 @@ INSERT INTO public.exams (
   description,
   duration_minutes,
   passing_score,
-  exam_code,
+  code,
+  questions,
   created_at,
   updated_at
 )
@@ -121,73 +191,59 @@ SELECT
   60,
   70,
   'TEST123',
+  '[]'::jsonb,
   NOW(),
   NOW()
 FROM course
-ON CONFLICT DO NOTHING;
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exams WHERE code = 'TEST123'
+);
 
--- Create test questions for the exam
-WITH exam AS (
-  SELECT id FROM public.exams WHERE exam_code = 'TEST123' LIMIT 1
+-- Note: Questions are stored in the exams.questions JSONB column
+-- Update the exam with test questions
+UPDATE public.exams
+SET questions = jsonb_build_array(
+  jsonb_build_object(
+    'id', 1,
+    'question', 'What is 2 + 2?',
+    'type', 'multiple_choice',
+    'options', jsonb_build_array(
+      jsonb_build_object('label', 'a', 'text', '3'),
+      jsonb_build_object('label', 'b', 'text', '4'),
+      jsonb_build_object('label', 'c', 'text', '5'),
+      jsonb_build_object('label', 'd', 'text', '6')
+    ),
+    'correctAnswer', 'b',
+    'points', 10
+  ),
+  jsonb_build_object(
+    'id', 2,
+    'question', 'What is the capital of France?',
+    'type', 'multiple_choice',
+    'options', jsonb_build_array(
+      jsonb_build_object('label', 'a', 'text', 'London'),
+      jsonb_build_object('label', 'b', 'text', 'Paris'),
+      jsonb_build_object('label', 'c', 'text', 'Berlin'),
+      jsonb_build_object('label', 'd', 'text', 'Madrid')
+    ),
+    'correctAnswer', 'b',
+    'points', 10
+  ),
+  jsonb_build_object(
+    'id', 3,
+    'question', 'What is the largest planet in our solar system?',
+    'type', 'multiple_choice',
+    'options', jsonb_build_array(
+      jsonb_build_object('label', 'a', 'text', 'Earth'),
+      jsonb_build_object('label', 'b', 'text', 'Mars'),
+      jsonb_build_object('label', 'c', 'text', 'Jupiter'),
+      jsonb_build_object('label', 'd', 'text', 'Saturn')
+    ),
+    'correctAnswer', 'c',
+    'points', 10
+  )
 )
-INSERT INTO public.exam_questions (
-  id,
-  exam_id,
-  question_text,
-  question_type,
-  options,
-  correct_answer,
-  points,
-  created_at
-)
-SELECT
-  gen_random_uuid(),
-  exam.id,
-  'What is 2 + 2?',
-  'multiple_choice',
-  jsonb_build_array(
-    jsonb_build_object('text', '3', 'value', 'a'),
-    jsonb_build_object('text', '4', 'value', 'b'),
-    jsonb_build_object('text', '5', 'value', 'c'),
-    jsonb_build_object('text', '6', 'value', 'd')
-  ),
-  'b',
-  10,
-  NOW()
-FROM exam
-UNION ALL
-SELECT
-  gen_random_uuid(),
-  exam.id,
-  'What is the capital of France?',
-  'multiple_choice',
-  jsonb_build_array(
-    jsonb_build_object('text', 'London', 'value', 'a'),
-    jsonb_build_object('text', 'Paris', 'value', 'b'),
-    jsonb_build_object('text', 'Berlin', 'value', 'c'),
-    jsonb_build_object('text', 'Madrid', 'value', 'd')
-  ),
-  'b',
-  10,
-  NOW()
-FROM exam
-UNION ALL
-SELECT
-  gen_random_uuid(),
-  exam.id,
-  'What is the largest planet in our solar system?',
-  'multiple_choice',
-  jsonb_build_array(
-    jsonb_build_object('text', 'Earth', 'value', 'a'),
-    jsonb_build_object('text', 'Mars', 'value', 'b'),
-    jsonb_build_object('text', 'Jupiter', 'value', 'c'),
-    jsonb_build_object('text', 'Saturn', 'value', 'd')
-  ),
-  'c',
-  10,
-  NOW()
-FROM exam
-ON CONFLICT DO NOTHING;
+WHERE code = 'TEST123';
 
 -- Grant necessary permissions (adjust based on your RLS policies)
 -- This ensures test users can access the data
@@ -208,15 +264,13 @@ WHERE email IN (
 
 -- Verify test course and exam were created
 SELECT 
-  c.title as course_title,
+  c.name as course_name,
   e.title as exam_title,
-  e.exam_code,
-  COUNT(q.id) as question_count
+  e.code as exam_code,
+  jsonb_array_length(e.questions) as question_count
 FROM public.courses c
 LEFT JOIN public.exams e ON e.course_id = c.id
-LEFT JOIN public.exam_questions q ON q.exam_id = e.id
-WHERE c.title = 'E2E Test Course'
-GROUP BY c.title, e.title, e.exam_code;
+WHERE c.name = 'E2E Test Course';
 
 -- Success message
 DO $$

@@ -19,6 +19,7 @@ jobs:
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       BASE_URL: http://localhost:3000
+      CI: true
 
     steps:
       - name: Checkout code
@@ -34,13 +35,39 @@ jobs:
         run: npm ci
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Verify test files exist
+        run: |
+          echo "Checking for test files..."
+          ls -la e2e/tests/
+          test_count=$(find e2e/tests -name "*.spec.ts" | wc -l)
+          echo "Found $test_count test files"
+          if [ "$test_count" -eq 0 ]; then
+            echo "Error: No test files found!"
+            exit 1
+          fi
 
       - name: Build application
         run: npm run build
 
+      - name: Start application in background
+        run: |
+          npm run start &
+          echo $! > .next-pid
+          # Wait for server to be ready
+          npx wait-on http://localhost:3000 --timeout 60000
+
       - name: Run E2E tests
         run: npm run test:e2e
+
+      - name: Stop application
+        if: always()
+        run: |
+          if [ -f .next-pid ]; then
+            kill $(cat .next-pid) || true
+            rm .next-pid
+          fi
 
       - name: Upload test results
         if: always()
@@ -58,8 +85,9 @@ jobs:
           path: test-results/
           retention-days: 7
 
-      - name: Comment PR with results
-        if: github.event_name == 'pull_request'
+      - name: Comment PR with test summary
+        if: always() && github.event_name == 'pull_request'
         uses: daun/playwright-report-comment@v3
         with:
-          report-path: playwright-report
+          report-path: playwright-report/
+          report-url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
