@@ -97,8 +97,8 @@ This creates:
 
 ## 🎯 Available Scripts
 
-| Script                    | Description              |
-| ------------------------- | ------------------------ |
+| Script          | Description              |
+| --------------- | ------------------------ |
 | `npm run dev`   | Start development server |
 | `npm run build` | Build for production     |
 | `npm start`     | Start production server  |
@@ -197,8 +197,6 @@ SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
 ---
-
-
 
 ## 📖 Documentation
 
