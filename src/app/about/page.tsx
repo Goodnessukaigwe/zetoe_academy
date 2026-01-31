@@ -66,7 +66,7 @@ const statistics = [
   { title: "Mentors", value: 20, suffix: "" },
   { title: "Projects Completed", value: 160, suffix: "+" },
 ];
-g
+
 const testimonials = [
   { name: "Jane Doe", role: "Student", text: "Zeteo Citadel Consult helped me gain confidence!" },
   { name: "John Smith", role: "Corporate Executive", text: "Outstanding mentorship program." },
