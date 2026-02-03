@@ -35,7 +35,7 @@ export default function TeamSection({ team }: TeamSectionProps) {
     <>
       <section>
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-8">Our Team</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {team.map((m) => (
             <div
               key={m.id}
@@ -45,9 +45,9 @@ export default function TeamSection({ team }: TeamSectionProps) {
               <Image
                 src={m.image}
                 alt={m.name}
-                width={300}
-                height={250}
-                className="h-56 w-full object-cover"
+                width={600}
+                height={400}
+                className="h-48 sm:h-56 w-full object-cover"
               />
 
               {/* Content */}
