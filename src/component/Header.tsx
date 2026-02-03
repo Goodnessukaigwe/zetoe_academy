@@ -20,10 +20,9 @@ export default function Header() {
           <Link href="/verify-certificate">Verify Certificate</Link>
         </nav>
 
-        {/* Desktop Register / Sign In */}
+        {/* Desktop Sign In */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="/register" className="text-white bg-[#3a0ca3] px-3 py-2 rounded-md">Register</Link>
-          <Link href="/login" className="border border-blue-700 text-blue-700 px-3 py-2 rounded-md">Sign In</Link>
+          <Link href="/login" className="border border-blue-700 text-blue-700 px-4 py-2 rounded-md hover:bg-blue-50">Sign In</Link>
         </div>
 
         {/* Mobile menu (no JS) */}
@@ -40,7 +39,6 @@ export default function Header() {
             <Link href="/about" className="block hover:text-[#4a03fc]">About</Link>
             <Link href="/contact" className="block hover:text-[#4a03fc]">Contact</Link>
             <div className="pt-2 border-t">
-              <Link href="/register" className="block text-white bg-[#3a0ca3] text-center mt-2 px-3 py-2 rounded-md">Register</Link>
               <Link href="/login" className="block border border-blue-700 text-blue-700 text-center mt-2 px-3 py-2 rounded-md">Sign In</Link>
             </div>
           </div>
