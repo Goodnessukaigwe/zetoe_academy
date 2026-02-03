@@ -92,18 +92,18 @@ export default function AboutPage() {
       <Header />
 
       {/* ================= CONTENT ================= */}
-      <main className="py-14 px-4 sm:px-6 lg:px-20 space-y-20">
+      <main className="py-14 px-4 sm:px-6 lg:px-12 space-y-20">
         {/* ABOUT SECTION WITH IMAGE */}
         <section className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             {/* Image */}
-            <div className="flex justify-center">
+            <div className="flex justify-center px-4 sm:px-0">
               <ImageModal
                 src="/zetelog.png"
                 alt="Zetoe Citadel Consult Team"
                 width={400}
                 height={400}
-                className="w-full max-w-md h-auto"
+                className="w-full max-w-xs sm:max-w-md h-auto"
               />
             </div>
 
@@ -132,10 +132,10 @@ export default function AboutPage() {
         {/* FEATURES */}
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {features.map((f) => (
-            <div key={f.title} className="bg-white rounded-3xl shadow p-6 text-center">
-              <div className="text-5xl mb-4">{f.icon}</div>
+            <div key={f.title} className="bg-white rounded-3xl shadow p-4 sm:p-6 text-center">
+              <div className="text-4xl sm:text-5xl mb-3">{f.icon}</div>
               <h3 className="font-bold text-lg">{f.title}</h3>
-              <p className="text-sm text-gray-600">{f.description}</p>
+              <p className="text-sm sm:text-base text-gray-600">{f.description}</p>
             </div>
           ))}
         </section>
@@ -147,7 +147,7 @@ export default function AboutPage() {
         <section className="grid grid-cols-2 sm:grid-cols-4 gap-6">
           {statistics.map((s) => (
             <div key={s.title} className="bg-blue-50 p-6 rounded-2xl text-center">
-              <h3 className="text-3xl font-bold text-blue-600">
+              <h3 className="text-3xl sm:text-4xl md:text-3xl font-bold text-blue-600">
                 <CountUpStats targetValue={s.value} suffix={s.suffix} />
               </h3>
               <p className="text-sm">{s.title}</p>
@@ -160,8 +160,14 @@ export default function AboutPage() {
           <h2 className="text-2xl font-bold text-center text-blue-600 mb-8">Our Partners</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {partners.map((p) => (
-              <div key={p.name} className="bg-white p-8 rounded-2xl shadow text-center">
-                <Image src={p.logo} alt={p.name} width={120} height={60} className="mx-auto object-contain" />
+              <div key={p.name} className="bg-white p-6 sm:p-8 rounded-2xl shadow text-center">
+                <Image
+                  src={p.logo}
+                  alt={p.name}
+                  width={240}
+                  height={120}
+                  className="mx-auto object-contain w-full max-w-[120px] h-auto"
+                />
                 <p className="text-sm mt-3">{p.name}</p>
               </div>
             ))}
