@@ -38,6 +38,7 @@ export async function GET() {
       .select(`
         id,
         name,
+        username,
         email,
         phone,
         payment_status,

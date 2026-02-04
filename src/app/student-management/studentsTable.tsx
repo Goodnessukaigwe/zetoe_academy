@@ -21,6 +21,7 @@ export default function StudentsTable({
             <thead className="bg-gray-800 sticky top-0 z-10">
               <tr className="text-left text-gray-300">
                 <th className="px-6 py-3 font-medium">Name</th>
+                <th className="px-6 py-3 font-medium">Username</th>
                 <th className="px-6 py-3 font-medium">Email</th>
                 <th className="px-6 py-3 font-medium">Phone</th>
                 <th className="px-6 py-3 font-medium">Course</th>
@@ -36,7 +37,7 @@ export default function StudentsTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="text-center py-6 text-gray-500 italic">
+                  <td colSpan={7} className="text-center py-6 text-gray-500 italic">
                     No students found.
                   </td>
                 </tr>

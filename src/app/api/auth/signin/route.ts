@@ -5,6 +5,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { NextRequest, NextResponse } from 'next/server'
 import { rateLimit, RateLimitPresets, createRateLimitResponse } from '@/lib/rate-limit'
 import { logger } from '@/lib/logger'
@@ -42,14 +43,15 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient()
+    const adminClient = createAdminClient()
     let emailToUse = username
 
     // Check if input looks like an email (for admin login)
     const isEmail = username.includes('@')
 
     if (!isEmail) {
-      // Look up student by username to get their email
-      const { data: student, error: studentError } = await supabase
+      // Look up student by username to get their email (use admin client to bypass RLS)
+      const { data: student, error: studentError } = await adminClient
         .from('students')
         .select('email, user_id')
         .eq('username', username)

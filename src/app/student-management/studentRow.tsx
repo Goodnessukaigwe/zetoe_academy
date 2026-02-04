@@ -41,6 +41,7 @@ export default function StudentRow({
     <>
       <tr className="hover:bg-gray-800/70 transition-colors duration-200">
         <td className="px-6 py-3">{student.name}</td>
+        <td className="px-6 py-3 text-gray-400 font-mono text-sm">{student.username || "N/A"}</td>
         <td className="px-6 py-3">{student.email}</td>
         <td className="px-6 py-3">{student.phone || "N/A"}</td>
         <td className="px-6 py-3">{student.course?.name || "Not Enrolled"}</td>
