@@ -8,8 +8,10 @@ import { logger } from '@/lib/logger'
 interface StudentProfile {
   id: string
   name: string
+  username?: string
   email: string
   payment_status: 'paid' | 'unpaid' | 'partial'
+  profile_picture_url?: string | null
   course: {
     id: string
     name: string
