@@ -101,7 +101,14 @@ export default function AddStudentModal({
         });
 
         if (!photoRes.ok) {
-          logger.error('Photo upload failed', await photoRes.json());
+          const errorData = await photoRes.json();
+          console.error('Photo upload failed - Status:', photoRes.status);
+          console.error('Photo upload failed - Error:', JSON.stringify(errorData, null, 2));
+          logger.error('Photo upload failed', {
+            status: photoRes.status,
+            statusText: photoRes.statusText,
+            errorData: JSON.stringify(errorData)
+          });
           // Don't fail the whole operation, just log the error
         }
       }
