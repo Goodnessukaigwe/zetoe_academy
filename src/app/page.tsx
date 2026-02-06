@@ -211,7 +211,7 @@ const Page = () => {
             Partner with us to tackle your unique challenges and unlock your organization’s full potential.
           </p>
           <br />
-          <p>
+          <p> d     wrfi
             <span className='text-23 text-white font-bold'>North west zone address:</span> No 6 Sabr Plaza Station, Block B, Room 17 , Kachia Road
           </p>
         </div>

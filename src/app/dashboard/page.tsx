@@ -341,6 +341,12 @@ const Page = () => {
               </div>
               <h3 className="font-bold text-xl text-gray-900 mb-1">{student.name}</h3>
               <p className="text-blue-600 text-sm font-semibold mb-4">Student</p>
+              <button
+         
+          className="mt-4 inline-block bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-900 transition"
+        >
+          ← Back to Dashboard
+        </button>
               <div className="space-y-2 text-sm text-gray-600 text-left bg-gray-50 rounded-xl p-4">
                 <div className="flex items-center gap-2">
                   <User size={16} className="text-gray-400" />
