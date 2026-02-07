@@ -7,6 +7,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
+import { isAdmin } from '@/lib/auth'
 
 export async function GET(
   request: NextRequest,
@@ -140,17 +141,10 @@ export async function DELETE(
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
-    // Get user role
-    const { data: userData } = await adminClient
-      .from('auth.users')
-      .select('raw_user_meta_data')
-      .eq('id', user.id)
-      .single()
+    // Check if user is admin or super_admin
+    const { isAdmin: userIsAdmin } = await isAdmin(user.id)
 
-    const userRole = userData?.raw_user_meta_data?.role || 'student'
-
-    // Only admin and super_admin can delete exams
-    if (userRole !== 'admin' && userRole !== 'super_admin') {
+    if (!userIsAdmin) {
       return NextResponse.json(
         { error: 'Unauthorized. Only admins can delete exams.' },
         { status: 403 }
@@ -214,7 +208,6 @@ export async function DELETE(
         examId,
         examTitle: exam.title,
         deletedBy: user.id,
-        userRole,
       },
     })
 

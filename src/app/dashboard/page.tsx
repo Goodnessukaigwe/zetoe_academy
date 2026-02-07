@@ -8,8 +8,10 @@ import { logger } from '@/lib/logger'
 interface StudentProfile {
   id: string
   name: string
+  username?: string
   email: string
   payment_status: 'paid' | 'unpaid' | 'partial'
+  profile_picture_url?: string | null
   course: {
     id: string
     name: string
@@ -336,9 +338,19 @@ const Page = () => {
             
             {/* Profile Card */}
             <div className="bg-white rounded-3xl p-6 shadow-lg text-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold shadow-lg">
-                {student.name.charAt(0).toUpperCase()}
-              </div>
+              {student.profile_picture_url ? (
+                <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden shadow-lg border-4 border-blue-500">
+                  <img 
+                    src={student.profile_picture_url} 
+                    alt={student.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+                  {student.name.charAt(0).toUpperCase()}
+                </div>
+              )}
               <h3 className="font-bold text-xl text-gray-900 mb-1">{student.name}</h3>
               <p className="text-blue-600 text-sm font-semibold mb-4">Student</p>
               <div className="space-y-2 text-sm text-gray-600 text-left bg-gray-50 rounded-xl p-4">

@@ -50,7 +50,7 @@ Follow the prompts to:
 
 ### Create All GitHub Issues
 
-This script will create all 22 issues from `GITHUB_ISSUES.md`:
+This script will create all 21 issues from `GITHUB_ISSUES.md`:
 
 ```bash
 ./scripts/create-github-issues.sh
@@ -58,7 +58,7 @@ This script will create all 22 issues from `GITHUB_ISSUES.md`:
 
 **What it does:**
 
-- ✅ Creates 22 GitHub issues with proper titles, descriptions, and labels
+- ✅ Creates 21 GitHub issues with proper titles, descriptions, and labels
 - ✅ Adds priority emoji indicators (🔴 🟠 🟡 🟢)
 - ✅ Includes formatted descriptions with checkboxes
 - ✅ Applies appropriate labels (security, bug, enhancement, etc.)
@@ -71,7 +71,7 @@ This script will create all 22 issues from `GITHUB_ISSUES.md`:
   Creating GitHub Issues for Zetoe Academy
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-This will create 22 GitHub issues in the repository.
+This will create 21 GitHub issues in the repository.
 
 Do you want to continue? (y/N): y
 
@@ -83,7 +83,7 @@ Creating: 🔴 Infinite Recursion in Admin RLS Policies
 ✓ Created
 ...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ Successfully created 22 GitHub issues!
+✅ Successfully created 21 GitHub issues!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 View them at: https://github.com/Goodnessukaigwe/zetoe_academy/issues
@@ -91,7 +91,7 @@ View them at: https://github.com/Goodnessukaigwe/zetoe_academy/issues
 
 ## Issue Breakdown
 
-The script creates **22 issues** organized by priority:
+The script creates **21 issues** organized by priority:
 
 ### 🔴 Critical (2 issues)
 
@@ -123,9 +123,8 @@ The script creates **22 issues** organized by priority:
 17. Feature: Student Profile Page
 18. Feature: Bulk Student Import via CSV
 19. Testing: Add Unit Tests
-20. Testing: Add E2E Tests
-21. Performance: Implement Request Caching
-22. Performance: Database Query Optimization
+20. Performance: Implement Request Caching
+21. Performance: Database Query Optimization
 
 ## Labels Used
 

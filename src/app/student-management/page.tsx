@@ -69,6 +69,7 @@ export default function StudentsPage() {
     (student) =>
       student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       student.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      student.username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       student.course?.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 

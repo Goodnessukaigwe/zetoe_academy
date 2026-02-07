@@ -38,6 +38,7 @@ export async function GET() {
       .select(`
         id,
         name,
+        username,
         email,
         phone,
         payment_status,
@@ -95,12 +96,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Generate unique username using database function
+    const { data: usernameData, error: usernameError } = await adminClient
+      .rpc('generate_student_username')
+
+    if (usernameError || !usernameData) {
+      logger.error('Username generation error', usernameError)
+      return NextResponse.json(
+        { error: 'Failed to generate username' },
+        { status: 500 }
+      )
+    }
+
+    const generatedUsername = usernameData
+
     // 1. Create auth user
     const { data: authData, error: authError } = await adminClient.auth.admin.createUser({
       email,
       password,
-      email_confirm: true, // Auto-confirm email
-      user_metadata: { name },
+      email_confirm: true, // Auto-confirm email (not used for login anymore)
+      user_metadata: { name, username: generatedUsername },
     })
 
     if (authError) {
@@ -114,11 +129,12 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 2. Create student profile
+    // 2. Create student profile with username
     const { data: studentData, error: studentError } = await adminClient
       .from('students')
       .insert({
         user_id: authData.user.id,
+        username: generatedUsername,
         name,
         email,
         phone: phone || null,

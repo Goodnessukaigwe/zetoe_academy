@@ -14,7 +14,6 @@ export default function CourseDetailPage() {
   const [course, setCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [showEnrollForm, setShowEnrollForm] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -162,233 +161,20 @@ export default function CourseDetailPage() {
                 </div>
               </div>
 
-              <button
-                onClick={() => setShowEnrollForm(true)}
-                className="w-full bg-gradient-to-r from-blue-700 to-blue-900 text-white py-4 rounded-lg font-semibold text-lg hover:from-blue-800 hover:to-blue-950 transition shadow-lg"
+              <Link
+                href="/login"
+                className="block w-full bg-gradient-to-r from-blue-700 to-blue-900 text-white py-4 rounded-lg font-semibold text-lg hover:from-blue-800 hover:to-blue-950 transition shadow-lg text-center"
               >
-                Enroll Now
-              </button>
+                Sign In to View Details
+              </Link>
 
               <p className="text-center text-gray-500 text-sm mt-4">
-                Limited seats available
+                Contact admin to enroll in this course
               </p>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Enrollment Modal */}
-      {showEnrollForm && (
-        <EnrollmentModal
-          course={course}
-          onClose={() => setShowEnrollForm(false)}
-        />
-      )}
-    </div>
-  );
-}
-
-function EnrollmentModal({
-  course,
-  onClose,
-}: {
-  course: Course;
-  onClose: () => void;
-}) {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
-  const [submitting, setSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-
-    // Simulate submission - in real app, send to API or email service
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    setSuccess(true);
-    setTimeout(() => {
-      router.push("/register");
-    }, 2000);
-  };
-
-  return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md p-8">
-        {success ? (
-          <div className="text-center">
-            <CheckCircle className="text-green-600 mx-auto mb-4" size={64} />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Enrollment Request Sent!
-            </h2>
-            <p className="text-gray-600 mb-4">
-              We'll contact you shortly with registration details.
-            </p>
-            <p className="text-sm text-gray-500">
-              Redirecting to registration page...
-            </p>
-          </div>
-        ) : (
-          <>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Enroll in {course.name}
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Fill out the form below and we'll contact you with enrollment details.
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="John Doe"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="john@example.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="+234 XXX XXX XXXX"
-                />
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  disabled={submitting}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition disabled:opacity-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="flex-1 px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition disabled:opacity-50"
-                >
-                  {submitting ? "Submitting..." : "Submit"}
-                </button>
-              </div>
-            </form>
-          </>
-        )}
-      </div>
-
-         {/* footer working */}
-      <footer
-        id="contact"
-        className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-10 mt-16"
-      >
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
-        
-        {/* Brand */}
-        <div>
-          <h2 className="text-25 font-bold text-white mb-3">ZETEO CITADEL CONSULT</h2>
-          <p className="text-sm leading-6">
-            Partner with us to tackle your unique challenges and unlock your organization’s full potential.
-          </p>
-          <br />
-          <p>
-            <span className='text-23 text-white font-bold'>North west zone address:</span> No 6 Sabr Plaza Station, Block B, Room 17 , Kachia Road
-          </p>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-               <li><a href="#" className="hover:text-white transition">Home</a></li>
-            <li><a href="#" className="hover:text-white transition">Course</a></li>
-            <li><a href="#" className="hover:text-white transition">About</a></li>
-         
-            
-          </ul>
-        </div>
-
-        {/* Resources */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Resources</h3>
-          <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:text-white transition">Blog</a></li>
-            <li><a href="#" className="hover:text-white transition">FAQs</a></li>
-            <li><a href="#" className="hover:text-white transition">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-white transition">Terms of Service</a></li>
-          </ul>
-        </div>
-
-        {/* Social Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Connect With Us</h3>
-          <div className="  space-x-8">
-            
-            <a href="#" className="  flex gap-3 hover:text-white transition">
-               <img src="/twister.png" className=' w-7 ' alt="logo" />twitter
-            </a>
-            <br />
-            <a href="#" className="  flex gap-3 hover:text-white transition">
-             <img src="/instag.png" className=' w-7 ' alt="logo" /> instagram
-            </a>
-            <br />
-            <a href="#" className=" flex gap-3 hover:text-white transition">
-              <img src="/facebook.png" className=' w-7 ' alt="logo" />facebook
-            </a>
-            <br />
-            <a href="#" className=" flex gap-3 hover:text-white transition">
-             <img src="/whatsapp.png" className=' w-7 ' alt="logo" />whatsapp
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Bottom Section */}
-      <div className="mt-10 border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
-        <p>
-          © {new Date().getFullYear()} <span className="text-white font-semibold">ZETEO CITADEL CONSULT</span>. 
-          All rights reserved.
-        </p>
-      </div>
-      </footer>
-
     </div>
   );
 }

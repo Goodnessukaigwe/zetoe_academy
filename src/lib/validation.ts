@@ -26,39 +26,21 @@ export function validateEmail(email: string): { valid: boolean; error?: string }
 }
 
 /**
- * Validate password strength
+ * Validate password (simplified - no complexity requirements)
  */
 export function validatePassword(password: string): { valid: boolean; error?: string } {
   if (!password) {
     return { valid: false, error: 'Password is required' }
   }
 
-  // Minimum length
-  if (password.length < 8) {
-    return { valid: false, error: 'Password must be at least 8 characters long' }
+  // Minimum length only
+  if (password.length < 6) {
+    return { valid: false, error: 'Password must be at least 6 characters long' }
   }
 
   // Maximum length (prevent DOS attacks)
   if (password.length > 128) {
     return { valid: false, error: 'Password must be less than 128 characters' }
-  }
-
-  // Check for complexity
-  const hasUpperCase = /[A-Z]/.test(password)
-  const hasLowerCase = /[a-z]/.test(password)
-  const hasNumber = /[0-9]/.test(password)
-
-  if (!hasUpperCase || !hasLowerCase || !hasNumber) {
-    return {
-      valid: false,
-      error: 'Password must contain uppercase, lowercase, and numbers',
-    }
-  }
-
-  // Check for common weak passwords
-  const weakPasswords = ['password', '12345678', 'qwerty123', 'admin123']
-  if (weakPasswords.includes(password.toLowerCase())) {
-    return { valid: false, error: 'Password is too common. Please choose a stronger password' }
   }
 
   return { valid: true }

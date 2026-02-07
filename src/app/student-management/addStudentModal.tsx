@@ -19,9 +19,12 @@ export default function AddStudentModal({
     course_id: "",
     payment_status: "unpaid" as "paid" | "unpaid" | "partial",
   });
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [successData, setSuccessData] = useState<{username: string, name: string} | null>(null);
 
   // Fetch courses
   useEffect(() => {
@@ -38,6 +41,34 @@ export default function AddStudentModal({
     };
     fetchCourses();
   }, []);
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        setError('Invalid file type. Only JPG, PNG, and WebP are allowed');
+        return;
+      }
+
+      // Validate file size (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setError('File size exceeds 5MB limit');
+        return;
+      }
+
+      setPhotoFile(file);
+      setError('');
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,8 +88,42 @@ export default function AddStudentModal({
         throw new Error(data.error || "Failed to add student");
       }
 
-      onSuccess();
-      onClose();
+      const studentId = data.student.id;
+
+      // Upload photo if provided
+      if (photoFile && studentId) {
+        const photoFormData = new FormData();
+        photoFormData.append('photo', photoFile);
+
+        const photoRes = await fetch(`/api/students/${studentId}/photo`, {
+          method: 'POST',
+          body: photoFormData,
+        });
+
+        if (!photoRes.ok) {
+          const errorData = await photoRes.json();
+          console.error('Photo upload failed - Status:', photoRes.status);
+          console.error('Photo upload failed - Error:', JSON.stringify(errorData, null, 2));
+          logger.error('Photo upload failed', {
+            status: photoRes.status,
+            statusText: photoRes.statusText,
+            errorData: JSON.stringify(errorData)
+          });
+          // Don't fail the whole operation, just log the error
+        }
+      }
+
+      // Show success message with username
+      setSuccessData({
+        username: data.student.username,
+        name: data.student.name
+      });
+
+      // Auto-close after 5 seconds
+      setTimeout(() => {
+        onSuccess();
+        onClose();
+      }, 5000);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -79,7 +144,33 @@ export default function AddStudentModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        {successData ? (
+          <div className="p-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Student Added Successfully!</h3>
+              <div className="bg-blue-900/20 border border-blue-500 rounded-lg p-4 mt-4">
+                <p className="text-gray-300 mb-2">Username generated for {successData.name}:</p>
+                <p className="text-2xl font-bold text-blue-400 font-mono">{successData.username}</p>
+                <p className="text-sm text-gray-400 mt-2">Share this username with the student for login</p>
+              </div>
+              <button
+                onClick={() => {
+                  onSuccess();
+                  onClose();
+                }}
+                className="mt-6 w-full px-4 py-2 bg-[#3a0ca3] hover:bg-[#4c1d95] text-white rounded-lg font-medium transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
             <div className="p-3 bg-red-900/20 border border-red-500 rounded text-red-400 text-sm">
               {error}
@@ -130,9 +221,32 @@ export default function AddStudentModal({
                 setFormData({ ...formData, password: e.target.value })
               }
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3a0ca3]"
-              placeholder="Min. 6 characters"
+              placeholder="Set student password"
               minLength={6}
             />
+            <p className="text-xs text-gray-400 mt-1">Minimum 6 characters (no special requirements)</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              Profile Photo (Optional)
+            </label>
+            <div className="flex items-center gap-4">
+              {photoPreview && (
+                <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-blue-500">
+                  <img src={photoPreview} alt="Preview" className="w-full h-full object-cover" />
+                </div>
+              )}
+              <div className="flex-1">
+                <input
+                  type="file"
+                  accept="image/jpeg,image/jpg,image/png,image/webp"
+                  onChange={handlePhotoChange}
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3a0ca3] file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer"
+                />
+                <p className="text-xs text-gray-400 mt-1">Max 5MB. JPG, PNG, or WebP</p>
+              </div>
+            </div>
           </div>
 
           <div>
@@ -208,6 +322,7 @@ export default function AddStudentModal({
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );
