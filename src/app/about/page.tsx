@@ -1,10 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
 import Header from "@/component/Header";
-import ImageModal from "@/components/ImageModal";
-import TeamMemberModal from "@/components/TeamMemberModal";
-import TeamSection from "@/components/TeamSection";
-import CountUpStats from "@/components/CountUpStats";
+import InteractiveAboutSection from "@/components/InteractiveAboutSection";
+import SlidingFeaturesSection from "@/components/SlidingFeaturesSection";
+import InteractiveTeamSection from "@/components/InteractiveTeamSection";
+import AnimatedStatsSection from "@/components/AnimatedStatsSection";
+import PartnersCarousel from "@/components/PartnersCarousel";
 
 /* ================= DATA ================= */
 
@@ -45,7 +44,7 @@ bio: "Mr. Audam Joseph Yaba ACA is a Chartered Accountant with practical experie
     id: 4,
     name: "Miss Peace",
     role: "Chief Admin",
-    image: "/about/teams/miss peace.jpg",
+    image: "/miss peace.jpg",
     bio: "As Chief Administrator, Miss Peace ensures smooth operations across all departments. Her meticulous attention to detail and excellent organizational skills have been instrumental in maintaining the high standards of service delivery at Zetoe Citadel Consult.",
     expertise: ["Administrative Management", "Operations", "Stakeholder Relations", "Program Coordination"],
   },
@@ -67,10 +66,7 @@ const statistics = [
   { title: "Projects Completed", value: 160, suffix: "+" },
 ];
 
-const testimonials = [
-  { name: "Jane Doe", role: "Student", text: "Zeteo Citadel Consult helped me gain confidence!" },
-  { name: "John Smith", role: "Corporate Executive", text: "Outstanding mentorship program." },
-];
+
 
 const partners = [
   { name: "University of Ibadan (Consulting Unit)", logo: "/about/partners/uni ibadan.png" },
@@ -78,151 +74,31 @@ const partners = [
   { name: " National Youth Service Corps", logo: "/about/partners/nysc.png" },
 ];
 
-const activities = [
-  { id: 1, image: "/about/activities/1.jpg", description: "Workshop session" },
-  { id: 2, image: "/about/activities/2.jpg", description: "Student training" },
-  { id: 3, image: "/about/activities/3.jpg", description: "Leadership program" },
-];
+
 
 /* ================= PAGE ================= */
 
 export default function AboutPage() {
   return (
-    <div className="overflow-x-hidden bg-gray-50">
+    <div className="overflow-x-hidden">
       <Header />
 
       {/* ================= CONTENT ================= */}
-      <main className="py-14 px-4 sm:px-6 lg:px-12 space-y-20">
-        {/* ABOUT SECTION WITH IMAGE */}
-        <section className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            {/* Image */}
-            <div className="flex justify-center px-4 sm:px-0">
-              <ImageModal
-                src="/zetelog.png"
-                alt="Zetoe Citadel Consult Team"
-                width={400}
-                height={400}
-                className="w-full max-w-xs sm:max-w-md h-auto"
-              />
-            </div>
+      <main>
+        {/* INTERACTIVE HERO ABOUT SECTION */}
+        <InteractiveAboutSection />
 
-            {/* About Text */}
-            <div className="space-y-6">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-600">About Us</h2>
-              <p className="text-sm sm:text-base leading-relaxed text-gray-700">
-                Zetoe Citadel Consult is a leading educational and consulting organization dedicated to 
-                empowering individuals and institutions through world-class training, mentorship, and 
-                strategic consultancy services.
-              </p>
-              <p className="text-sm sm:text-base leading-relaxed text-gray-700">
-                We deliver professional training, mentorship, and consultancy for students, NYSC members, 
-                executives, and organisations. Our team of experienced mentors and consultants is committed 
-                to fostering excellence, professionalism, and continuous growth in every engagement.
-              </p>
-              <div className="pt-4">
-                <p className="text-sm text-gray-600 italic">
-                  💡 <span className="font-semibold">Tip:</span> Click on the image to enlarge and get a better view!
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* SLIDING FEATURES SECTION */}
+        <SlidingFeaturesSection features={features} />
 
-        {/* FEATURES */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {features.map((f) => (
-            <div key={f.title} className="bg-white rounded-3xl shadow p-4 sm:p-6 text-center">
-              <div className="text-4xl sm:text-5xl mb-3">{f.icon}</div>
-              <h3 className="font-bold text-lg">{f.title}</h3>
-              <p className="text-sm sm:text-base text-gray-600">{f.description}</p>
-            </div>
-          ))}
-        </section>
+        {/* INTERACTIVE TEAM SECTION */}
+        <InteractiveTeamSection team={team} />
 
-        {/* TEAM */}
-        <TeamSection team={team} />
+        {/* ANIMATED STATISTICS */}
+        <AnimatedStatsSection statistics={statistics} />
 
-        {/* STATISTICS */}
-        <section className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-          {statistics.map((s) => (
-            <div key={s.title} className="bg-blue-50 p-6 rounded-2xl text-center">
-              <h3 className="text-3xl sm:text-4xl md:text-3xl font-bold text-blue-600">
-                <CountUpStats targetValue={s.value} suffix={s.suffix} />
-              </h3>
-              <p className="text-sm">{s.title}</p>
-            </div>
-          ))}
-        </section>
-
-        {/* PARTNERS */}
-        <section>
-          <h2 className="text-2xl font-bold text-center text-blue-600 mb-8">Our Partners</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {partners.map((p) => (
-              <div key={p.name} className="bg-white p-6 sm:p-8 rounded-2xl shadow text-center">
-                <Image
-                  src={p.logo}
-                  alt={p.name}
-                  width={240}
-                  height={120}
-                  className="mx-auto object-contain w-full max-w-[120px] h-auto"
-                />
-                <p className="text-sm mt-3">{p.name}</p>
-              </div>
-            ))}
-          </div>
-    </section>
-
-    {/* ================= FOOTER ================= */}
-      {/* <footer className="bg-gray-900 text-gray-300 py-2">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
-          <div>
-            <h3 className="font-bold text-white mb-3">ZETEO CITADEL CONSULT</h3>
-            <p className="text-sm">
-              No 6 Sabr Plaza Station, Kachia Road
-            </p>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li><Link href="/">Home</Link></li>
-              <li><Link href="/about">About</Link></li>
-              <li><Link href="/courses">Courses</Link></li>
-              <li><Link href="/contact">Contact</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Resources</h4>
-            <ul className="space-y-2 text-sm">
-              <li>Blog</li>
-              <li>FAQs</li>
-              <li>Privacy Policy</li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">Social</h4>
-            <div className="space-y-3">
-              {["twister", "instag", "facebook", "whatsapp"].map((icon) => (
-                <Image
-                  key={icon}
-                  src={`/${icon}.png`}
-                  alt={icon}
-                  width={24}
-                  height={24}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <p className="text-center text-sm mt-10 text-gray-400">
-          © {new Date().getFullYear()} ZETEO CITADEL CONSULT
-        </p>
-      </footer> */}
+        {/* PARTNERS CAROUSEL */}
+        <PartnersCarousel partners={partners} />
       </main>
     </div>
   );
