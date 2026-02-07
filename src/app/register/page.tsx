@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { logger } from '@/lib/logger'
+import { Eye, EyeOff } from 'lucide-react'
 
 const RegisterPage = () => {
   const [name, setName] = useState('')
@@ -115,7 +116,8 @@ const RegisterPage = () => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-3 text-gray-600"
             >
-              {showPassword ? (
+              
+               {showPassword ? (
                 <Eye className='h-5 w-5 text-black'/>
               ) : (
                  <EyeOff className='h-5 w-5 text-black'/>
