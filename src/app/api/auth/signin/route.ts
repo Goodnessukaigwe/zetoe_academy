@@ -1,11 +1,12 @@
 /**
  * API Route: Sign In
  * POST /api/auth/signin
+ * Authenticates users with username and password
  */
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { NextRequest, NextResponse } from 'next/server'
-import { validateEmail } from '@/lib/validation'
 import { rateLimit, RateLimitPresets, createRateLimitResponse } from '@/lib/rate-limit'
 import { logger } from '@/lib/logger'
 
@@ -23,13 +24,12 @@ export async function POST(request: NextRequest) {
       return createRateLimitResponse(rateLimitResult)
     }
 
-    const { email, password } = await request.json()
+    const { username, password } = await request.json()
 
-    // Validate email format
-    const emailValidation = validateEmail(email)
-    if (!emailValidation.valid) {
+    // Validate username/email
+    if (!username || username.trim().length === 0) {
       return NextResponse.json(
-        { error: emailValidation.error },
+        { error: 'Username or email is required' },
         { status: 400 }
       )
     }
@@ -43,50 +43,54 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient()
+    const adminClient = createAdminClient()
+    let emailToUse = username
 
-    // Sign in with Supabase
+    // Check if input looks like an email (for admin login)
+    const isEmail = username.includes('@')
+
+    if (!isEmail) {
+      // Look up student by username to get their email (use admin client to bypass RLS)
+      const { data: student, error: studentError } = await adminClient
+        .from('students')
+        .select('email, user_id')
+        .eq('username', username)
+        .single()
+
+      if (studentError || !student) {
+        logger.error('Student lookup failed', studentError, {
+          context: { username },
+        })
+        return NextResponse.json(
+          { error: 'Invalid username or password' },
+          { status: 401 }
+        )
+      }
+
+      emailToUse = student.email
+    }
+
+    // Sign in with Supabase using the email
     const { data, error } = await supabase.auth.signInWithPassword({
-      email,
+      email: emailToUse,
       password,
     })
 
     if (error) {
       logger.error('Signin failed', error, {
         context: {
-          email,
+          username,
           errorCode: error.code,
         },
       })
       
-      return NextResponse.json({ error: error.message }, { status: 401 })
-    }
-
-    // Check if email is verified
-    if (!data.user.email_confirmed_at) {
-      logger.warn('Login attempt with unverified email', {
-        context: {
-          userId: data.user.id,
-          email: data.user.email,
-        },
-      })
-
-      // Sign out the user immediately
-      await supabase.auth.signOut()
-
-      return NextResponse.json(
-        {
-          error: 'Please verify your email address before logging in.',
-          requiresVerification: true,
-          email: data.user.email,
-        },
-        { status: 403 }
-      )
+      return NextResponse.json({ error: 'Invalid username or password' }, { status: 401 })
     }
 
     logger.info('User signed in successfully', {
       context: {
         userId: data.user?.id,
-        email: data.user?.email,
+        username,
       },
     })
 

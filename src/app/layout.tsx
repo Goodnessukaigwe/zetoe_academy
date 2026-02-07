@@ -16,9 +16,7 @@ export const metadata: Metadata = {
   title: "Zetoe Academy",
   description: "Learn and excel with Zetoe Citadel Consult - Your trusted partner in education and training",
   icons: {
-    icon: '/images/zeteo.jpg',
-    // Or use a custom path:
-    // icon: '/images/zeteo.jpg',
+    icon: '/zetoe/zetoe-logo.jpeg',
   },
 };
 
