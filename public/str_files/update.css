@@ -1,0 +1,44 @@
+/****/
+.single-course .course-meta .meta-item:nth-child(3n+1) {
+  clear: both;
+}
+@media (max-width: 767px) {
+  .single-course .course-meta .meta-item {
+    width: 50%;
+  }
+  .single-course .course-meta .meta-item:nth-child(3n+1) {
+    clear: none;
+  }
+  .single-course .course-meta .meta-item:nth-child(2n+1) {
+    clear: both;
+  }
+}
+@media (max-width: 400px) {
+  .single-course .course-meta .meta-item {
+    width: 100%;
+  }
+}
+
+.icon-level {
+  background: url("../images/level-up.png") no-repeat scroll center center transparent;
+}
+
+.icon-price {
+  background: url("../images/price-tag.png") no-repeat scroll center center transparent;
+}
+
+.icon-students {
+  background: url("../images/student.png") no-repeat scroll center center transparent;
+}
+
+.gbb-row.gsc-equal-height .column-content-inner {
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+  top: 0;
+}
+
+header#header{
+  z-index: 39;
+}
