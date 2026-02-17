@@ -1,128 +1,341 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
 import Header from "@/component/Header";
+
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    // Add your form submission logic here
+    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+  };
+
+  const contactInfo = [
+    {
+      name: "John  Daniel",
+      title: "Chief Admin",
+      phone: "09012345678",
+      whatsapp: "09012345678",
+      email: "chiefadmin@gmail.com",
+      icon: "👤",
+    },
+    {
+      name: "Mary Johnson",
+      title: "Admin",
+      phone: "09012345678",
+      whatsapp: "09012345678",
+      email: "admin@gmail.com",
+      icon: "👤",
+    },
+    {
+      name: "Kelechi Obi",
+      title: "CRO (Client Relations)",
+      phone: "09012345678",
+      whatsapp: "09012345678",
+      email: "cro@gmail.com",
+      icon: "👤",
+    },
+  ];
+
+  const offices = [
+    {
+      zone: "North West Zone",
+      address: "No 6 Sabr Plaza Station, Block B, Room 17, Kachia Road",
+    },
+  ];
+
   return (
-
-
-    
-    <div>
+    <div className="bg-white">
       <Header />
 
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-indigo-600 to-blue-800 text-white py-12 sm:py-16 md:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
+            Get In Touch
+          </h1>
+          <p className="text-lg sm:text-xl text-indigo-100 max-w-2xl mx-auto">
+            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          </p>
+        </div>
+      </section>
 
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          {/* Contact Information */}
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
+              Contact Information
+            </h2>
 
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-20">
+            {/* Office Location */}
+            <div className="mb-10 p-6 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg border border-indigo-200">
+              <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <span className="text-2xl">📍</span> Our Office
+              </h3>
+              {offices.map((office, idx) => (
+                <div key={idx}>
+                  <p className="text-sm text-indigo-600 font-semibold uppercase tracking-wide mb-2">
+                    {office.zone}
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">{office.address}</p>
+                </div>
+              ))}
+            </div>
 
-      
-      <h1 className="text-2xl sm:text-3xl font-bold mb-8 text-blue-700
-       text-center sm:text-left">
-        Contact Us
-      </h1>
+            {/* General Contact */}
+            <div className="mb-10">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                General Inquiries
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">📧</span>
+                  <div>
+                    <p className="text-sm text-gray-500 font-medium">Email</p>
+                    <a
+                      href="mailto:info@zeteoconsult.ng"
+                      className="text-indigo-600 hover:text-indigo-700 font-medium"
+                    >
+                      info@zeteoconsult.ng
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">📱</span>
+                  <div>
+                    <p className="text-sm text-gray-500 font-medium">Phone</p>
+                    <a
+                      href="tel:+234800000000"
+                      className="text-indigo-600 hover:text-indigo-700 font-medium"
+                    >
+                      +234 800 000 0000
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      {/* ====== CONTACT LIST SECTION ====== */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+            {/* Team Members */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Team Contacts
+              </h3>
+              <div className="space-y-4">
+                {contactInfo.map((contact, idx) => (
+                  <div
+                    key={idx}
+                    className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="text-2xl">{contact.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-gray-900">
+                          {contact.name}
+                        </h4>
+                        <p className="text-sm text-indigo-600 font-medium mb-2">
+                          {contact.title}
+                        </p>
+                        <div className="space-y-1 text-sm">
+                          <p>
+                            <span className="text-gray-600">Phone: </span>
+                            <a
+                              href={`tel:${contact.phone}`}
+                              className="text-indigo-600 hover:underline"
+                            >
+                              {contact.phone}
+                            </a>
+                          </p>
+                          <p>
+                            <span className="text-gray-600">WhatsApp: </span>
+                            <a
+                              href={`https://wa.me/${contact.whatsapp.replace(/\D/g, '')}`}
+                              className="text-indigo-600 hover:underline"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {contact.whatsapp}
+                            </a>
+                          </p>
+                          <p>
+                            <span className="text-gray-600">Email: </span>
+                            <a
+                              href={`mailto:${contact.email}`}
+                              className="text-indigo-600 hover:underline break-all"
+                            >
+                              {contact.email}
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-        {/* CONTACT CARD */}
-        <div className="bg-white shadow-md p-5 rounded-xl">
-          <h2 className="text-lg sm:text-xl font-semibold text-black">John Daniel</h2>
-          <p className="text-xs sm:text-sm text-lime-500 mb-3">Chief Admin</p>
+          {/* Contact Form */}
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
+              Send us a Message
+            </h2>
 
-          <p className=" text-blue-800 text-sm"><strong
-          className=" text-black text-sm">Phone:</strong> 09012345678</p>
-          <p className=" text-blue-800 text-sm"><strong
-         className=" text-black text-sm" >WhatsApp:</strong> 09012345678</p>
-          <p className=" text-blue-800 text-sm"><strong
-         className=" text-black text-sm" >Email:</strong> chiefadmin@gmail.com</p>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
+                  placeholder="John Doe"
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email Address <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
+                  placeholder="john@example.com"
+                />
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
+                  placeholder="+234 800 000 0000"
+                />
+              </div>
+
+              {/* Subject */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Subject <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
+                  placeholder="What is this about?"
+                />
+              </div>
+
+              {/* Message */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Message <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={5}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500 resize-none"
+                  placeholder="Tell us more about your inquiry..."
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-blue-700 transition duration-300 shadow-md hover:shadow-lg"
+              >
+                Send Message
+              </button>
+
+              <p className="text-sm text-gray-500 text-center">
+                We typically respond within 24 hours.
+              </p>
+            </form>
+          </div>
         </div>
 
-        <div className="bg-white shadow-md p-5 rounded-xl">
-          <h2 className="text-lg sm:text-xl font-semibold text-black">Mary Johnson</h2>
-          <p className="text-xs sm:text-sm text-lime-500 mb-3">Admin</p>
-
-           <p className=" text-blue-800 text-sm"><strong
-          className=" text-black text-sm">Phone:</strong> 09012345678</p>
-          <p className=" text-blue-800 text-sm"><strong
-         className=" text-black text-sm" >WhatsApp:</strong> 09012345678</p>
-          <p className=" text-blue-800 text-sm"><strong
-         className=" text-black text-sm" >Email:</strong> admin@gmail.com</p>
-
-        </div>
-
-        <div className="bg-white shadow-md p-5 rounded-xl">
-          <h2 className="text-lg sm:text-xl font-semibold text-black">Kelechi Obi</h2>
-          <p className="text-xs sm:text-sm text-lime-500 mb-3">CRO (Client Relations)</p>
-
-          <p className=" text-blue-800 text-sm"><strong
-          className=" text-black text-sm">Phone:</strong> 09012345678</p>
-          <p className=" text-blue-800 text-sm"><strong
-         className=" text-black text-sm" >WhatsApp:</strong> 09012345678</p>
-          <p className=" text-blue-800 text-sm"><strong
-         className=" text-black text-sm" >Email:</strong> cro@gmail.com</p>
+        {/* FAQ Section */}
+        <div className="bg-gradient-to-r from-gray-50 to-indigo-50 rounded-lg p-8 md:p-12 border border-gray-200">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
+            Frequently Asked Questions
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-2">
+                How long does it take to get a response?
+              </h3>
+              <p className="text-gray-700">
+                We typically respond to all inquiries within 24 hours during business days.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-2">
+                Do you offer free consultations?
+              </h3>
+              <p className="text-gray-700">
+                Yes, we offer initial consultations for institutional partnerships and major programs.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-2">
+                What are your business hours?
+              </h3>
+              <p className="text-gray-700">
+                Monday to Friday, 9:00 AM - 5:00 PM. We also respond to WhatsApp messages.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-2">
+                Can I schedule a call with the team?
+              </h3>
+              <p className="text-gray-700">
+                Absolutely! Mention your preferred time in the contact form or call us directly.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* ====== CONTACT FORM SECTION ====== */}
-      <div className="bg-white shadow-lg p-6 sm:p-8 rounded-xl max-w-3xl mx-auto">
-
-        <h2 className="text-xl sm:text-2xl font-semibold text-blue-700
-         mb-6 text-center sm:text-left">
-          Send Us a Message
-        </h2>
-
-        <form className="grid gap-4">
-
-          {/* NAME */}
-          <div>
-            <label className="block font-medium mb-1 text-black text-sm">Name</label>
-            <input
-              type="text"
-              className="w-full border  text-black rounded-lg px-3 py-2 sm:px-4 sm:py-2 
-              focus:outline-none focus:ring"
-              placeholder="Enter your name"
-            />
-          </div>
-
-          {/* EMAIL */}
-          <div>
-            <label className="block font-medium mb-1  text-black text-sm">Email</label>
-            <input
-              type="email"
-              className="w-full border rounded-lg px-3 py-2 sm:px-4 sm:py-2
-                text-black focus:outline-none focus:ring"
-              placeholder="Enter your email"
-            />
-          </div>
-
-          {/* PHONE */}
-          <div>
-            <label className="block font-medium mb-1 text-black text-sm">Phone Number</label>
-            <input
-              type="text"
-              className="w-full border rounded-lg px-3 py-2 sm:px-4 sm:py-2
-               text-black focus:outline-none focus:ring"
-              placeholder="Enter your phone number"
-            />
-          </div>
-
-          {/* MESSAGE */}
-          <div>
-            <label className="block font-medium mb-1  text-black text-sm">Message</label>
-            <textarea
-              className="w-full border rounded-lg px-3 py-2 sm:px-4 sm:py-2 h-28 
-               text-black sm:h-32 resize-none focus:outline-none focus:ring"
-              placeholder="Type your message..."
-            ></textarea>
-          </div>
-
-          {/* SUBMIT */}
-          <button className=" py-3 rounded-lg font-semibold text-center text-white
-           bg-[#3a0ca3] hover:bg-[#1d0555] transition duration-300 px-2 ">
-            Submit
-          </button>
-
-        </form>
-      </div>
-</div>
 
 
 
@@ -155,8 +368,7 @@ export default function ContactPage() {
           <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
           <ul className="space-y-2 text-sm">
                <li><Link href="/" className="hover:text-white transition">Home</Link></li>
-            <li><Link href="/courses/id" className="hover:text-white transition">Course</Link></li>
-            <li><Link href="/About" className="hover:text-white transition">About</Link></li>
+           \ <li><Link href="/About" className="hover:text-white transition">About</Link></li>
          
             
           </ul>
