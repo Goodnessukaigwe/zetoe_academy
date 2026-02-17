@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { logger } from '@/lib/logger'
 
 const Navbar = () => {
   const router = useRouter()
@@ -12,33 +13,29 @@ const Navbar = () => {
       await fetch('/api/auth/signout', { method: 'POST' })
       router.push('/login')
     } catch (error) {
-      console.error('Logout failed:', error)
+      logger.error('Logout failed', error)
     }
   }
 
   return (
-    <nav className="bg-[#3a0ca3] p-4 flex justify-between items-center shadow-md font-['Roboto_Condensed']">
-      {/* Logo + Name */}
+    <nav className="bg-[#3a0ca3] p-4 flex justify-between items-center shadow-md font-['Open_Sans']">
+  
       <div className="flex items-center space-x-3">
         <Image
           src="/images/zeteo(1).jpg"
-          alt="ZyraTel Consult Logo"
+          alt="Zeteo Academy Logo"
           width={40}
           height={40}
-          className="rounded-full"
-        />
+          className="rounded-full"/>
         <h1 className="text-2xl font-extrabold text-white">
           Zeteo Citadel Consult
         </h1>
       </div>
-
-      {/* Logout */}
+    
       <button
         onClick={handleLogout}
-        className=" text-white px-4 py-2 rounded-lg 
-        
-        bg-[#3a0ca3] border border-white hover:bg-white hover:text-[#3a0ca3] 
-        transition duration-300 font-bold shadow-sm"
+        className="relative font-['Times_New_Roman'] text-white px-5 py-2 rounded-md
+         bg-[#3a0ca3] border border-white hover:bg-white hover:text-[#3a0ca3] transition duration-300 font-bold shadow-sm"
       >
         Logout
       </button>
