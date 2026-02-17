@@ -292,6 +292,7 @@ const Page = () => {
     )
   }
 
+  
   const progress = calculateProgress()
 
   return (
