@@ -1,48 +1,27 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        {/* Logo & Brand */}
-        <div className="flex items-center gap-3">
-          <Image src="/zetelog.png" alt="Logo" width={48} height={48} className="object-contain" />
-          <h1 className="text-lg md:text-2xl font-extrabold text-blue-700">ZETEO CITADEL CONSULT</h1>
-        </div>
-
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-6 font-semibold text-gray-800">
-          <Link href="/">Home</Link>
-          <Link href="/courses/id">Courses</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/verify-certificate">Verify Certificate</Link>
+    <header className="sticky top-0 z-50 bg-white shadow-sm">
+      <div className="flex items-center px-0 py-3">
+        
+        <img src="/zetelog.png" alt="Zeteo logo" className="h-16 w-16 object-contain" />
+        <h1 className="text-2xl font-extrabold flex-1 text-blue-700">ZETEO CITADEL CONSULT</h1>
+        
+        <nav className="flex-1 space-x-10 font-bold text-gray-800">
+          <Link href="/" className="hover:text-[#4a03fc] transition">Home</Link>
+          <Link href="/about" className="hover:text-[#4a03fc] transition">About</Link>
+          <Link href="/contact" className="hover:text-[#4a03fc] transition">Contact</Link>
+          <Link href="/verify-certificate" className="hover:text-[#4a03fc] transition">Verify Certificate</Link>
         </nav>
 
-        {/* Desktop Sign In */}
-        <div className="hidden md:flex items-center space-x-4">
-          <Link href="/login" className="border border-blue-700 text-blue-700 px-4 py-2 rounded-md hover:bg-blue-50">Sign In</Link>
+        <div className="hidden md:flex items-center">
+          <Link href="/login" className="border-2 border-indigo-600 text-blue-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-100 transition mr-5">Sign In</Link>
         </div>
 
-        {/* Mobile menu (no JS) */}
-        <details className="md:hidden">
-          <summary className="list-none cursor-pointer p-2">
-            <span className="sr-only">Open menu</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </summary>
-          <div className="mt-2 p-3 space-y-2 bg-white border rounded-md shadow-sm">
-            <Link href="/" className="block hover:text-[#4a03fc]">Home</Link>
-            <Link href="/courses/id" className="block hover:text-[#4a03fc]">Courses</Link>
-            <Link href="/about" className="block hover:text-[#4a03fc]">About</Link>
-            <Link href="/contact" className="block hover:text-[#4a03fc]">Contact</Link>
-            <div className="pt-2 border-t">
-              <Link href="/login" className="block border border-blue-700 text-blue-700 text-center mt-2 px-3 py-2 rounded-md">Sign In</Link>
-            </div>
-          </div>
-        </details>
+        <div className="md:hidden">
+          <button className="text-gray-700 text-2xl">☰</button>
+        </div>
       </div>
     </header>
   );

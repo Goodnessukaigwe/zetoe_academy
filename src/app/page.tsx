@@ -20,6 +20,7 @@ const Page = () => {
             <Link href="/" className="hover:text-[#4a03fc] transition">Home</Link>
             <Link href="/about" className="hover:text-[#4a03fc] transition">About</Link>
             <Link href="/contact" className="hover:text-[#4a03fc] transition">Contact</Link>
+            <Link href="/verify-certificate" className="hover:text-[#4a03fc] transition">Verify Certificate</Link>
           </nav>
 
           <div className="hidden md:flex items-center">
