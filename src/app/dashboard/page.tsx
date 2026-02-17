@@ -312,13 +312,14 @@ const Page = () => {
               <div className="hidden md:block text-right">
                 <p className="text-sm text-slate-600">{getCurrentDate()}</p>
               </div>
-              <button
+              {/* Sign out */}
+              {/* <button
                 onClick={handleLogout}
                 className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
               >
                 <LogOut size={16} />
                 Sign out
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -613,10 +614,13 @@ const Page = () => {
                 <div>
                   <h3 className="font-semibold text-xl text-slate-900">{student.name}</h3>
                   <p className="text-slate-500 text-sm">Student</p>
+                  <a href="/StudentProfile">
                   <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
                     <User size={14} />
                     Active profile
                   </div>
+                  </a>
+                  
                 </div>
               </div>
               <div className="mt-5 space-y-2 text-sm text-slate-600 bg-slate-50 rounded-2xl p-4">
