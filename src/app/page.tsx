@@ -22,11 +22,8 @@ const Page = () => {
             <Link href="/contact" className="hover:text-[#4a03fc] transition">Contact</Link>
           </nav>
 
-          <div className="hidden md:flex space-x-4 mt-15">
-            <Link href="/register" className="bg-indigo-600 text-white px-5 py-2 
-            rounded-lg font-semibold shadow-md hover:bg-[#1d0555] transition">Get Started</Link>
-            <Link href="/login" className="border-1 border-indigo-600 text-blue-700 px-2 py-2 rounded-md
-         hover:bg-indigo-100 transition mr-4">Sign In</Link>
+          <div className="hidden md:flex items-center">
+            <Link href="/login" className="border-2 border-indigo-600 text-blue-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-100 transition mr-5">Sign In</Link>
           </div>
         
 
@@ -49,17 +46,8 @@ const Page = () => {
                institutional consulting tailored for learners, corps members and
                 organizations preparing for exams and assessments.</p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/register" className="inline-block bg-gradient-to-r
-               from-yellow-600 to-indigo-700 text-white px-8 py-4 rounded-lg 
-               font-bold shadow-lg hover:shadow-2xl hover:scale-105 transition duration-300">
-                Get Started Now</Link>
-              <Link href="/about" className="inline-block border-2 border-indigo-600
-               text-indigo-600 px-8 py-4 rounded-lg font-bold hover:bg-indigo-50 
-               transition duration-300">Learn More</Link>
-            </div>
 
-            <div className="mt-8 text-sm text-gray-600">✓ Trusted by: University of Ibadan(Consulting Unit), SMPIN, NYSC</div>
+            <div className="mt-8 text-sm text-gray-600">Trusted by: University of Ibadan(Consulting Unit), SMPIN, NYSC</div>
           </div>
 
           <div className="order-first lg:order-last">
@@ -83,7 +71,6 @@ const Page = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <article className=" p-8  bg-gradient-to-br from-indigo-200 to-blue-50
              rounded-2xl shadow-lg  border border-gray-100">
-              <div className="text-5xl mb-4 ">🤝</div>
               <h4 className="text-2xl font-bold text-gray-900">Mentorship</h4>
               <p className="mt-5 text-gray-800 leading-relaxed">
                 Personalized coaching, exam strategies and structured study plans tailored 
@@ -94,7 +81,6 @@ const Page = () => {
 
             <article className=" p-8 bg-gradient-to-br from-indigo-200 to-blue-50 
             rounded-2xl shadow-lg  border border-gray-100">
-              <div className="text-5xl mb-4 ">🎯</div>
               <h4 className="text-2xl font-bold text-gray-900">Professionalism</h4>
               <p className="mt-5 text-gray-800 leading-relaxed">Soft-skills development,
                  CV clinics and workplace readiness for early-career professionals.</p>
@@ -104,7 +90,6 @@ const Page = () => {
 
             <article className=" p-8 bg-gradient-to-br from-indigo-200 to-blue-50
             rounded-2xl shadow-lg border border-gray-100">
-              <div className="text-5xl mb-4 ">💼</div>
               <h4 className="text-2xl font-bold text-gray-900">Consulting</h4>
               <p className="mt-5 text-gray-800 leading-relaxed">Curriculum support,
                  assessment design and institutional training programs.</p>
@@ -126,7 +111,7 @@ const Page = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {['Kaduna','Kano','Niger','Lagos','Abuja','Jos','Ebonyi'].map((l) => (
-              <div key={1} className=" px-2 py-2 bg-gradient-to-br from-indigo-200 to-blue-50
+              <div key={l} className=" px-2 py-2 bg-gradient-to-br from-indigo-200 to-blue-50
                rounded-2xl shadow-md hover:shadow-xl transform hover:scale-110 transition-all 
                duration-300 border border-indigo-400 cursor-pointer">
                 <span className="text-gray-900 font-bold text-lg group-hover:text-indigo-600 
@@ -149,7 +134,7 @@ const Page = () => {
             <div className=" p-8 bg-gradient-to-br from-indigo-50 to-blue-50
              rounded-2xl shadow-lg border border-gray-200 cursor-pointer">
                 <img
-        src="/about/partners/uni ibadan.png"
+        src="ibadanlog.png"
         alt=""className="w-20 h-18 ml-20" />
 
               <h4 className="text-2xl font-bold text-gray-900 mt-3">University of Ibadan(Consulting Unit)</h4>
@@ -175,7 +160,7 @@ const Page = () => {
              rounded-2xl shadow-lg border border-gray-200 cursor-pointer">
              
              <img
-        src="/about/partners/nysc.png"
+        src="nysc.png"
         alt=""className="w-20 h-18 ml-20 object-cover" />
 
               <h4 className="text-2xl font-bold mt-6 text-gray-900">National Youth Service Corps(NYSC)</h4>
@@ -195,7 +180,6 @@ const Page = () => {
           <h4 className="text-4xl font-black">Ready to Transform Results?</h4>
           <p className="text-indigo-100 mt-4 mb-8 text-lg">Start a program, request institutional support, or connect with our team today.</p>
           <div className="flex justify-center gap-4 flex-wrap">
-            <Link href="/register" className="bg-white text-indigo-700 px-8 py-4 rounded-lg font-bold shadow-lg hover:shadow-xl hover:scale-105 transition duration-300">Create Account</Link>
             <Link href="/contact" className="border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-indigo-700 transition">Contact Sales</Link>
           </div>
         </div>
