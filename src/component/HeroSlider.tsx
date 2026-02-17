@@ -62,20 +62,27 @@ export default function HeroSlider() {
     // Initialize first image text
     setText(chooseTextForImage(heroImages[0]));
 
-    const interval = setInterval(() => {
-      setFade(false);
+    // Lightweight auto-slide: advance image every 5s with a short fade
+    const slideInterval = 5000;
+    const fadeDuration = 500; // keep CSS transition durations in sync
 
-      setTimeout(() => {
-        setIndex(prev => {
+    const iv = setInterval(() => {
+      setFade(false);
+      // after fade-out, switch image and fade back in
+      const t = setTimeout(() => {
+        setIndex((prev) => {
           const next = (prev + 1) % heroImages.length;
           setText(chooseTextForImage(heroImages[next]));
-          setFade(true);
           return next;
         });
-      }, 1500); // fade transition
-    }, 8000); // slide duration
+        setFade(true);
+      }, fadeDuration);
 
-    return () => clearInterval(interval);
+      // clear the timeout if interval cleared early
+      return () => clearTimeout(t);
+    }, slideInterval);
+
+    return () => clearInterval(iv);
   }, []);
 
   const positionClass =
@@ -86,13 +93,11 @@ export default function HeroSlider() {
       : "left-8 text-left";
 
   return (
-    <div className="relative  w-full md:h-[400px] overflow-hidden mt-3
-     m-auto border-8 ">
+    <div className="relative w-full md:h-[400px] overflow-hidden">
       {/* IMAGE */}
       <img
         src={heroImages[index]}
-        className={`absolute inset-0 w-full h-full object-cover
-          object-center transition-opacity duration-[2350ms] ${
+        className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ease-in-out ${
           fade ? "opacity-100" : "opacity-0"
         }`}
         alt=""
