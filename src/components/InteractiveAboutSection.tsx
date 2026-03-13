@@ -19,7 +19,7 @@ export default function InteractiveAboutSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-20 px-4">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-600 py-20 px-4">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
@@ -61,12 +61,12 @@ export default function InteractiveAboutSection() {
               
               {/* Floating cards */}
               <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl p-4 backdrop-blur-md transform hover:scale-110 transition duration-300 shadow-2xl max-w-xs">
-                <p className="text-white font-bold text-sm">🎓 Empowering Excellence</p>
+                <p className="text-white font-bold text-sm"> Empowering Excellence</p>
                 <p className="text-white text-xs mt-1 opacity-90">Training & Mentorship</p>
               </div>
               
               <div className="absolute -top-6 -right-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-4 backdrop-blur-md transform hover:scale-110 transition duration-300 shadow-2xl max-w-xs">
-                <p className="text-white font-bold text-sm">💼 Strategic Growth</p>
+                <p className="text-white font-bold text-sm"> Strategic Growth</p>
                 <p className="text-white text-xs mt-1 opacity-90">Consulting Services</p>
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function InteractiveAboutSection() {
               {/* Animated heading */}
               <div>
                 <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-4 leading-tight">
-                  About <span className="block">Zetoe Citadel</span>
+                  About <span className="block">Zeteo Citadel</span>
                 </h1>
                 <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
               </div>
@@ -90,7 +90,7 @@ export default function InteractiveAboutSection() {
               {/* Description text */}
               <div className="space-y-4 text-gray-300 leading-relaxed">
                 <p className="text-lg">
-                  Zetoe Citadel Consult is a <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-bold">leading educational and consulting organization</span> dedicated to empowering individuals and institutions through world-class training, mentorship, and strategic consultancy services.
+                  Zeteo Citadel Consult is a <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 font-bold">leading educational and consulting organization</span> dedicated to empowering individuals and institutions through world-class training, mentorship, and strategic consultancy services.
                 </p>
                 <p className="text-lg">
                   We deliver professional training, mentorship, and consultancy for students, NYSC members, executives, and organisations. Our team of experienced mentors and consultants is committed to fostering excellence, professionalism, and continuous growth in every engagement.
@@ -100,9 +100,9 @@ export default function InteractiveAboutSection() {
               {/* Features list with animation */}
               <div className="space-y-3 pt-4">
                 {[
-                  { icon: '✨', text: 'World-class training programs' },
-                  { icon: '🚀', text: 'Strategic mentorship and guidance' },
-                  { icon: '🌟', text: 'Innovative consulting solutions' },
+                  { icon: '', text: 'World-class training programs' },
+                  { icon: '', text: 'Strategic mentorship and guidance' },
+                  { icon: '', text: 'Innovative consulting solutions' },
                 ].map((item, index) => (
                   <div
                     key={index}

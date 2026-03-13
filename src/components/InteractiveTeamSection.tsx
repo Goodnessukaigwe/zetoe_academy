@@ -83,7 +83,7 @@ export default function InteractiveTeamSection({ team }: InteractiveTeamSectionP
                           alt={member.name}
                           width={400}
                           height={400}
-                          className={`w-full h-full object-cover transition-transform duration-500 ${
+                          className={`w-full h-full object-contain transition-transform duration-500 ${
                             isHovered ? 'scale-110' : 'scale-100'
                           }`}
                         />
@@ -142,7 +142,7 @@ export default function InteractiveTeamSection({ team }: InteractiveTeamSectionP
                     alt={selectedMember.name}
                     width={600}
                     height={400}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
