@@ -795,7 +795,7 @@ const Page = () => {
                 <h3 className="font-semibold text-slate-900">Payment Status</h3>
                 <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Finance</span>
               </div>
-              <div className={`${getPaymentStatusColor(student.payment_status)} text-white px-4 py-3 rounded-2xl text-center font-semibold shadow-md`}>
+              <div className={`${getPaymentStatusColor(overallPaymentStatus)} text-white px-4 py-3 rounded-2xl text-center font-semibold shadow-md`}>
                 {getPaymentStatusText(overallPaymentStatus)}
               </div>
               <p className="text-xs text-slate-500 mt-3">Ensure your subscription remains active.</p>
