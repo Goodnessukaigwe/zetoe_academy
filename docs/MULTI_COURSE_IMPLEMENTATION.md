@@ -15,11 +15,13 @@ This document details the implementation of the multi-course registration system
 Based on [improvement.md](improvement.md), the following requirements have been implemented:
 
 ### 1. ✅ Multiple Course Registration
+
 - Students can now register for unlimited courses
 - No restriction on the number of courses
 - Implemented via `student_courses` junction table
 
 ### 2. ✅ Dashboard Shows All Courses
+
 - Student dashboard displays all enrolled courses
 - Each course card shows:
   - Course name and description
@@ -28,6 +30,7 @@ Based on [improvement.md](improvement.md), the following requirements have been 
   - Enrollment date
 
 ### 3. ✅ Per-Course Payment & Exam Access
+
 - Payment status tracked individually for each course enrollment
 - Exam access validated against specific course payment
 - Students can only access exams for courses they've paid for
@@ -37,6 +40,7 @@ Based on [improvement.md](improvement.md), the following requirements have been 
 ## 📁 Files Created
 
 ### Database & Schema
+
 1. **`supabase/multi-course-migration.sql`** (211 lines)
    - Creates `student_courses` junction table
    - Adds `course_id` to `payments` table
@@ -46,6 +50,7 @@ Based on [improvement.md](improvement.md), the following requirements have been 
    - Includes verification queries
 
 ### Type Definitions
+
 2. **`src/types/enrollment.ts`** (182 lines)
    - TypeScript interfaces for enrollments
    - Payment and course types
@@ -53,6 +58,7 @@ Based on [improvement.md](improvement.md), the following requirements have been 
    - Dashboard data structures
 
 ### API Endpoints
+
 3. **`src/app/api/enrollments/route.ts`** (252 lines)
    - `GET /api/enrollments` - List enrollments with filters
    - `POST /api/enrollments` - Create new enrollment
@@ -71,12 +77,15 @@ Based on [improvement.md](improvement.md), the following requirements have been 
 ### Backend Updates
 
 #### 1. `src/lib/auth.ts`
+
 **Changes:**
+
 - Updated `getStudentProfile()` to fetch multiple courses via `student_courses` table
 - Returns array of enrollments with payment status per course
 - Added deprecated `getStudentProfileLegacy()` for backward compatibility
 
 **Query Change:**
+
 ```typescript
 // Old: Single course
 course:courses(*)
@@ -92,12 +101,15 @@ enrollments:student_courses(
 ```
 
 #### 2. `src/app/api/exams/access/route.ts`
+
 **Changes:**
+
 - Removed global `payment_status` check
 - Added `student_courses` enrollment verification
 - Validates per-course payment before exam access
 
 **Critical Fix:**
+
 ```typescript
 // Old: Global payment check (SECURITY ISSUE)
 if (student.payment_status !== 'paid') { ... }
@@ -107,33 +119,40 @@ if (enrollment.payment_status !== 'paid') { ... }
 ```
 
 #### 3. `src/app/api/exams/[id]/route.ts`
+
 **Changes:**
+
 - Same security fix as `access/route.ts`
 - Per-course enrollment validation
 - Proper payment status checking
 
 #### 4. `src/app/api/payments/route.ts`
+
 **Changes:**
+
 - Added `course_id` parameter requirement
 - Links payments to specific courses
 - Updates `student_courses.payment_status` instead of global status
 - Verifies enrollment exists before recording payment
 
 **Payment Flow Change:**
+
 ```typescript
 // Old: Update global status
 UPDATE students SET payment_status = 'paid'
 
 // New: Update enrollment status
-UPDATE student_courses 
-SET payment_status = 'paid' 
+UPDATE student_courses
+SET payment_status = 'paid'
 WHERE student_id = X AND course_id = Y
 ```
 
 ### Frontend Updates
 
 #### 5. `src/app/dashboard/page.tsx`
+
 **Major Changes:**
+
 - Updated `StudentProfile` interface to include `enrollments` array
 - Removed global `payment_status` field
 - Fetch exams for all enrolled courses
@@ -142,13 +161,16 @@ WHERE student_id = X AND course_id = Y
 - Conditional exam access based on any paid course
 
 **UI Improvements:**
+
 - Course cards show individual payment status
 - "No courses enrolled" empty state with enrollment CTA
 - Payment status color coding per course
 - Enrollment date display
 
 #### 6. `src/app/student-management/addStudentModal.tsx`
+
 **Changes:**
+
 - Made course selection optional
 - Renamed `payment_status` to `initial_payment_status`
 - Removed `course_id` from student creation payload
@@ -161,6 +183,7 @@ WHERE student_id = X AND course_id = Y
 ## 🗄️ Database Schema Changes
 
 ### New Table: `student_courses`
+
 ```sql
 CREATE TABLE student_courses (
   id UUID PRIMARY KEY,
@@ -174,18 +197,21 @@ CREATE TABLE student_courses (
 ```
 
 ### Updated Table: `payments`
+
 ```sql
-ALTER TABLE payments 
+ALTER TABLE payments
 ADD COLUMN course_id UUID REFERENCES courses(id);
 ```
 
 ### RLS Policies Created
+
 - Students can view their own enrollments
 - Students can enroll themselves (self-registration)
 - Admins can view/insert/update/delete all enrollments
 - Prevents duplicate enrollments via UNIQUE constraint
 
 ### Helper Functions
+
 1. `get_student_enrollments(student_id)` - Fetch all enrollments
 2. `has_course_access(student_id, course_id)` - Check payment status
 3. `update_enrollment_payment(student_id, course_id, status)` - Update status
@@ -210,6 +236,7 @@ psql your_database < supabase/multi-course-migration.sql
 ```
 
 **Migration Does:**
+
 - ✅ Creates `student_courses` table
 - ✅ Migrates existing enrollments from `students.course_id`
 - ✅ Preserves existing payment status per course
@@ -263,14 +290,17 @@ ALTER TABLE students DROP COLUMN IF EXISTS payment_status;
 ### Enrollment Management
 
 #### `GET /api/enrollments`
+
 List enrollments with filters
 
 **Query Parameters:**
+
 - `student_id` - Filter by student (admin only)
 - `course_id` - Filter by course
 - `payment_status` - Filter by status (paid/unpaid/partial)
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -290,9 +320,11 @@ List enrollments with filters
 ```
 
 #### `POST /api/enrollments`
+
 Enroll student in course
 
 **Request Body:**
+
 ```json
 {
   "student_id": "uuid",
@@ -302,14 +334,17 @@ Enroll student in course
 ```
 
 **Permissions:**
+
 - Admins can enroll any student
 - Students can only enroll themselves
 - Students cannot set payment_status (always unpaid)
 
 #### `PUT /api/enrollments/[id]`
+
 Update enrollment payment status (admin only)
 
 **Request Body:**
+
 ```json
 {
   "payment_status": "paid"
@@ -317,9 +352,11 @@ Update enrollment payment status (admin only)
 ```
 
 #### `DELETE /api/enrollments/[id]`
+
 Remove enrollment
 
 **Permissions:**
+
 - Admins can delete any enrollment
 - Students can only delete their own unpaid enrollments
 
@@ -328,6 +365,7 @@ Remove enrollment
 ## 📊 Impact on Existing Features
 
 ### Features Still Working ✅
+
 - ✅ Student authentication
 - ✅ Admin dashboard
 - ✅ Exam taking flow
@@ -337,12 +375,14 @@ Remove enrollment
 - ✅ Payment recording (with course now required)
 
 ### Features Updated 🔄
+
 - 🔄 Student dashboard (shows multiple courses)
 - 🔄 Student creation (course optional)
 - 🔄 Payment recording (requires course selection)
 - 🔄 Exam access (per-course validation)
 
 ### Features Deprecated ⚠️
+
 - ⚠️ Global `students.payment_status` (replaced by per-course)
 - ⚠️ Direct `students.course_id` foreign key (use `student_courses`)
 
@@ -436,67 +476,72 @@ Remove enrollment
 ### For Admins
 
 **Enroll Student in Course:**
+
 ```javascript
-await fetch('/api/enrollments', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+await fetch("/api/enrollments", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    student_id: 'student-uuid',
-    course_id: 'course-uuid',
-    payment_status: 'unpaid'
-  })
-})
+    student_id: "student-uuid",
+    course_id: "course-uuid",
+    payment_status: "unpaid",
+  }),
+});
 ```
 
 **Update Payment Status:**
+
 ```javascript
 await fetch(`/api/enrollments/${enrollmentId}`, {
-  method: 'PUT',
-  headers: { 'Content-Type': 'application/json' },
+  method: "PUT",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    payment_status: 'paid'
-  })
-})
+    payment_status: "paid",
+  }),
+});
 ```
 
 **Record Payment:**
+
 ```javascript
-await fetch('/api/payments', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+await fetch("/api/payments", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    student_id: 'student-uuid',
-    course_id: 'course-uuid', // NOW REQUIRED
+    student_id: "student-uuid",
+    course_id: "course-uuid", // NOW REQUIRED
     amount: 50000,
-    payment_method: 'bank_transfer',
-    reference: 'TXN12345'
-  })
-})
+    payment_method: "bank_transfer",
+    reference: "TXN12345",
+  }),
+});
 ```
 
 ### For Students
 
 **View Enrollments:**
-```javascript
-const response = await fetch('/api/enrollments')
-const { enrollments } = await response.json()
 
-enrollments.forEach(e => {
-  console.log(`${e.course.name}: ${e.payment_status}`)
-})
+```javascript
+const response = await fetch("/api/enrollments");
+const { enrollments } = await response.json();
+
+enrollments.forEach((e) => {
+  console.log(`${e.course.name}: ${e.payment_status}`);
+});
 ```
 
 **Self-Enroll:**
+
 ```javascript
-await fetch('/api/enrollments', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+await fetch("/api/enrollments", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
     student_id: currentUser.profile.id,
-    course_id: 'desired-course-uuid'
+    course_id: "desired-course-uuid",
     // payment_status not allowed for students
-  })
-})
+  }),
+});
 ```
 
 ---
@@ -556,21 +601,25 @@ await fetch('/api/enrollments', {
 ### Common Issues
 
 **Issue: "Student is not enrolled in this course"**
+
 - Check if enrollment exists in `student_courses` table
 - Verify course_id matches exam's course_id
 - Create enrollment if missing
 
 **Issue: "Payment required for this course"**
+
 - Check enrollment payment_status
 - Verify payment was recorded with correct course_id
 - Update enrollment status if payment exists
 
 **Issue: Dashboard shows no courses**
+
 - Verify API returns enrollments array
 - Check browser console for errors
 - Verify database migration completed
 
 **Issue: Can't create payment**
+
 - Ensure course_id is provided
 - Verify enrollment exists first
 - Check admin permissions
@@ -598,6 +647,7 @@ npm run build
 ### Version 2.0 - Multi-Course System (March 9, 2026)
 
 **Added:**
+
 - student_courses junction table for many-to-many relationships
 - Per-course payment tracking
 - Enrollment API endpoints (GET, POST, PUT, DELETE)
@@ -605,6 +655,7 @@ npm run build
 - Self-enrollment capability for students
 
 **Changed:**
+
 - Exam access validation (per-course instead of global)
 - Payment recording (now requires course_id)
 - Student profile structure (enrollments array)
@@ -612,11 +663,13 @@ npm run build
 - Add student workflow (optional initial course)
 
 **Deprecated:**
+
 - students.course_id column
 - students.payment_status column
 - Global payment status checks
 
 **Security Fixes:**
+
 - Fixed bug where paying for one course granted access to all courses
 - Added proper per-course payment validation on exam access
 
@@ -625,6 +678,7 @@ npm run build
 ## ✅ Implementation Checklist
 
 ### Database ✅
+
 - [x] Create student_courses table
 - [x] Add course_id to payments table
 - [x] Write migration script
@@ -633,6 +687,7 @@ npm run build
 - [ ] **Run migration in production** ⚠️
 
 ### Backend ✅
+
 - [x] Update getStudentProfile()
 - [x] Update exam access validation
 - [x] Create enrollment API endpoints
@@ -640,6 +695,7 @@ npm run build
 - [x] Add TypeScript types
 
 ### Frontend ✅
+
 - [x] Update dashboard for multiple courses
 - [x] Update add student modal
 - [ ] Update edit student modal (partial)
@@ -647,12 +703,14 @@ npm run build
 - [ ] Create enrollment management UI
 
 ### Testing ⚠️
+
 - [ ] Unit tests for enrollment API
 - [ ] Integration tests for exam access
 - [ ] Manual testing scenarios
 - [ ] Performance testing with many enrollments
 
 ### Documentation ✅
+
 - [x] API documentation
 - [x] Implementation guide
 - [x] Migration instructions
