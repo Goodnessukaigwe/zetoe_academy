@@ -5,9 +5,12 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { isAdmin, getUserRole } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
+
+const VALID_PAYMENT_METHODS = ['cash', 'bank_transfer', 'card', 'other'] as const
 
 // GET payments
 export async function GET(request: NextRequest) {
@@ -37,7 +40,8 @@ export async function GET(request: NextRequest) {
       reference,
       notes,
       paid_at,
-      student:students(id, name, email, payment_status),
+      student:students(id, name, email),
+      course:courses(id, name),
       admin:admins!recorded_by(name, email)
     `, { count: 'exact' })
 
@@ -90,6 +94,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient()
+    const adminClient = createAdminClient()
 
     // Check authentication
     const {
@@ -121,7 +126,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { student_id, amount, payment_method, reference, notes } =
+    const { student_id, course_id, amount, payment_method, reference, notes } =
       await request.json()
 
     // Validate input
@@ -132,13 +137,54 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create payment record
-    const { data: paymentData, error: paymentError } = await supabase
+    if (!course_id) {
+      return NextResponse.json(
+        { error: 'Course ID is required for payment' },
+        { status: 400 }
+      )
+    }
+
+    const normalizedAmount = Number(amount)
+    if (!Number.isFinite(normalizedAmount) || normalizedAmount <= 0) {
+      return NextResponse.json(
+        { error: 'Amount must be a positive number' },
+        { status: 400 }
+      )
+    }
+
+    const normalizedPaymentMethod = payment_method || 'cash'
+    if (!VALID_PAYMENT_METHODS.includes(normalizedPaymentMethod)) {
+      return NextResponse.json(
+        { error: 'Invalid payment method' },
+        { status: 400 }
+      )
+    }
+
+    // Verify enrollment exists
+    const { data: enrollment, error: enrollmentError } = await adminClient
+      .from('student_courses')
+      .select('id, payment_status')
+      .eq('student_id', student_id)
+      .eq('course_id', course_id)
+      .single()
+
+    if (enrollmentError || !enrollment) {
+      return NextResponse.json(
+        { error: 'Student is not enrolled in this course' },
+        { status: 404 }
+      )
+    }
+
+    // Create payment record with course linkage
+    // Use the admin client for the write so the route behavior does not depend on
+    // frontend session RLS state after admin authorization has already been verified.
+    const { data: paymentData, error: paymentError } = await adminClient
       .from('payments')
       .insert({
         student_id,
-        amount,
-        payment_method: payment_method || 'cash',
+        course_id,
+        amount: normalizedAmount,
+        payment_method: normalizedPaymentMethod,
         reference,
         notes,
         recorded_by: adminData.id,
@@ -146,7 +192,8 @@ export async function POST(request: NextRequest) {
       })
       .select(`
         *,
-        student:students(*),
+        student:students(id, name, email),
+        course:courses(id, name),
         admin:admins!recorded_by(name, email)
       `)
       .single()
@@ -158,11 +205,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Update student payment status to 'paid'
-    await supabase
-      .from('students')
-      .update({ payment_status: 'paid' })
-      .eq('id', student_id)
+    // Update enrollment payment status to 'paid'
+    const { error: updateError } = await adminClient
+      .from('student_courses')
+      .update({ 
+        payment_status: 'paid',
+        updated_at: new Date().toISOString()
+      })
+      .eq('student_id', student_id)
+      .eq('course_id', course_id)
+
+    if (updateError) {
+      logger.error('Error updating enrollment payment status', { error: updateError })
+      // Don't fail the request if payment was recorded
+    }
 
     return NextResponse.json(
       {

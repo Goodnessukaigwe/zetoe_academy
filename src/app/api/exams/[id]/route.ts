@@ -51,7 +51,7 @@ export async function GET(
     // Get student profile
     const { data: student } = await adminClient
       .from('students')
-      .select('id, course_id, payment_status')
+      .select('id')
       .eq('user_id', user.id)
       .single()
 
@@ -62,18 +62,28 @@ export async function GET(
       )
     }
 
-    // Check if student is enrolled in the course
-    if (student.course_id !== exam.course_id) {
+    // Check if student is enrolled in the course and has paid
+    const { data: enrollment, error: enrollmentError } = await adminClient
+      .from('student_courses')
+      .select('id, payment_status')
+      .eq('student_id', student.id)
+      .eq('course_id', exam.course_id)
+      .single()
+
+    if (enrollmentError || !enrollment) {
       return NextResponse.json(
         { error: 'You are not enrolled in this course' },
         { status: 403 }
       )
     }
 
-    // Check payment status
-    if (student.payment_status !== 'paid') {
+    // Check per-course payment status
+    if (enrollment.payment_status !== 'paid') {
       return NextResponse.json(
-        { error: 'Please complete payment to access exams' },
+        { 
+          error: 'Payment required for this course',
+          details: 'Please complete payment to access exams for this course'
+        },
         { status: 403 }
       )
     }

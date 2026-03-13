@@ -11,6 +11,38 @@ import { isAdmin } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
 
+const studentSelect = `
+  id,
+  user_id,
+  username,
+  name,
+  email,
+  phone,
+  profile_picture_url,
+  created_at,
+  updated_at,
+  course_id,
+  payment_status,
+  course:courses(*),
+  enrollments:student_courses(
+    id,
+    student_id,
+    course_id,
+    payment_status,
+    enrolled_at,
+    updated_at,
+    course:courses(
+      id,
+      name,
+      description,
+      price,
+      duration,
+      created_at,
+      updated_at
+    )
+  )
+`
+
 // GET single student
 export async function GET(
   request: NextRequest,
@@ -32,10 +64,7 @@ export async function GET(
 
     const { data, error } = await adminClient
       .from('students')
-      .select(`
-        *,
-        course:courses(*)
-      `)
+      .select(studentSelect)
       .eq('id', id)
       .single()
 
@@ -88,23 +117,32 @@ export async function PUT(
 
     const body = await request.json()
 
-    // Remove fields that shouldn't be updated directly
-    delete body.id
-    delete body.user_id
-    delete body.created_at
+    const updateData: Record<string, string | null> = {}
 
-    // Convert empty strings to null for optional fields
-    if (body.phone === '') body.phone = null
-    if (body.course_id === '') body.course_id = null
+    if (typeof body.name === 'string') {
+      updateData.name = body.name.trim()
+    }
+
+    if (typeof body.email === 'string') {
+      updateData.email = body.email.trim()
+    }
+
+    if (Object.prototype.hasOwnProperty.call(body, 'phone')) {
+      updateData.phone = body.phone ? String(body.phone).trim() : null
+    }
+
+    if (Object.keys(updateData).length === 0) {
+      return NextResponse.json(
+        { error: 'No valid fields provided for update' },
+        { status: 400 }
+      )
+    }
 
     const { data, error } = await adminClient
       .from('students')
-      .update(body)
+      .update(updateData)
       .eq('id', id)
-      .select(`
-        *,
-        course:courses(*)
-      `)
+      .select(studentSelect)
       .single()
 
     if (error) {

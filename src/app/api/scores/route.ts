@@ -4,7 +4,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
-import { getUserRole, isAdmin } from '@/lib/auth'
+import { getUserRole } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
 import { withCache, generateCacheKey, CACHE_TTL } from '@/lib/cache'
@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
 
     const role = await getUserRole(user.id)
     const { searchParams } = new URL(request.url)
+    const scoreId = searchParams.get('scoreId')
     const studentId = searchParams.get('student_id')
     const examId = searchParams.get('exam_id')
     const page = parseInt(searchParams.get('page') || '1')
@@ -33,6 +34,7 @@ export async function GET(request: NextRequest) {
     const cacheKey = generateCacheKey('scores', {
       userId: user.id,
       role,
+      scoreId: scoreId || undefined,
       studentId: studentId || undefined,
       examId: examId || undefined,
       page,
@@ -46,6 +48,7 @@ export async function GET(request: NextRequest) {
         // Optimized: Select only needed columns
         let query = supabase.from('scores').select(`
           id,
+          exam_id,
           score,
           total_questions,
           percentage,
@@ -53,7 +56,7 @@ export async function GET(request: NextRequest) {
           time_taken_minutes,
           submitted_at,
           student:students(id, name, email),
-          exam:exams(id, title, passing_score)
+          exam:exams(id, title, passing_score, course:courses(id, name))
         `, { count: 'exact' })
 
         // Filter based on role
@@ -68,8 +71,19 @@ export async function GET(request: NextRequest) {
           if (studentData) {
             query = query.eq('student_id', studentData.id)
           }
+
+          if (scoreId) {
+            query = query.eq('id', scoreId)
+          }
+
+          if (examId) {
+            query = query.eq('exam_id', examId)
+          }
         } else {
           // Admins can filter
+          if (scoreId) {
+            query = query.eq('id', scoreId)
+          }
           if (studentId) {
             query = query.eq('student_id', studentId)
           }

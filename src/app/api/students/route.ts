@@ -86,12 +86,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const { email, password, name, phone, course_id, payment_status } = await request.json()
+    const body = await request.json()
+    const email = String(body.email || '').trim().toLowerCase()
+    const password = String(body.password || '')
+    const name = String(body.name || '').trim()
+    const phone = body.phone ? String(body.phone).trim() : null
 
     // Validate input
     if (!email || !password || !name) {
       return NextResponse.json(
         { error: 'Email, password, and name are required' },
+        { status: 400 }
+      )
+    }
+
+    if (password.length < 6) {
+      return NextResponse.json(
+        { error: 'Password must be at least 6 characters' },
+        { status: 400 }
+      )
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailPattern.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email address' },
         { status: 400 }
       )
     }
@@ -137,9 +156,9 @@ export async function POST(request: NextRequest) {
         username: generatedUsername,
         name,
         email,
-        phone: phone || null,
-        course_id: course_id || null,
-        payment_status: payment_status || 'unpaid',
+        phone,
+        // Keep the student profile free of direct course/payment assignment.
+        // Enrollments are created separately through /api/enrollments.
       })
       .select(`
         *,

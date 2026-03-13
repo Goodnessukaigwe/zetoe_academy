@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { Student } from "@/types/database";
-import { Pencil, Trash2 } from "lucide-react";
-import EditStudentModal from "./editStudentModal";
+import { Info, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function StudentRow({
   student,
@@ -12,8 +12,8 @@ export default function StudentRow({
   student: Student;
   onRefresh: () => void;
 }) {
+  const router = useRouter();
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = async () => {
@@ -62,11 +62,11 @@ export default function StudentRow({
         <td className="px-6 py-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2">
             <button
-              onClick={() => setShowEditModal(true)}
+              onClick={() => router.push(`/student-management/${student.id}`)}
               className="w-full sm:w-auto flex items-center justify-center gap-1 px-3 py-1.5 bg-[#3a0ca3] hover:bg-blue-700 rounded-lg text-xs font-medium text-white transition-all"
             >
-              <Pencil size={14} />
-              <span className="hidden sm:inline">Edit</span>
+              <Info size={14} />
+              <span className="hidden sm:inline">Info</span>
             </button>
             <button
               onClick={() => setConfirmDelete(true)}
@@ -108,16 +108,6 @@ export default function StudentRow({
             </div>
           </div>
         </div>,
-        document.body
-      )}
-
-      {/* Edit Student Modal */}
-      {showEditModal && typeof document !== 'undefined' && createPortal(
-        <EditStudentModal
-          student={student}
-          onClose={() => setShowEditModal(false)}
-          onSuccess={onRefresh}
-        />,
         document.body
       )}
     </>

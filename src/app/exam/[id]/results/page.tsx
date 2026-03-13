@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRouter, useSearchParams, useParams } from 'next/navigation'
 import { CheckCircle, XCircle, Trophy, TrendingUp, Clock } from 'lucide-react'
 import { logger } from '@/lib/logger'
 
 interface Score {
   id: string
+  exam_id?: string
   score: number
   total_questions: number
   percentage: number
@@ -16,7 +17,7 @@ interface Score {
   exam: {
     title: string
     passing_score: number
-  }
+  } | null
 }
 
 export default function ExamResultsPage() {
@@ -30,11 +31,7 @@ export default function ExamResultsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetchResults()
-  }, [scoreId, examId])
-
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
     try {
       setLoading(true)
       
@@ -48,10 +45,16 @@ export default function ExamResultsPage() {
         }
 
         const data = await res.json()
-        setResult(data.scores[0])
+        const matchedScore = data.scores?.[0]
+
+        if (matchedScore) {
+          setResult(matchedScore)
+        } else {
+          setError('No results found for this score')
+        }
       } else {
         // Otherwise, fetch all scores and find the one for this exam
-        const res = await fetch('/api/scores')
+        const res = await fetch(`/api/scores?exam_id=${examId}`)
         
         if (!res.ok) {
           setError('Failed to load results')
@@ -60,7 +63,7 @@ export default function ExamResultsPage() {
 
         const data = await res.json()
         // Find the score for this specific exam
-        const examScore = data.scores?.find((s: any) => s.exam_id === examId)
+        const examScore = data.scores?.find((s: Score) => s.exam_id === examId)
         
         if (examScore) {
           setResult(examScore)
@@ -74,7 +77,11 @@ export default function ExamResultsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [examId, scoreId])
+
+  useEffect(() => {
+    fetchResults()
+  }, [fetchResults])
 
   if (loading) {
     return (
@@ -106,6 +113,8 @@ export default function ExamResultsPage() {
   }
 
   const isPassed = result.status === 'passed'
+  const examTitle = result.exam?.title || 'Exam Result'
+  const passingScore = result.exam?.passing_score ?? 0
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4">
@@ -137,7 +146,7 @@ export default function ExamResultsPage() {
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
           {/* Exam Title */}
           <div className="text-center mb-6 pb-6 border-b">
-            <h2 className="text-2xl font-bold text-gray-800">{result.exam.title}</h2>
+            <h2 className="text-2xl font-bold text-gray-800">{examTitle}</h2>
             <p className="text-sm text-gray-500 mt-1">
               Submitted on {new Date(result.submitted_at).toLocaleString()}
             </p>
@@ -225,7 +234,7 @@ export default function ExamResultsPage() {
                     {isPassed ? 'Passed' : 'Failed'}
                   </p>
                   <p className={`text-sm ${isPassed ? 'text-green-600' : 'text-red-600'}`}>
-                    Passing score: {result.exam.passing_score}%
+                    Passing score: {passingScore}%
                   </p>
                 </div>
               </div>

@@ -169,9 +169,36 @@ export async function getUserRole(userId: string) {
 }
 
 /**
- * Get student profile
+ * Get student profile with all enrolled courses
  */
 export async function getStudentProfile(userId: string) {
+  // Use admin client to bypass RLS
+  const supabase = createAdminClient()
+  
+  const { data, error } = await supabase
+    .from('students')
+    .select(`
+      *,
+      enrollments:student_courses(
+        id,
+        course_id,
+        payment_status,
+        enrolled_at,
+        updated_at,
+        course:courses(*)
+      )
+    `)
+    .eq('user_id', userId)
+    .single()
+
+  return { data, error }
+}
+
+/**
+ * Get student profile (legacy - single course)
+ * DEPRECATED: Use getStudentProfile() which returns enrollments array
+ */
+export async function getStudentProfileLegacy(userId: string) {
   // Use admin client to bypass RLS
   const supabase = createAdminClient()
   

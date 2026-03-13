@@ -17,7 +17,7 @@ export default function AddStudentModal({
     password: "",
     phone: "",
     course_id: "",
-    payment_status: "unpaid" as "paid" | "unpaid" | "partial",
+    initial_payment_status: "unpaid" as "paid" | "unpaid" | "partial",
   });
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -76,10 +76,13 @@ export default function AddStudentModal({
     setLoading(true);
 
     try {
+      // Create student without course_id (no longer stored directly on student)
+      const { course_id, initial_payment_status, ...studentData } = formData;
+      
       const res = await fetch("/api/students", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(studentData),
       });
 
       const data = await res.json();
@@ -110,6 +113,25 @@ export default function AddStudentModal({
             errorData: JSON.stringify(errorData)
           });
           // Don't fail the whole operation, just log the error
+        }
+      }
+
+      // If a course was selected, create enrollment
+      if (course_id && studentId) {
+        const enrollmentRes = await fetch("/api/enrollments", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            student_id: studentId,
+            course_id: course_id,
+            payment_status: initial_payment_status,
+          }),
+        });
+
+        if (!enrollmentRes.ok) {
+          const enrollmentError = await enrollmentRes.json();
+          logger.error('Enrollment creation failed', enrollmentError);
+          // Don't fail the whole operation, student is created
         }
       }
 
@@ -266,7 +288,7 @@ export default function AddStudentModal({
 
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
-              Course
+              Initial Course (Optional)
             </label>
             <select
               value={formData.course_id}
@@ -275,35 +297,39 @@ export default function AddStudentModal({
               }
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3a0ca3]"
             >
-              <option value="">Select a course (optional)</option>
+              <option value="">No course - enroll later</option>
               {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.name}
                 </option>
               ))}
             </select>
+            <p className="text-xs text-gray-400 mt-1">Students can enroll in multiple courses</p>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
-              Payment Status *
-            </label>
-            <select
-              required
-              value={formData.payment_status}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  payment_status: e.target.value as "paid" | "unpaid" | "partial",
-                })
-              }
-              className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3a0ca3]"
-            >
-              <option value="unpaid">Unpaid</option>
-              <option value="partial">Partial</option>
-              <option value="paid">Paid</option>
-            </select>
-          </div>
+          {formData.course_id && (
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-1">
+                Initial Payment Status *
+              </label>
+              <select
+                required
+                value={formData.initial_payment_status}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    initial_payment_status: e.target.value as "paid" | "unpaid" | "partial",
+                  })
+                }
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3a0ca3]"
+              >
+                <option value="unpaid">Unpaid</option>
+                <option value="partial">Partial</option>
+                <option value="paid">Paid</option>
+              </select>
+              <p className="text-xs text-gray-400 mt-1">Payment status for the selected course</p>
+            </div>
+          )}
 
           <div className="flex gap-3 pt-4">
             <button

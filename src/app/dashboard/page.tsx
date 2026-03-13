@@ -1,22 +1,29 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { BookOpen, Trophy, Clock, User, LogOut, TrendingUp, Calendar } from 'lucide-react'
+import { BookOpen, Trophy, Clock, User, TrendingUp, Calendar } from 'lucide-react'
 import { logger } from '@/lib/logger'
+
+interface StudentEnrollment {
+  id: string
+  course_id: string
+  payment_status: 'paid' | 'unpaid' | 'partial'
+  enrolled_at: string
+  course: {
+    id: string
+    name: string
+    description: string
+  }
+}
 
 interface StudentProfile {
   id: string
   name: string
   username?: string
   email: string
-  payment_status: 'paid' | 'unpaid' | 'partial'
   profile_picture_url?: string | null
-  course: {
-    id: string
-    name: string
-    description: string
-  } | null
+  enrollments?: StudentEnrollment[]
 }
 
 interface Exam {
@@ -32,7 +39,7 @@ interface Score {
   id: string
   exam: {
     title: string
-  }
+  } | null
   score: number
   percentage: number
   status: 'passed' | 'failed'
@@ -59,25 +66,7 @@ const Page = () => {
   const [tipIndex, setTipIndex] = useState(0)
   const router = useRouter()
 
-  useEffect(() => {
-    fetchStudentData()
-  }, [])
-
-  useEffect(() => {
-    if (!focusRunning) return
-    if (focusSeconds === 0) {
-      setFocusRunning(false)
-      return
-    }
-
-    const timer = window.setInterval(() => {
-      setFocusSeconds((prev) => (prev > 0 ? prev - 1 : 0))
-    }, 1000)
-
-    return () => window.clearInterval(timer)
-  }, [focusRunning, focusSeconds])
-
-  const fetchStudentData = async () => {
+  const fetchStudentData = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
@@ -105,13 +94,36 @@ const Page = () => {
 
       setStudent(meData.profile)
 
-      // Fetch available exams if student has a course
-      if (meData.profile?.course?.id) {
-        const examsRes = await fetch(`/api/exams?courseId=${meData.profile.course.id}`)
-        if (examsRes.ok) {
+      // Fetch available exams for all enrolled courses
+      if (meData.profile?.enrollments && meData.profile.enrollments.length > 0) {
+        const uniqueCourseIds = Array.from(
+          new Set(
+            meData.profile.enrollments
+              .map((enrollment: StudentEnrollment) => enrollment.course?.id)
+              .filter(Boolean)
+          )
+        )
+
+        const examResponses = await Promise.all(
+          uniqueCourseIds.map((courseId) => fetch(`/api/exams?courseId=${courseId}`))
+        )
+
+        const allExams: Exam[] = []
+
+        for (const examsRes of examResponses) {
+          if (!examsRes.ok) continue
+
           const examsData = await examsRes.json()
-          setExams(examsData.exams || [])
+          allExams.push(...(examsData.exams || []))
         }
+
+        const uniqueExams = Array.from(
+          new Map(allExams.map((exam) => [exam.id, exam])).values()
+        )
+
+        setExams(uniqueExams)
+      } else {
+        setExams([])
       }
 
       // Fetch student scores
@@ -130,7 +142,25 @@ const Page = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [router])
+
+  useEffect(() => {
+    fetchStudentData()
+  }, [fetchStudentData])
+
+  useEffect(() => {
+    if (!focusRunning) return
+    if (focusSeconds === 0) {
+      setFocusRunning(false)
+      return
+    }
+
+    const timer = window.setInterval(() => {
+      setFocusSeconds((prev) => (prev > 0 ? prev - 1 : 0))
+    }, 1000)
+
+    return () => window.clearInterval(timer)
+  }, [focusRunning, focusSeconds])
 
   const getPaymentStatusColor = (status: string) => {
     switch (status) {
@@ -156,11 +186,6 @@ const Page = () => {
       default:
         return 'Unknown'
     }
-  }
-
-  const handleLogout = async () => {
-    await fetch('/api/auth/signout', { method: 'POST' })
-    router.push('/')
   }
 
   const getCurrentDate = () => {
@@ -250,6 +275,17 @@ const Page = () => {
   const handleNextTip = () => {
     setTipIndex((prev) => (prev + 1) % studyTips.length)
   }
+
+  // The dashboard still has a few legacy visual slots that expect a single course or
+  // a single payment status. Derive those values from the new enrollments model so the
+  // page stays stable while the rest of the UI migrates away from single-course fields.
+  const primaryEnrollment = student?.enrollments?.[0] || null
+  const currentCourseLabel = primaryEnrollment?.course?.name || 'Not enrolled'
+  const overallPaymentStatus = student?.enrollments?.some((enrollment) => enrollment.payment_status === 'paid')
+    ? 'paid'
+    : student?.enrollments?.some((enrollment) => enrollment.payment_status === 'partial')
+      ? 'partial'
+      : 'unpaid'
 
   if (loading) {
     return (
@@ -362,7 +398,7 @@ const Page = () => {
               <div className="bg-white rounded-2xl p-5 shadow-lg ring-1 ring-slate-200">
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Course</p>
                 <p className="text-lg font-semibold text-slate-900 mt-2 line-clamp-1">
-                  {student.course?.name || 'Not enrolled'}
+                  {currentCourseLabel}
                 </p>
                 <div className="mt-4 h-2 rounded-full bg-slate-100">
                   <div className="h-2 rounded-full bg-amber-400" style={{ width: `${progress}%` }}></div>
@@ -381,7 +417,7 @@ const Page = () => {
               <div className="bg-white rounded-2xl p-5 shadow-lg ring-1 ring-slate-200">
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Payment</p>
                 <div className="mt-2 inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                  {getPaymentStatusText(student.payment_status)}
+                  {getPaymentStatusText(overallPaymentStatus)}
                 </div>
                 <p className="text-sm text-slate-600 mt-3">Stay up to date</p>
               </div>
@@ -398,31 +434,42 @@ const Page = () => {
               </div>
 
               <div className="space-y-4">
-                {student.course ? (
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                    <div className="flex items-center gap-4">
-                      <div className="bg-slate-900 text-white w-12 h-12 rounded-2xl flex items-center justify-center">
-                        <BookOpen size={22} />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-slate-900">{student.course.name}</p>
-                        <p className="text-sm text-slate-600">{student.course.description || 'Professional Course'}</p>
-                      </div>
-                    </div>
-                    <div className="sm:text-right">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Progress</p>
-                      <div className="mt-2 flex items-center gap-3">
-                        <div className="w-28 bg-slate-200 rounded-full h-2">
-                          <div className="bg-amber-500 h-2 rounded-full transition-all" style={{ width: `${progress}%` }}></div>
+                {student.enrollments && student.enrollments.length > 0 ? (
+                  student.enrollments.map((enrollment) => (
+                    <div key={enrollment.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                      <div className="flex items-center gap-4">
+                        <div className="bg-slate-900 text-white w-12 h-12 rounded-2xl flex items-center justify-center">
+                          <BookOpen size={22} />
                         </div>
-                        <span className="text-slate-900 font-semibold text-sm">{progress}%</span>
+                        <div>
+                          <p className="font-semibold text-slate-900">{enrollment.course.name}</p>
+                          <p className="text-sm text-slate-600">{enrollment.course.description || 'Professional Course'}</p>
+                          <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full ${getPaymentStatusColor(enrollment.payment_status)} text-white`}>
+                            {getPaymentStatusText(enrollment.payment_status)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="sm:text-right">
+                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Progress</p>
+                        <div className="mt-2 flex items-center gap-3">
+                          <div className="w-28 bg-slate-200 rounded-full h-2">
+                            <div className="bg-amber-500 h-2 rounded-full transition-all" style={{ width: `${progress}%` }}></div>
+                          </div>
+                          <span className="text-slate-900 font-semibold text-sm">{progress}%</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))
                 ) : (
                   <div className="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
                     <BookOpen className="mx-auto text-slate-400 mb-2" size={32} />
-                    <p className="text-slate-500">No course enrolled yet</p>
+                    <p className="text-slate-500">No courses enrolled yet</p>
+                    <button 
+                      onClick={() => router.push('/courses')}
+                      className="mt-4 px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition"
+                    >
+                      Browse Courses
+                    </button>
                   </div>
                 )}
               </div>
@@ -438,11 +485,17 @@ const Page = () => {
                 <Calendar className="text-slate-400" size={20} />
               </div>
 
-              {student.payment_status !== 'paid' ? (
+              {!student.enrollments || student.enrollments.length === 0 ? (
+                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
+                  <div className="text-5xl mb-3">📚</div>
+                  <h4 className="font-semibold text-amber-900 mb-2">No Courses Yet</h4>
+                  <p className="text-sm text-amber-800">Enroll in courses to access exams</p>
+                </div>
+              ) : student.enrollments.every(e => e.payment_status !== 'paid') ? (
                 <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
                   <div className="text-5xl mb-3">🔒</div>
                   <h4 className="font-semibold text-amber-900 mb-2">Payment Required</h4>
-                  <p className="text-sm text-amber-800">Complete your payment to unlock all available exams</p>
+                  <p className="text-sm text-amber-800">Complete payment for at least one course to unlock exams</p>
                 </div>
               ) : exams.length > 0 ? (
                 <div className="grid md:grid-cols-2 gap-4">
@@ -563,7 +616,7 @@ const Page = () => {
                   scores.slice(0, 4).map((score) => (
                     <div key={score.id} className="flex items-center justify-between gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200">
                       <div className="flex-1">
-                        <p className="font-semibold text-slate-900 text-sm">{score.exam.title}</p>
+                        <p className="font-semibold text-slate-900 text-sm">{score.exam?.title || 'Exam record unavailable'}</p>
                         <p className="text-xs text-slate-500 mt-1">
                           {new Date(score.submitted_at).toLocaleDateString()}
                         </p>
@@ -628,10 +681,10 @@ const Page = () => {
                   <User size={16} className="text-slate-400" />
                   <span className="truncate">{student.email}</span>
                 </div>
-                {student.course && (
+                {primaryEnrollment?.course && (
                   <div className="flex items-center gap-2">
                     <BookOpen size={16} className="text-slate-400" />
-                    <span className="truncate">{student.course.name}</span>
+                    <span className="truncate">{primaryEnrollment.course.name}</span>
                   </div>
                 )}
               </div>
@@ -743,7 +796,7 @@ const Page = () => {
                 <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Finance</span>
               </div>
               <div className={`${getPaymentStatusColor(student.payment_status)} text-white px-4 py-3 rounded-2xl text-center font-semibold shadow-md`}>
-                {getPaymentStatusText(student.payment_status)}
+                {getPaymentStatusText(overallPaymentStatus)}
               </div>
               <p className="text-xs text-slate-500 mt-3">Ensure your subscription remains active.</p>
             </div>
