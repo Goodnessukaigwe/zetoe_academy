@@ -69,9 +69,21 @@ const statistics = [
 
 
 const partners = [
-  { name: "University of Ibadan (Consulting Unit)", logo: "/about/partners/uni ibadan.png" },
-  { name: "Software and Management Professional Institute of Nigeria", logo: "/HeroImages/smpin.png" },
-  { name: " National Youth Service Corps", logo: "/about/partners/nysc.png" },
+  { 
+    name: "University of Ibadan (Consulting Unit)", 
+    logo: "/ibadanlog.png",
+    description: "The University of Ibadan Consulting Unit provides expert consulting services in management, training, and professional development. As one of Nigeria's premier academic institutions, they collaborate with Zeteo Citadel Consult to deliver world-class educational and consulting solutions."
+  },
+  { 
+    name: "Software and Management Professional Institute of Nigeria", 
+    logo: "/HeroImages/smpin.png",
+    description: "SMPIN is a leading professional institute dedicated to advancing software and management expertise in Nigeria. Founded by industry leaders, they work closely with Zeteo Citadel Consult to provide certified training programs and professional development opportunities."
+  },
+  { 
+    name: "National Youth Service Corps", 
+    logo: "/nysc.png",
+    description: "The National Youth Service Corps (NYSC) is Nigeria's mandatory national service program for graduates. Zeteo Citadel Consult partners with NYSC to provide skill acquisition, entrepreneurship training, and career development programs for corps members across the country."
+  },
 ];
 
 
