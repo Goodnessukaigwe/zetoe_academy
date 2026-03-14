@@ -148,7 +148,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
         </div>
 
         {/* Auto-play info */}
-        <div className="text-center mt-8">
+        {/* <div className="text-center mt-8">
           <p className="text-gray-600 text-sm">
             {isAutoPlay ? '⏯️' : '⏸️'} {Math.ceil(partners.length / itemsPerView)} partners,{' '}
             <button
@@ -158,7 +158,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
               {isAutoPlay ? 'pause auto-play' : 'resume auto-play'}
             </button>
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );
