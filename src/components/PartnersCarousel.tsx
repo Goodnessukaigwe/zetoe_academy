@@ -60,6 +60,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
         </div>
 
         {/* Carousel */}
+        
         <div className="relative">
           {/* Main carousel container */}
           <div className="overflow-hidden rounded-lg">
@@ -118,7 +119,8 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
           </div>
 
           {/* Navigation buttons */}
-          <button
+
+          {/* <button
             onClick={prevSlide}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-8 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition duration-300 z-10 font-bold"
           >
@@ -130,7 +132,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-8 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition duration-300 z-10 font-bold"
           >
             →
-          </button>
+          </button> */}
         </div>
 
         {/* Carousel indicators */}

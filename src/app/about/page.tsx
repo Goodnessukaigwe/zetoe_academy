@@ -8,8 +8,8 @@ import PartnersCarousel from "@/components/PartnersCarousel";
 /* ================= DATA ================= */
 
 const features = [
-  { title: "Mentorship", description: "Personalized guidance to help you grow.", icon: "" },
-  { title: "Professionalism", description: "Ethics, discipline & excellence.", icon: "" },
+  { title: "Mentorship", description: "Personalized guidance to help you grow.", icon: "👨‍🏫" },
+  { title: "Professionalism", description: "Ethics, discipline & excellence.", icon: "💼" },
   { title: "Consultancy", description: "Strategic solutions for individuals & organisations.", icon: "📊" },
 ];
 

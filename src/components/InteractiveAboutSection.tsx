@@ -23,7 +23,7 @@ export default function InteractiveAboutSection() {
                 alt="Zetoe Citadel Consult"
                 width={500}
                 height={500}
-                className="w-full h-auto rounded-lg shadow-lg"
+                className="w-90 ml-30 h-auto rounded-lg shadow-lg"
               />
             </div>
           </div>
