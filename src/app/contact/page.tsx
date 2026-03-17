@@ -29,27 +29,27 @@ export default function ContactPage() {
 
   const contactInfo = [
     {
-      name: "John  Daniel",
-      title: "Chief Admin",
-      phone: "09012345678",
-      whatsapp: "09012345678",
-      email: "chiefadmin@gmail.com",
+      name: "RAJUNOR STEPHEN EGBE",
+      title: "Admin   Personnel",
+      phone: "08066172156",
+      whatsapp: "08188450748",
+      email: "rajunoregbe1@gmail.com",
       icon: "👤",
     },
     {
-      name: "Mary Johnson",
-      title: "Admin",
-      phone: "09012345678",
-      whatsapp: "09012345678",
-      email: "admin@gmail.com",
+      name: "OBADEMI FAVOUR OLUWASEUN",
+      title: "EXECUTIVE DIRECTOR",
+      phone: "09165962622",
+      whatsapp: "08173233034",
+      email: "demifavour15@gmail.com",
       icon: "👤",
     },
     {
-      name: "Kelechi Obi",
-      title: "CRO (Client Relations)",
-      phone: "09012345678",
-      whatsapp: "09012345678",
-      email: "cro@gmail.com",
+      name: "IBIRA ADONIS",
+      title: "EXECUTIVE DIRECTOR",
+      phone: "09122863165",
+      whatsapp: "09122863165",
+      email: "adonisibira01@gmail.com",
       icon: "👤",
     },
   ];
@@ -112,10 +112,10 @@ export default function ContactPage() {
                   <div>
                     <p className="text-sm text-gray-500 font-medium">Email</p>
                     <a
-                      href="mailto:info@zeteoconsult.ng"
+                      href="zeteocitadel08@gmail.com"
                       className="text-indigo-600 hover:text-indigo-700 font-medium"
                     >
-                      info@zeteoconsult.ng
+                      zeteocitadel08@gmail.com
                     </a>
                   </div>
                 </div>
@@ -124,10 +124,10 @@ export default function ContactPage() {
                   <div>
                     <p className="text-sm text-gray-500 font-medium">Phone</p>
                     <a
-                      href="tel:+234800000000"
+                      href="tel:+234 8064691255"
                       className="text-indigo-600 hover:text-indigo-700 font-medium"
                     >
-                      +234 800 000 0000
+                      +234 8064691255
                     </a>
                   </div>
                 </div>
