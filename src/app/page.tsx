@@ -291,7 +291,7 @@ const Page = () => {
              <img src="/instag.png" className=' w-7 ' alt="logo" /> instagram
             </a>
             <br />
-            <a href="#" className=" flex gap-3 hover:text-white transition">
+            <a href="https://web.facebook.com/Zeteocitadel" className=" flex gap-3 hover:text-white transition">
               <img src="/facebook.png" className=' w-7 ' alt="logo" />facebook
             </a>
             <br />
