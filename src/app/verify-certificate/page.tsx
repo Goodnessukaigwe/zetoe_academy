@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Header from '@/component/Header'
 import { Search, Award, CheckCircle, XCircle, Calendar, User, BookOpen, Download, Shield, AlertCircle } from 'lucide-react'
 import { logger } from '@/lib/logger'
 
@@ -95,9 +96,10 @@ export default function VerifyCertificatePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+      <Header />
+
+      <div className="bg-white shadow-sm border-b py-6 mb-8">
+        <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-center gap-3">
             <Shield className="text-blue-600" size={36} />
             <div>
@@ -106,7 +108,7 @@ export default function VerifyCertificatePage() {
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Search Section */}
