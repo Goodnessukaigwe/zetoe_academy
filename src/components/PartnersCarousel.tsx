@@ -21,15 +21,15 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   const itemsPerView = 3;
   const autoPlayDelay = 5000;
 
-  useEffect(() => {
-    if (!isAutoPlay) return;
+  // useEffect(() => {
+  //   if (!isAutoPlay) return;
 
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % Math.ceil(partners.length / itemsPerView));
-    }, autoPlayDelay);
+  //   const timer = setInterval(() => {
+  //     setCurrentIndex((prev) => (prev + 1) % Math.ceil(partners.length / itemsPerView));
+  //   }, autoPlayDelay);
 
-    return () => clearInterval(timer);
-  }, [isAutoPlay, partners.length]);
+  //   return () => clearInterval(timer);
+  // }, [isAutoPlay, partners.length]);
 
   const nextSlide = () => {
     setIsAutoPlay(false);
@@ -136,21 +136,7 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
         </div>
 
         {/* Carousel indicators */}
-        <div className="flex justify-center gap-3 mt-12">
-          {Array.from({ length: Math.ceil(partners.length / itemsPerView) }).map(
-            (_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex
-                    ? 'w-8 bg-blue-600'
-                    : 'w-3 bg-gray-300 hover:bg-gray-400'
-                }`}
-              ></button>
-            )
-          )}
-        </div>
+     {/* / */}
       </div>
 
       {/* Partner Details Modal */}
