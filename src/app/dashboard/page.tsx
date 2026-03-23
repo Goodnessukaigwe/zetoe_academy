@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { BookOpen, Trophy, Clock, User, TrendingUp, Calendar } from 'lucide-react'
 import { logger } from '@/lib/logger'
 
@@ -52,18 +53,6 @@ const Page = () => {
   const [scores, setScores] = useState<Score[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [focusSeconds, setFocusSeconds] = useState(25 * 60)
-  const [focusRunning, setFocusRunning] = useState(false)
-  const [checklist, setChecklist] = useState([
-    { id: 'goal-1', label: 'Review lesson notes', done: false },
-    { id: 'goal-2', label: 'Complete 1 practice exam', done: false },
-    { id: 'goal-3', label: 'Summarize key concepts', done: false },
-  ])
-  const [streakCount, setStreakCount] = useState(0)
-  const [checkedInToday, setCheckedInToday] = useState(false)
-  const [flashcardIndex, setFlashcardIndex] = useState(0)
-  const [flashcardFlipped, setFlashcardFlipped] = useState(false)
-  const [tipIndex, setTipIndex] = useState(0)
   const router = useRouter()
 
   const fetchStudentData = useCallback(async () => {
@@ -148,20 +137,6 @@ const Page = () => {
     fetchStudentData()
   }, [fetchStudentData])
 
-  useEffect(() => {
-    if (!focusRunning) return
-    if (focusSeconds === 0) {
-      setFocusRunning(false)
-      return
-    }
-
-    const timer = window.setInterval(() => {
-      setFocusSeconds((prev) => (prev > 0 ? prev - 1 : 0))
-    }, 1000)
-
-    return () => window.clearInterval(timer)
-  }, [focusRunning, focusSeconds])
-
   const getPaymentStatusColor = (status: string) => {
     switch (status) {
       case 'paid':
@@ -210,70 +185,6 @@ const Page = () => {
     if (scores.length === 0) return 0
     const totalScore = scores.reduce((acc, score) => acc + score.percentage, 0)
     return Math.round(totalScore / scores.length)
-  }
-
-  const formatTime = (totalSeconds: number) => {
-    const minutes = Math.floor(totalSeconds / 60)
-    const seconds = totalSeconds % 60
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`
-  }
-
-  const setFocusPreset = (minutes: number) => {
-    setFocusRunning(false)
-    setFocusSeconds(minutes * 60)
-  }
-
-  const toggleChecklist = (id: string) => {
-    setChecklist((items) =>
-      items.map((item) => (item.id === id ? { ...item, done: !item.done } : item))
-    )
-  }
-
-  const handleCheckIn = () => {
-    if (checkedInToday) return
-    setCheckedInToday(true)
-    setStreakCount((prev) => prev + 1)
-  }
-
-  const resetStreak = () => {
-    setCheckedInToday(false)
-    setStreakCount(0)
-  }
-
-  const flashcards = [
-    {
-      question: 'Define active recall.',
-      answer: 'A study method where you try to retrieve information from memory without cues.',
-    },
-    {
-      question: 'What improves long-term retention most?',
-      answer: 'Spaced repetition across multiple sessions over time.',
-    },
-    {
-      question: 'When is a good time to review notes?',
-      answer: 'Within 24 hours after learning to reinforce memory.',
-    },
-  ]
-
-  const studyTips = [
-    'Start with a 25 minute focus session to build momentum.',
-    'Teach a concept aloud to uncover gaps in understanding.',
-    'Mix topics instead of studying one topic for too long.',
-    'End each session by planning the next step.',
-  ]
-
-  const handleNextFlashcard = () => {
-    setFlashcardFlipped(false)
-    setFlashcardIndex((prev) => (prev + 1) % flashcards.length)
-  }
-
-  const handlePrevFlashcard = () => {
-    setFlashcardFlipped(false)
-    setFlashcardIndex((prev) => (prev - 1 + flashcards.length) % flashcards.length)
-  }
-
-  const handleNextTip = () => {
-    setTipIndex((prev) => (prev + 1) % studyTips.length)
   }
 
   // The dashboard still has a few legacy visual slots that expect a single course or
@@ -330,105 +241,73 @@ const Page = () => {
 
   
   const progress = calculateProgress()
+  const passedCount = scores.filter((score) => score.status === 'passed').length
+  const paidEnrollmentsCount = student.enrollments?.filter((enrollment) => enrollment.payment_status === 'paid').length || 0
 
   return (
-    <div className="min-h-screen bg-[#f7f4ef] text-slate-900 relative overflow-hidden">
-      <div className="absolute -top-32 -right-24 h-72 w-72 rounded-full bg-amber-200/70 blur-3xl" />
-      <div className="absolute top-1/3 -left-32 h-80 w-80 rounded-full bg-sky-200/70 blur-3xl" />
-
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+    <div className="min-h-screen bg-[#f7f4ef] text-slate-900">
+      <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Zetoe Academy</p>
-              <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">Student Dashboard</h1>
+              <h1 className="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">Student Dashboard</h1>
+              <p className="mt-2 text-sm text-slate-600">{getGreeting()}, {student.name.split(' ')[0]} • {getCurrentDate()}</p>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="hidden md:block text-right">
-                <p className="text-sm text-slate-600">{getCurrentDate()}</p>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:w-[30rem]">
+              <div className="rounded-2xl bg-slate-900 px-4 py-3 text-white">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-slate-300">Progress</p>
+                <p className="mt-1 text-2xl font-semibold">{progress}%</p>
               </div>
-              {/* Sign out */}
-              {/* <button
-                onClick={handleLogout}
-                className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
-              >
-                <LogOut size={16} />
-                Sign out
-              </button> */}
+              <div className="rounded-2xl bg-white px-4 py-3 ring-1 ring-slate-200">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Exams</p>
+                <p className="mt-1 text-2xl font-semibold text-slate-900">{exams.length}</p>
+              </div>
+              <div className="rounded-2xl bg-white px-4 py-3 ring-1 ring-slate-200">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Results</p>
+                <p className="mt-1 text-2xl font-semibold text-slate-900">{scores.length}</p>
+              </div>
+              <div className="rounded-2xl bg-white px-4 py-3 ring-1 ring-slate-200">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Passed</p>
+                <p className="mt-1 text-2xl font-semibold text-emerald-600">{passedCount}</p>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-[2fr_1fr] gap-8">
-          
-          {/* Left Column - Main Content */}
-          <div className="space-y-6">
-            
-            {/* Hero Card */}
-            <div className="relative overflow-hidden rounded-[32px] bg-slate-900 text-white shadow-2xl">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(251,191,36,0.25),_transparent_55%)]" />
-              <div className="relative p-8 sm:p-10">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                  <div>
-                    <p className="text-sm text-amber-200 font-semibold tracking-wide">{getGreeting()}, {student.name.split(' ')[0]}</p>
-                    <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mt-2">Your learning space is ready</h2>
-                    <p className="text-slate-200 mt-3 max-w-xl">
-                      You are <span className="text-amber-300 font-semibold">{progress}%</span> toward your weekly goal. Keep the momentum and aim for mastery.
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="bg-white/10 rounded-2xl px-5 py-4">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-200">Average</p>
-                      <p className="text-3xl font-semibold text-amber-300 mt-1">{progress}%</p>
-                      <p className="text-xs text-slate-300">Progress score</p>
-                    </div>
-                    <div className="hidden sm:flex items-center justify-center bg-white/10 rounded-2xl p-4">
-                      <Trophy className="w-12 h-12 text-amber-300" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
-              <div className="bg-white rounded-2xl p-5 shadow-lg ring-1 ring-slate-200">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Course</p>
-                <p className="text-lg font-semibold text-slate-900 mt-2 line-clamp-1">
-                  {currentCourseLabel}
-                </p>
-                <div className="mt-4 h-2 rounded-full bg-slate-100">
-                  <div className="h-2 rounded-full bg-amber-400" style={{ width: `${progress}%` }}></div>
-                </div>
-              </div>
-              <div className="bg-white rounded-2xl p-5 shadow-lg ring-1 ring-slate-200">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Available Exams</p>
-                <p className="text-3xl font-semibold text-slate-900 mt-2">{exams.length}</p>
-                <p className="text-sm text-slate-600 mt-1">Ready when you are</p>
-              </div>
-              <div className="bg-white rounded-2xl p-5 shadow-lg ring-1 ring-slate-200">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Results</p>
-                <p className="text-3xl font-semibold text-slate-900 mt-2">{scores.length}</p>
-                <p className="text-sm text-slate-600 mt-1">Recorded attempts</p>
-              </div>
-              <div className="bg-white rounded-2xl p-5 shadow-lg ring-1 ring-slate-200">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Payment</p>
-                <div className="mt-2 inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                  {getPaymentStatusText(overallPaymentStatus)}
-                </div>
-                <p className="text-sm text-slate-600 mt-3">Stay up to date</p>
-              </div>
-            </div>
-
-            {/* Current Focus */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between mb-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
+          <section className="space-y-6">
+            <div className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900">Current Focus</h3>
-                  <p className="text-sm text-slate-600">Track your active course performance</p>
+                  <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Learning Overview</h2>
+                  <p className="mt-2 max-w-2xl text-sm text-slate-600">
+                    You are currently in <span className="font-semibold text-slate-900">{currentCourseLabel}</span>. Keep your pace steady and continue improving your average score.
+                  </p>
+                  <div className="mt-4 h-2.5 w-full max-w-md rounded-full bg-slate-100">
+                    <div className="h-2.5 rounded-full bg-amber-400" style={{ width: `${progress}%` }}></div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3 sm:min-w-[17rem]">
+                  <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Payment</p>
+                    <p className="mt-2 text-sm font-semibold text-slate-900">{getPaymentStatusText(overallPaymentStatus)}</p>
+                  </div>
+                  <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Paid Courses</p>
+                    <p className="mt-2 text-xl font-semibold text-slate-900">{paidEnrollmentsCount}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8">
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900">Courses and Progress</h3>
+                  <p className="text-sm text-slate-600">Track each enrolled course and payment visibility at a glance</p>
                 </div>
                 <TrendingUp className="text-amber-500" size={22} />
               </div>
@@ -436,37 +315,34 @@ const Page = () => {
               <div className="space-y-4">
                 {student.enrollments && student.enrollments.length > 0 ? (
                   student.enrollments.map((enrollment) => (
-                    <div key={enrollment.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                      <div className="flex items-center gap-4">
-                        <div className="bg-slate-900 text-white w-12 h-12 rounded-2xl flex items-center justify-center">
-                          <BookOpen size={22} />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-slate-900">{enrollment.course.name}</p>
-                          <p className="text-sm text-slate-600">{enrollment.course.description || 'Professional Course'}</p>
-                          <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full ${getPaymentStatusColor(enrollment.payment_status)} text-white`}>
-                            {getPaymentStatusText(enrollment.payment_status)}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="sm:text-right">
-                        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Progress</p>
-                        <div className="mt-2 flex items-center gap-3">
-                          <div className="w-28 bg-slate-200 rounded-full h-2">
-                            <div className="bg-amber-500 h-2 rounded-full transition-all" style={{ width: `${progress}%` }}></div>
+                    <div key={enrollment.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-start gap-3">
+                          <div className="mt-1 flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900 text-white">
+                            <BookOpen size={18} />
                           </div>
-                          <span className="text-slate-900 font-semibold text-sm">{progress}%</span>
+                          <div>
+                            <p className="font-semibold text-slate-900">{enrollment.course.name}</p>
+                            <p className="mt-1 text-sm text-slate-600">{enrollment.course.description || 'Professional Course'}</p>
+                            <span className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold text-white ${getPaymentStatusColor(enrollment.payment_status)}`}>
+                              {getPaymentStatusText(enrollment.payment_status)}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="sm:min-w-[10rem] sm:text-right">
+                          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Avg. Progress</p>
+                          <p className="mt-1 text-xl font-semibold text-slate-900">{progress}%</p>
                         </div>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
-                    <BookOpen className="mx-auto text-slate-400 mb-2" size={32} />
+                  <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 py-10 text-center">
+                    <BookOpen className="mx-auto mb-2 text-slate-400" size={32} />
                     <p className="text-slate-500">No courses enrolled yet</p>
-                    <button 
+                    <button
                       onClick={() => router.push('/courses')}
-                      className="mt-4 px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition"
+                      className="mt-4 rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
                     >
                       Browse Courses
                     </button>
@@ -475,208 +351,125 @@ const Page = () => {
               </div>
             </div>
 
-            {/* Your Exams */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between mb-6">
+            <div className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8">
+              <div className="mb-6 flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900">Your Exams</h3>
-                  <p className="text-sm text-slate-600">Jump back in when you are ready</p>
+                  <h3 className="text-lg font-semibold text-slate-900">Exam Center</h3>
+                  <p className="text-sm text-slate-600">Access available exams and continue your assessments</p>
                 </div>
                 <Calendar className="text-slate-400" size={20} />
               </div>
 
               {!student.enrollments || student.enrollments.length === 0 ? (
-                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
-                  <div className="text-5xl mb-3">📚</div>
-                  <h4 className="font-semibold text-amber-900 mb-2">No Courses Yet</h4>
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-center">
+                  <div className="mb-3 text-5xl">📚</div>
+                  <h4 className="mb-2 font-semibold text-amber-900">No Courses Yet</h4>
                   <p className="text-sm text-amber-800">Enroll in courses to access exams</p>
                 </div>
-              ) : student.enrollments.every(e => e.payment_status !== 'paid') ? (
-                <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
-                  <div className="text-5xl mb-3">🔒</div>
-                  <h4 className="font-semibold text-amber-900 mb-2">Payment Required</h4>
+              ) : student.enrollments.every((e) => e.payment_status !== 'paid') ? (
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-center">
+                  <div className="mb-3 text-5xl">🔒</div>
+                  <h4 className="mb-2 font-semibold text-amber-900">Payment Required</h4>
                   <p className="text-sm text-amber-800">Complete payment for at least one course to unlock exams</p>
                 </div>
               ) : exams.length > 0 ? (
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                   {exams.slice(0, 6).map((exam, index) => {
                     const colors = ['bg-emerald-500', 'bg-sky-500', 'bg-rose-500', 'bg-amber-500', 'bg-teal-500', 'bg-orange-500']
                     const bgColors = ['bg-emerald-50', 'bg-sky-50', 'bg-rose-50', 'bg-amber-50', 'bg-teal-50', 'bg-orange-50']
+
                     return (
-                      <div 
-                        key={exam.id} 
+                      <button
+                        key={exam.id}
                         onClick={() => router.push(`/exam/${exam.id}`)}
-                        className={`${bgColors[index % 6]} group rounded-2xl p-5 cursor-pointer border border-transparent hover:border-slate-200 hover:shadow-lg transition`}
+                        className={`${bgColors[index % 6]} group rounded-2xl border border-transparent p-5 text-left transition hover:border-slate-200 hover:shadow-md`}
                       >
-                        <div className="flex items-center justify-between mb-4">
-                          <div className={`${colors[index % 6]} text-white w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-semibold shadow-md`}>
+                        <div className="mb-4 flex items-center justify-between">
+                          <div className={`${colors[index % 6]} flex h-11 w-11 items-center justify-center rounded-xl text-sm font-semibold text-white shadow-sm`}>
                             {exam.code.substring(0, 2)}
                           </div>
                           <Clock className="text-slate-400" size={18} />
                         </div>
-                        <div>
-                          <h4 className="font-semibold text-slate-900 mb-1 group-hover:text-slate-950">{exam.title}</h4>
-                          <p className="text-xs text-slate-600">{exam.code}</p>
-                          <p className="text-xs text-slate-500 mt-2">
-                            {exam.duration_minutes} mins • Pass: {exam.passing_score}%
-                          </p>
-                        </div>
-                      </div>
+                        <h4 className="font-semibold text-slate-900 group-hover:text-slate-950">{exam.title}</h4>
+                        <p className="mt-1 text-xs text-slate-600">{exam.code}</p>
+                        <p className="mt-2 text-xs text-slate-500">{exam.duration_minutes} mins • Pass: {exam.passing_score}%</p>
+                      </button>
                     )
                   })}
                 </div>
               ) : (
-                <div className="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                  <Calendar className="mx-auto text-slate-400 mb-2" size={32} />
+                <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 py-8 text-center">
+                  <Calendar className="mx-auto mb-2 text-slate-400" size={32} />
                   <p className="text-slate-500">No exams available for your course yet</p>
                 </div>
               )}
             </div>
 
-            {/* Learning Toolkit */}
-            <div className="grid lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-                <div className="flex items-center justify-between mb-5">
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-900">Daily Checklist</h3>
-                    <p className="text-sm text-slate-600">Keep your study plan on track</p>
-                  </div>
-                  <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Today</span>
-                </div>
-                <div className="space-y-3">
-                  {checklist.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => toggleChecklist(item.id)}
-                      className={`w-full flex items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
-                        item.done
-                          ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                          : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
-                      }`}
-                    >
-                      <span className="text-sm font-medium">{item.label}</span>
-                      <span className={`text-xs font-semibold ${item.done ? 'text-emerald-600' : 'text-slate-400'}`}>
-                        {item.done ? 'Done' : 'Mark'}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-                <div className="flex items-center justify-between mb-5">
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-900">Flashcards</h3>
-                    <p className="text-sm text-slate-600">Quick recall practice</p>
-                  </div>
-                  <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                    {flashcardIndex + 1} / {flashcards.length}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setFlashcardFlipped((prev) => !prev)}
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-8 text-left transition hover:bg-slate-100"
-                >
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                    {flashcardFlipped ? 'Answer' : 'Question'}
-                  </p>
-                  <p className="mt-3 text-base font-semibold text-slate-900">
-                    {flashcardFlipped ? flashcards[flashcardIndex].answer : flashcards[flashcardIndex].question}
-                  </p>
-                  <p className="mt-4 text-xs text-slate-500">Click to flip</p>
-                </button>
-                <div className="mt-4 flex items-center justify-between">
-                  <button
-                    onClick={handlePrevFlashcard}
-                    className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100"
-                  >
-                    Previous
-                  </button>
-                  <button
-                    onClick={handleNextFlashcard}
-                    className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100"
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Recent Scores */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between mb-6">
+            <div className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8">
+              <div className="mb-6 flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900">Recent Scores</h3>
+                  <h3 className="text-lg font-semibold text-slate-900">Performance History</h3>
                   <p className="text-sm text-slate-600">Latest attempts and outcomes</p>
                 </div>
                 <Trophy className="text-amber-500" size={20} />
               </div>
+
               <div className="space-y-3">
                 {scores.length > 0 ? (
                   scores.slice(0, 4).map((score) => (
-                    <div key={score.id} className="flex items-center justify-between gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <div key={score.id} className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
                       <div className="flex-1">
-                        <p className="font-semibold text-slate-900 text-sm">{score.exam?.title || 'Exam record unavailable'}</p>
-                        <p className="text-xs text-slate-500 mt-1">
-                          {new Date(score.submitted_at).toLocaleDateString()}
-                        </p>
+                        <p className="text-sm font-semibold text-slate-900">{score.exam?.title || 'Exam record unavailable'}</p>
+                        <p className="mt-1 text-xs text-slate-500">{new Date(score.submitted_at).toLocaleDateString()}</p>
                       </div>
                       <div className="text-right">
-                        <div className={`text-lg font-semibold ${
-                          score.status === 'passed' ? 'text-emerald-600' : 'text-rose-600'
-                        }`}>
+                        <p className={`text-lg font-semibold ${score.status === 'passed' ? 'text-emerald-600' : 'text-rose-600'}`}>
                           {score.percentage}%
-                        </div>
-                        <span className={`text-[11px] px-2 py-1 rounded-full font-semibold ${
-                          score.status === 'passed' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
-                        }`}>
+                        </p>
+                        <span className={`rounded-full px-2 py-1 text-[11px] font-semibold ${score.status === 'passed' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
                           {score.status.toUpperCase()}
                         </span>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-6 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                    <Trophy className="mx-auto text-slate-400 mb-2" size={24} />
-                    <p className="text-slate-500 text-sm">No exam results yet</p>
+                  <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 py-6 text-center">
+                    <Trophy className="mx-auto mb-2 text-slate-400" size={24} />
+                    <p className="text-sm text-slate-500">No exam results yet</p>
                   </div>
                 )}
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Right Column - Sidebar */}
-          <div className="space-y-6">
-            
-            {/* Profile Card */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
+          <aside className="space-y-6">
+            <div className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200">
               <div className="flex items-center gap-4">
                 {student.profile_picture_url ? (
-                  <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-md border border-slate-200">
-                    <img 
-                      src={student.profile_picture_url} 
+                  <div className="relative h-20 w-20 overflow-hidden rounded-2xl border border-slate-200 shadow-md">
+                    <Image
+                      src={student.profile_picture_url}
                       alt={student.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="80px"
+                      className="h-full w-full object-cover"
                     />
                   </div>
                 ) : (
-                  <div className="w-20 h-20 bg-slate-900 rounded-2xl flex items-center justify-center text-white text-2xl font-semibold shadow-md">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-slate-900 text-2xl font-semibold text-white shadow-md">
                     {student.name.charAt(0).toUpperCase()}
                   </div>
                 )}
                 <div>
-                  <h3 className="font-semibold text-xl text-slate-900">{student.name}</h3>
-                  <p className="text-slate-500 text-sm">Student</p>
-                  <a href="/StudentProfile">
-                  <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                  <h3 className="text-xl font-semibold text-slate-900">{student.name}</h3>
+                  <p className="text-sm text-slate-500">Student</p>
+                  <a href="/StudentProfile" className="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
                     <User size={14} />
                     Active profile
-                  </div>
                   </a>
-                  
                 </div>
               </div>
-              <div className="mt-5 space-y-2 text-sm text-slate-600 bg-slate-50 rounded-2xl p-4">
+              <div className="mt-5 space-y-2 rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">
                 <div className="flex items-center gap-2">
                   <User size={16} className="text-slate-400" />
                   <span className="truncate">{student.email}</span>
@@ -690,143 +483,42 @@ const Page = () => {
               </div>
             </div>
 
-            {/* Focus Timer */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold text-slate-900">Focus Timer</h3>
-                  <p className="text-sm text-slate-600">Short, intentional sessions</p>
-                </div>
-                <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Timer</span>
-              </div>
-              <div className="mt-5 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-6 text-center">
-                <p className="text-3xl font-semibold text-slate-900 tracking-tight">{formatTime(focusSeconds)}</p>
-                <p className="text-xs text-slate-500 mt-1">minutes : seconds</p>
-              </div>
-              <div className="mt-4 flex items-center justify-center gap-2">
-                {[25, 45, 60].map((preset) => (
-                  <button
-                    key={preset}
-                    onClick={() => setFocusPreset(preset)}
-                    className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100"
-                  >
-                    {preset}m
-                  </button>
-                ))}
-              </div>
-              <div className="mt-4 flex items-center gap-3">
-                <button
-                  onClick={() => setFocusRunning((prev) => !prev)}
-                  className="flex-1 rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
-                >
-                  {focusRunning ? 'Pause' : 'Start'}
-                </button>
-                <button
-                  onClick={() => setFocusPreset(25)}
-                  className="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-
-            {/* Streak Tracker */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="font-semibold text-slate-900">Skill Streak</h3>
-                  <p className="text-sm text-slate-600">Build daily consistency</p>
-                </div>
-                <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Streak</span>
-              </div>
-              <div className="flex items-center justify-between rounded-2xl bg-slate-50 border border-slate-200 px-4 py-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Current</p>
-                  <p className="text-3xl font-semibold text-slate-900 mt-1">{streakCount}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-slate-500">Check in today</p>
-                  <p className="text-sm font-semibold text-slate-900">{checkedInToday ? 'Completed' : 'Not yet'}</p>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-3">
-                <button
-                  onClick={handleCheckIn}
-                  className="flex-1 rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-amber-400"
-                >
-                  {checkedInToday ? 'Checked in' : 'Check in'}
-                </button>
-                <button
-                  onClick={resetStreak}
-                  className="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-
-            {/* Study Tips */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="font-semibold text-slate-900">Study Tip</h3>
-                  <p className="text-sm text-slate-600">Small changes, big wins</p>
-                </div>
-                <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                  {tipIndex + 1} / {studyTips.length}
-                </span>
-              </div>
-              <div className="rounded-2xl bg-slate-50 border border-slate-200 px-4 py-5">
-                <p className="text-sm text-slate-700">{studyTips[tipIndex]}</p>
-              </div>
-              <div className="mt-4 flex items-center justify-end">
-                <button
-                  onClick={handleNextTip}
-                  className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100"
-                >
-                  Next tip
-                </button>
-              </div>
-            </div>
-
-            {/* Payment Status */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between mb-3">
+            <div className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200">
+              <div className="mb-3 flex items-center justify-between">
                 <h3 className="font-semibold text-slate-900">Payment Status</h3>
                 <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Finance</span>
               </div>
-              <div className={`${getPaymentStatusColor(overallPaymentStatus)} text-white px-4 py-3 rounded-2xl text-center font-semibold shadow-md`}>
+              <div className={`${getPaymentStatusColor(overallPaymentStatus)} rounded-2xl px-4 py-3 text-center font-semibold text-white shadow-md`}>
                 {getPaymentStatusText(overallPaymentStatus)}
               </div>
-              <p className="text-xs text-slate-500 mt-3">Ensure your subscription remains active.</p>
+              <p className="mt-3 text-xs text-slate-500">Ensure your subscription remains active.</p>
             </div>
 
-            {/* Upcoming Exams */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <h3 className="font-semibold text-slate-900 mb-4">Upcoming Exams</h3>
+            <div className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-slate-200">
+              <h3 className="mb-4 font-semibold text-slate-900">Upcoming Exams</h3>
               <div className="space-y-3">
                 {exams.slice(0, 3).map((exam, index) => (
-                  <div key={exam.id} className="flex items-start gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                    <div className="bg-slate-900 text-white px-3 py-1 rounded-lg text-[11px] font-semibold">
+                  <div key={exam.id} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                    <div className="rounded-lg bg-slate-900 px-3 py-1 text-[11px] font-semibold text-white">
                       {index === 0 ? 'Today' : index === 1 ? 'Tomorrow' : 'Soon'}
                     </div>
                     <div className="flex-1">
-                      <p className="font-semibold text-slate-900 text-sm">{exam.title}</p>
+                      <p className="text-sm font-semibold text-slate-900">{exam.title}</p>
                       <p className="text-xs text-slate-600">{exam.duration_minutes} minutes</p>
                     </div>
                   </div>
                 ))}
                 {exams.length === 0 && (
-                  <div className="text-center py-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                    <Calendar className="mx-auto text-slate-400 mb-2" size={24} />
-                    <p className="text-slate-500 text-sm">No upcoming exams</p>
+                  <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 py-4 text-center">
+                    <Calendar className="mx-auto mb-2 text-slate-400" size={24} />
+                    <p className="text-sm text-slate-500">No upcoming exams</p>
                   </div>
                 )}
               </div>
             </div>
-          </div>
+          </aside>
         </div>
-      </div>
+      </main>
     </div>
   )
 };
