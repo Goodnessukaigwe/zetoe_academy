@@ -29,27 +29,27 @@ export default function ContactPage() {
 
   const contactInfo = [
     {
-      name: "John  Daniel",
+      name: "miss Peace",
       title: "Chief Admin",
-      phone: "09012345678",
-      whatsapp: "09012345678",
-      email: "chiefadmin@gmail.com",
+      phone: "0806 617 2156",
+      whatsapp: "081 88 45 0748",
+      email: "rajunoregbe1@gmail.com",
       icon: "👤",
     },
     {
-      name: "Mary Johnson",
-      title: "Admin",
-      phone: "09012345678",
-      whatsapp: "09012345678",
-      email: "admin@gmail.com",
+      name: "Mr Obaje Collins",
+      title: "CLO",
+      phone: "0907 511 6034",
+      whatsapp: "0907 511 6034",
+      email: "",
       icon: "👤",
     },
     {
-      name: "Kelechi Obi",
+      name: "Miss IB Friday",
       title: "CRO (Client Relations)",
-      phone: "09012345678",
-      whatsapp: "09012345678",
-      email: "cro@gmail.com",
+      phone: "",
+      whatsapp: "",
+      email: "",
       icon: "👤",
     },
   ];
@@ -127,7 +127,7 @@ export default function ContactPage() {
                       href="tel:+234800000000"
                       className="text-indigo-600 hover:text-indigo-700 font-medium"
                     >
-                      +234 800 000 0000
+                      +234 0907 511 6034
                     </a>
                   </div>
                 </div>

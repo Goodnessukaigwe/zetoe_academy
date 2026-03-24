@@ -93,7 +93,7 @@ export default function HeroSlider() {
       : "left-8 text-left";
 
   return (
-    <div className="relative w-full md:h-[400px] overflow-hidden">
+    <div className="relative w-full h-[300px] md:h-[400px] overflow-hidden">
       {/* IMAGE */}
       <img
         src={heroImages[index]}
@@ -111,7 +111,7 @@ export default function HeroSlider() {
       {text.title && (
         <div
           className={`absolute bottom-5 text-white p-2 sm:p-2 md:p-8 
-            rounded max-w-[80%] sm:max-w-[30%] md:max-w-[130%] ${positionClass} 
+            rounded max-w-[90%] ${positionClass} 
             backdrop-blur-none`}
         >
           <h2 className="text-xl sm:text-3xl md:text-5xl 

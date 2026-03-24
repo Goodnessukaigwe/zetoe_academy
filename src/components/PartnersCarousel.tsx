@@ -45,18 +45,17 @@ export default function PartnersCarousel({ partners }: PartnersCarouselProps) {
   };
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-20 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Section heading */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-black mb-4">
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Our Partners
-            </span>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Our Partners
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-lg text-gray-600">
             Trusted by leading organizations worldwide
           </p>
+          <div className="w-24 h-1 bg-gray-300 mx-auto mt-4"></div>
         </div>
 
         {/* Carousel */}

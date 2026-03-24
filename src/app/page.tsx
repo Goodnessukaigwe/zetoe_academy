@@ -8,33 +8,49 @@ const Page = () => {
     <div className="antialiased">
 
       {/* Header / Navigation */}
-      <header className="sticky top-0 z-50 bg-white  shadow-sm">
-          <div className="flex items-center px-0 py-3">
-            
-              <img src="/zetelog.png" alt="Zeteo logo" className="h-16 w-16 object-contain" />
-              <h1 className="text-2xl font-extrabold flex-1 text-blue-700">ZETEO CITADEL CONSULT</h1>
-            
+      <header className="sticky top-0 z-50 bg-white shadow-sm">
+        <div className="flex items-center px-4 py-3 justify-between">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <img src="/zetelog.png" alt="Zeteo logo" className="h-16 w-16 object-contain" />
+            <h1 className="text-2xl font-extrabold text-blue-700">ZETEO CITADEL CONSULT</h1>
+          </div>
 
-           
-          <nav className="flex-1 space-x-10 font-bold text-gray-800">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex flex-1 space-x-10 font-bold text-gray-800 ml-10">
             <Link href="/" className="hover:text-[#4a03fc] transition">Home</Link>
             <Link href="/about" className="hover:text-[#4a03fc] transition">About</Link>
             <Link href="/contact" className="hover:text-[#4a03fc] transition">Contact</Link>
+            <Link href="/verify-certificate" className="hover:text-[#4a03fc] transition">Verify Certificate</Link>
           </nav>
 
-          <div className="hidden md:flex space-x-4 mt-15">
-            <Link href="/register" className="bg-indigo-600 text-white px-5 py-2 
-            rounded-lg font-semibold shadow-md hover:bg-[#1d0555] transition">Get Started</Link>
-            <Link href="/login" className="border-1 border-indigo-600 text-blue-700 px-2 py-2 rounded-md
-         hover:bg-indigo-100 transition mr-4">Sign In</Link>
+          {/* Desktop Buttons */}
+          <div className="hidden md:flex space-x-4">
+            <Link href="/register" className="bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-[#1d0555] transition">Get Started</Link>
+            <Link href="/login" className="border border-indigo-600 text-blue-700 px-4 py-2 rounded-md hover:bg-indigo-100 transition">Sign In</Link>
           </div>
-        
 
-         <div className="md:hidden">
-              <button className="text-gray-700 text-2xl">☰</button>
+          {/* Mobile Menu Button */}
+          <details className="md:hidden relative">
+            <summary className="list-none cursor-pointer p-2">
+              <span className="sr-only">Open menu</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </summary>
+            {/* Dropdown Menu - Positioned as Popup */}
+            <div className="absolute top-full right-0 mt-2 p-3 space-y-2 bg-white border rounded-lg shadow-lg w-56 z-50">
+              <Link href="/" className="block px-3 py-2 hover:text-[#4a03fc] hover:bg-gray-100 rounded transition">Home</Link>
+              <Link href="/about" className="block px-3 py-2 hover:text-[#4a03fc] hover:bg-gray-100 rounded transition">About</Link>
+              <Link href="/contact" className="block px-3 py-2 hover:text-[#4a03fc] hover:bg-gray-100 rounded transition">Contact</Link>
+              <Link href="/verify-certificate" className="block px-3 py-2 hover:text-[#4a03fc] hover:bg-gray-100 rounded transition">Verify Certificate</Link>
+              <div className="pt-2 border-t space-y-2">
+                <Link href="/register" className="block bg-indigo-600 text-white text-center px-3 py-2 rounded-lg hover:bg-[#1d0555] transition">Get Started</Link>
+                <Link href="/login" className="block border border-indigo-600 text-blue-700 text-center px-3 py-2 rounded-md hover:bg-indigo-100 transition">Sign In</Link>
+              </div>
             </div>
-          </div>
-
+          </details>
+        </div>
       </header>
 
       {/* Hero */}
@@ -126,7 +142,7 @@ const Page = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {['Kaduna','Kano','Niger','Lagos','Abuja','Jos','Ebonyi'].map((l) => (
-              <div key={1} className=" px-2 py-2 bg-gradient-to-br from-indigo-200 to-blue-50
+              <div key={l} className=" px-2 py-2 bg-gradient-to-br from-indigo-200 to-blue-50
                rounded-2xl shadow-md hover:shadow-xl transform hover:scale-110 transition-all 
                duration-300 border border-indigo-400 cursor-pointer">
                 <span className="text-gray-900 font-bold text-lg group-hover:text-indigo-600 
@@ -150,7 +166,7 @@ const Page = () => {
              rounded-2xl shadow-lg border border-gray-200 cursor-pointer">
                 <img
         src="/about/partners/uni ibadan.png"
-        alt=""className="w-20 h-18 ml-20" />
+        alt="University of Ibadan logo"className="w-20 h-18 ml-20" />
 
               <h4 className="text-2xl font-bold text-gray-900 mt-3">University of Ibadan(Consulting Unit)</h4>
               <p className="mt-5 text-gray-800">Academic collaboration for curriculum design and
@@ -158,11 +174,11 @@ const Page = () => {
             </div>
 
             <div className=" p-8 bg-gradient-to-br from-indigo-50 to-blue-50
-             rounded-2xl shadow-lg  border-gray-200 cursor-pointer">
+             rounded-2xl shadow-lg  border border-gray-200 cursor-pointer">
               
                <img
         src="/HeroImages/smpin.png"
-        alt=""className="w-20 h-18 ml-20 object-cover" />
+        alt="SMPIN logo"className="w-20 h-18 ml-20 object-cover" />
 
               
               <h4 className="text-2xl font-bold  text-gray-900">Software and Management
@@ -176,7 +192,7 @@ const Page = () => {
              
              <img
         src="/about/partners/nysc.png"
-        alt=""className="w-20 h-18 ml-20 object-cover" />
+        alt="NYSC logo"className="w-20 h-18 ml-20 object-cover" />
 
               <h4 className="text-2xl font-bold mt-6 text-gray-900">National Youth Service Corps(NYSC)</h4>
               <p className="mt-5 text-gray-800">Supporting corps members with training, 

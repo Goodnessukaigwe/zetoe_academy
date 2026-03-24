@@ -53,7 +53,7 @@ export default function SlidingFeaturesSection({ features }: SlidingFeaturesSect
               <div
                 key={index}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  visibleCards[index] ? 'w-8 bg-gradient-to-r from-purple-500 to-pink-500' : 'w-2 bg-gray-300'
+                  visibleCards[index] ? 'w-8 bg-gray-600' : 'w-2 bg-gray-300'
                 }`}
               ></div>
             ))}
