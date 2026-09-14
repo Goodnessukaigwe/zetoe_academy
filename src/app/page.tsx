@@ -5,6 +5,7 @@ import { ArrowRight, BookOpen, BriefcaseBusiness, CheckCircle2, Landmark, MapPin
 import Header from "@/component/Header";
 import Footer from "@/component/Footer";
 import InteractiveSection from "@/component/InteractiveSection";
+import HeroSlider from "@/component/HeroSlider";
 
 const locations = ["Kaduna", "Kano", "Niger", "Lagos", "Abuja", "Jos", "Ebonyi"];
 
@@ -33,7 +34,7 @@ export default function Page() {
               <p className="mt-5 max-w-xl text-base leading-7 text-slate-600">We provide personalized mentorship, professional development and institutional consulting tailored for learners, corps members and organizations preparing for exams and assessments.</p>
               <div className="mt-10 border-t border-slate-200 pt-5"><p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-500">Trusted by leading bodies across Nigeria</p><div className="mt-3 flex flex-wrap gap-4 text-xs font-semibold text-slate-600"><span>University of Ibadan</span><span>SMPIN Nigeria</span><span>NYSC SAED</span></div></div>
             </div>
-            <div className="relative mx-auto w-full max-w-md lg:justify-self-end"><div className="absolute -inset-5 rounded-full bg-[#cfe7ff] opacity-60 blur-3xl" /><div className="relative overflow-hidden rounded-xl border-8 border-white bg-white shadow-2xl"><img src="/HeroImages/12.png" alt="Learners celebrating their completed training" className="h-[340px] w-full object-cover sm:h-[420px]" /></div></div>
+            <div className="relative mx-auto w-full max-w-md lg:justify-self-end"><div className="absolute -inset-5 rounded-full bg-[#cfe7ff] opacity-60 blur-3xl" /><div className="relative overflow-hidden rounded-xl border-8 border-white bg-white shadow-2xl"><HeroSlider /></div></div>
           </div>
         </section>
 
