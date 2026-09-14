@@ -1,318 +1,57 @@
 "use client";
-import React from "react";
+
 import Link from "next/link";
-import { HeroSlider, InteractiveSection } from "@/component";
+import { ArrowRight, BookOpen, BriefcaseBusiness, CheckCircle2, Landmark, MapPin } from "lucide-react";
+import Header from "@/component/Header";
+import Footer from "@/component/Footer";
+import InteractiveSection from "@/component/InteractiveSection";
 
-const Page = () => {
+const locations = ["Kaduna", "Kano", "Niger", "Lagos", "Abuja", "Jos", "Ebonyi"];
+
+const services = [
+  { icon: BookOpen, eyebrow: "Module 01", title: "Mentorship", description: "Personalized coaching, exam strategies and structured study plans tailored to learner goals.", bullets: ["One-on-one diagnostic sessions", "Tailored revision timetable", "Career-focused support"] },
+  { icon: BriefcaseBusiness, eyebrow: "Module 02", title: "Professionalism", description: "Soft-skills development, CV clinics and workplace readiness for early-career professionals.", bullets: ["ATS resume re-engineering", "Executive communication mastery", "Corporate workplace readiness"] },
+  { icon: Landmark, eyebrow: "Module 03", title: "Consulting", description: "Curriculum support, assessment design and institutional training programs.", bullets: ["Accreditation support", "Custom CBT exam architecture", "Organizational training"] },
+];
+
+const partners = [
+  { name: "University of Ibadan", detail: "Consulting Unit", image: "/ibadanlog.png", color: "text-[#214397]" },
+  { name: "Software and Management Professional Institute of Nigeria", detail: "Strategic Management Institute", image: "/HeroImages/smpin.png", color: "text-[#087eaf]" },
+  { name: "National Youth Service Corps", detail: "NYSC", image: "/nysc.png", color: "text-emerald-600" },
+];
+
+export default function Page() {
   return (
-    <div className="antialiased">
-
-      {/* Header / Navigation */}
-      <header className="sticky top-0 z-50 bg-white  shadow-sm">
-          <div className="flex items-center px-0 py-3">
-            
-              <img src="/zetelog.png" alt="Zeteo logo" className="h-16 w-16 object-contain" />
-              <h1 className="text-2xl font-extrabold flex-1 text-blue-700">ZETEO CITADEL CONSULT</h1>
-            
-
-           
-          <nav className="flex-1 space-x-10 font-bold text-gray-800">
-            <Link href="/" className="hover:text-[#4a03fc] transition">Home</Link>
-            <Link href="/about" className="hover:text-[#4a03fc] transition">About</Link>
-            <Link href="/contact" className="hover:text-[#4a03fc] transition">Contact</Link>
-            <Link href="/verify-certificate" className="hover:text-[#4a03fc] transition">Verify Certificate</Link>
-          </nav>
-
-          <div className="hidden md:flex items-center">
-            <Link href="/login" className="border-2 bg-indigo-700 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition mr-5">Sign In</Link>
-          </div>
-        
-
-         <div className="md:hidden">
-              <button className="text-gray-700 text-2xl">☰</button>
+    <div className="min-h-screen bg-[#f8faff] text-slate-900">
+      <Header />
+      <main>
+        <section className="overflow-hidden bg-gradient-to-br from-[#f2f6ff] via-white to-[#e6f3ff]">
+          <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-16">
+            <div>
+              <span className="inline-flex rounded-full bg-[#e1ebff] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#214397]">Empowering education & professional development</span>
+              <h1 className="mt-5 max-w-2xl text-4xl font-black leading-[1.05] tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">Elevate Exam Readiness. <span className="text-[#214397]">Accelerate Careers.</span></h1>
+              <p className="mt-5 max-w-xl text-base leading-7 text-slate-600">We provide personalized mentorship, professional development and institutional consulting tailored for learners, corps members and organizations preparing for exams and assessments.</p>
+              <div className="mt-10 border-t border-slate-200 pt-5"><p className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-500">Trusted by leading bodies across Nigeria</p><div className="mt-3 flex flex-wrap gap-4 text-xs font-semibold text-slate-600"><span>University of Ibadan</span><span>SMPIN Nigeria</span><span>NYSC SAED</span></div></div>
             </div>
+            <div className="relative mx-auto w-full max-w-md lg:justify-self-end"><div className="absolute -inset-5 rounded-full bg-[#cfe7ff] opacity-60 blur-3xl" /><div className="relative overflow-hidden rounded-xl border-8 border-white bg-white shadow-2xl"><img src="/HeroImages/12.png" alt="Learners celebrating their completed training" className="h-[340px] w-full object-cover sm:h-[420px]" /><div className="absolute inset-x-4 bottom-4 flex items-center justify-between rounded-lg bg-white/95 p-3 shadow-lg backdrop-blur-sm"><div><p className="text-xl font-black text-[#214397]">1,000+</p><p className="text-[10px] text-slate-500">Learners Trained</p></div><div className="h-8 w-px bg-slate-200" /><div><p className="text-xl font-black text-emerald-600">92%</p><p className="text-[10px] text-slate-500">Pass Rate</p></div></div></div></div>
           </div>
+        </section>
 
-      </header>
+        <section className="border-y border-[#dbe6f6] bg-[#eef4ff]"><div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8"><div className="flex items-center gap-3"><MapPin size={17} className="text-[#214397]" /><div><p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#214397]">National footprint</p><p className="text-xs text-slate-600">Our locations</p></div></div><div className="flex flex-wrap gap-2">{locations.map((location) => <span key={location} className="rounded bg-white px-3 py-1 text-[10px] font-semibold text-slate-600 shadow-sm">{location}</span>)}</div></div></section>
 
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-indigo-50 via-white to-blue-50">
-        <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-2
-         gap-12 items-center">
-          <div>
-            <h2 className="lg:text-5xl font-black
-               text-emerald-600 leading-tight">Elevate Exam Readiness. Accelerate Careers.</h2>
-            <p className="mt-6 text-lg text-gray-700 max-w-2xl leading-relaxed">
-              We provide personalized mentorship, professional development and
-               institutional consulting tailored for learners, corps members and
-                organizations preparing for exams and assessments.</p>
+        <section id="services" className="bg-[#f8faff] px-4 py-16 sm:px-6 lg:px-8"><div className="mx-auto max-w-7xl"><div className="mx-auto max-w-xl text-center"><span className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#214397]">Comprehensive pathways</span><h2 className="mt-2 text-3xl font-black tracking-tight text-slate-900">Our Services</h2><p className="mt-3 text-sm text-slate-500">Elite-sized programs and institutional support that focus on measurable results.</p></div><div className="mt-10 grid gap-5 md:grid-cols-3">{services.map(({ icon: Icon, eyebrow, title, description, bullets }) => <article key={title} className="rounded-lg border border-slate-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#e5edff] text-[#214397]"><Icon size={19} /></div><p className="mt-5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#214397]">{eyebrow}</p><h3 className="mt-1 text-lg font-bold">{title}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{description}</p><ul className="mt-4 space-y-2 text-xs text-slate-500">{bullets.map((bullet) => <li key={bullet} className="flex gap-2"><CheckCircle2 size={13} className="mt-0.5 shrink-0 text-emerald-500" />{bullet}</li>)}</ul><Link href="/contact" className="mt-6 inline-flex items-center gap-1 text-[10px] font-bold text-[#214397]">Explore {title} <ArrowRight size={12} /></Link></article>)}</div></div></section>
 
+        <section className="bg-white px-4 py-16 sm:px-6 lg:px-8"><div className="mx-auto max-w-7xl"><div className="text-center"><h2 className="text-2xl font-black">Trusted by Top Institutions</h2><p className="mt-2 text-xs text-slate-500">We collaborate with leading academic and professional bodies to maintain quality standards.</p></div><div className="mt-9 grid gap-5 md:grid-cols-3">{partners.map((partner) => <div key={partner.name} className="flex min-h-36 flex-col items-center justify-center rounded-lg bg-[#eef4ff] p-6 text-center"><div className="flex h-11 w-11 items-center justify-center rounded-lg bg-white p-2"><img src={partner.image} alt="" className="h-full w-full object-contain" /></div><h3 className={`mt-3 text-sm font-bold ${partner.color}`}>{partner.name}</h3><p className="mt-1 text-[10px] text-slate-500">{partner.detail}</p></div>)}</div></div></section>
 
-            <div className="mt-8 text-sm text-gray-600">Trusted by: University of Ibadan(Consulting Unit), SMPIN, NYSC</div>
-          </div>
+        <InteractiveSection />
 
-          <div className="order-first lg:order-last">
-            <div className="rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl
-             transition-shadow duration-300">
-              <HeroSlider />
-            </div>
-          </div>
-        </div>
-      </section>
+        <section id="readiness" className="bg-[#edf4ff] px-4 py-16 sm:px-6 lg:px-8"><div className="mx-auto max-w-2xl rounded-xl bg-white p-6 shadow-lg sm:p-8"><div className="text-center"><span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#087eaf]">Get assessment tool</span><h2 className="mt-2 text-2xl font-black">Test Your Readiness</h2><p className="mt-2 text-xs text-slate-500">Take our quick quiz to see how exam-ready you are.</p></div><div className="mt-6 rounded-lg bg-[#f1f5ff] p-5"><div className="flex items-center justify-between"><h3 className="text-sm font-bold">Quick Exam Readiness Quiz</h3><span className="rounded bg-white px-2 py-1 text-[9px] font-semibold text-slate-500">Real-time diagnostic</span></div><p className="mt-2 text-xs text-slate-500">Use the readiness check in the success stories section to begin.</p><Link href="#success" className="mt-4 inline-flex items-center gap-2 rounded-md bg-[#214397] px-4 py-2 text-xs font-bold text-white">Start quiz <ArrowRight size={13} /></Link></div></div></section>
 
-      {/* Services */}
-      <section id="services" className="py-20 bg-gradient-to-b from-white to-gray-200">
-        <div className="max-w-5xl mx-auto px-3 text-center">
-          <h3 className="text-3xl md:text-4xl font-bold text-black mb-10 
-  relative inline-block">
-          Our Services
-          <p className="text-gray-600 mt-4 mb-12 text-sm">
-            Bite-sized programs and institutional support that focus on measurable results.</p>
-            </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <article className=" p-8  bg-gradient-to-br from-indigo-200 to-blue-50
-             rounded-2xl shadow-lg  border border-gray-100">
-              <h4 className="text-2xl font-bold text-gray-900">Mentorship</h4>
-              <p className="mt-5 text-gray-800 leading-relaxed">
-                Personalized coaching, exam strategies and structured study plans tailored 
-                to learner goals.</p>
-              {/* <button className="mt-6 text-indigo-600 font-semibold hover:text-indigo-700 
-              transition">Learn more →</button> */}
-            </article>
+        <section className="bg-[#f8faff] px-4 py-16 sm:px-6 lg:px-8"><div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]"><div className="overflow-hidden rounded-lg shadow-lg"><img src="/mrlaw.jpg" alt="Mr. Akor Lawrence speaking at an event" className="h-80 w-full object-cover sm:h-[390px]" /></div><div><span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#214397]">Corporate & institutional partner</span><h2 className="mt-2 text-3xl font-black">ABOUT US</h2><p className="mt-4 text-sm leading-7 text-slate-600">The role of professionalism is key for effective and efficient work delivery. As a 21st-century organisation, we understand the dynamics of the time and the ever-changing world.</p><p className="mt-3 text-sm leading-7 text-slate-600">We have seasoned professionals and experts who are passionate about knowledge delivery alongside coaching, mentorship, and consultancy.</p><div className="mt-5 flex flex-wrap gap-2"><span className="rounded bg-[#e5edff] px-3 py-1 text-[10px] font-bold text-[#214397]">Mentorship</span><span className="rounded bg-[#e5edff] px-3 py-1 text-[10px] font-bold text-[#214397]">Professionalism</span><span className="rounded bg-[#e5edff] px-3 py-1 text-[10px] font-bold text-[#214397]">Consultancy</span></div><Link href="/about" className="mt-6 inline-flex items-center gap-2 rounded-md bg-[#214397] px-4 py-2.5 text-xs font-bold text-white">Read More <ArrowRight size={13} /></Link></div></div></section>
 
-            <article className=" p-8 bg-gradient-to-br from-indigo-200 to-blue-50 
-            rounded-2xl shadow-lg  border border-gray-100">
-              <h4 className="text-2xl font-bold text-gray-900">Professionalism</h4>
-              <p className="mt-5 text-gray-800 leading-relaxed">Soft-skills development,
-                 CV clinics and workplace readiness for early-career professionals.</p>
-              {/* <button className="mt-6 text-indigo-600 font-semibold hover:text-indigo-700
-               transition">Learn more →</button> */}
-            </article>
-
-            <article className=" p-8 bg-gradient-to-br from-indigo-200 to-blue-50
-            rounded-2xl shadow-lg border border-gray-100">
-              <h4 className="text-2xl font-bold text-gray-900">Consulting</h4>
-              <p className="mt-5 text-gray-800 leading-relaxed">Curriculum support,
-                 assessment design and institutional training programs.</p>
-              {/* <button className="mt-6 text-indigo-600 font-semibold hover:text-indigo-700 
-              transition">Learn more →</button> */}
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* Locations */}
-      <section id="locations" className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-2 text-center">
-          <h3 className="text-3xl md:text-4xl font-bold text-black mb-10 
-  relative inline-block">
-          Our Locations
-          <p className="text-gray-600 mt-4 mb-12 text-sm">We serve learners and 
-            institutions across key Nigerian centres:</p></h3>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {['Kaduna','Kano','Niger','Lagos','Abuja','Jos','Ebonyi'].map((l) => (
-              <div key={l} className=" px-2 py-2 bg-gradient-to-br from-indigo-200 to-blue-50
-               rounded-2xl shadow-md hover:shadow-xl transform hover:scale-110 transition-all 
-               duration-300 border border-indigo-400 cursor-pointer">
-                <span className="text-gray-900 font-bold text-lg group-hover:text-indigo-600 
-                transition">{l}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Partners */}
-      <section id="partners" className="py-20 bg-gradient-to-b from-gray-200 to-white">
-        <div className="max-w-5xl mx-auto px-3 text-center">
-           <h3 className="text-3xl md:text-4xl font-bold text-black mb-10 
-  relative inline-block">
- Trusted by Top Institutions
-          <p className="text-gray-600 mt-4 mb-12 text-sm">We collaborate with leading academic and professional bodies to maintain quality standards.</p>
-</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            <div className=" p-8 bg-gradient-to-br from-indigo-50 to-blue-50
-             rounded-2xl shadow-lg border border-gray-200 cursor-pointer">
-                <img
-        src="ibadanlog.png"
-        alt=""className="w-20 h-18 ml-20" />
-
-              <h4 className="text-2xl font-bold text-gray-900 mt-3">University of Ibadan(Consulting Unit)</h4>
-              <p className="mt-5 text-gray-800">Academic collaboration for curriculum design and
-                 assessment quality assurance.</p>
-            </div>
-
-            <div className=" p-8 bg-gradient-to-br from-indigo-50 to-blue-50
-             rounded-2xl shadow-lg  border-gray-200 cursor-pointer">
-              
-               <img
-        src="/HeroImages/smpin.png"
-        alt=""className="w-20 h-18 ml-20 object-cover" />
-
-              
-              <h4 className="text-2xl font-bold  text-gray-900">Software and Management
-                 Professional Institute of Nigeria(SMPIN)</h4>
-              <p className="mt-5 text-gray-800">Professional network support,
-                 industry partnerships and placement services.</p>
-            </div>
-
-            <div className=" p-8 bg-gradient-to-br from-indigo-50 to-blue-50
-             rounded-2xl shadow-lg border border-gray-200 cursor-pointer">
-             
-             <img
-        src="nysc.png"
-        alt=""className="w-20 h-18 ml-20 object-cover" />
-
-              <h4 className="text-2xl font-bold mt-6 text-gray-900">National Youth Service Corps(NYSC)</h4>
-              <p className="mt-5 text-gray-800">Supporting corps members with training, 
-                mentorship and certification pathways.</p>
-            </div>
-          </div>
-        </div>
-              </section>
-
-      {/* Interactive Section (stats, testimonials, quiz preview) */}
-      <InteractiveSection />
-
-      {/* CTA */}
-      <section className="bg-gradient-to-r from-amber-400 to-blue-800 text-white py-16">
-        <div className="max-w-6xl mx-auto px-3 text-center">
-          <h4 className="text-4xl font-black">Ready to Transform Results?</h4>
-          <p className="text-indigo-100 mt-4 mb-8 text-lg">Start a program, request institutional support, or connect with our team today.</p>
-          <div className="flex justify-center gap-4 flex-wrap">
-            <Link href="/contact" className="border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-indigo-700 transition">Contact Sales</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT */}
-<div id="about" className="max-w-6xl mx-auto px-6 py-16">
-  {/* Section Heading */}
-  <h1 className="text-4xl md:text-4xl font-extrabold text-black mb-10 
-  relative inline-block">
-    ABOUT US
-    <span className="absolute left-0 -bottom-2 w-17 h-1
-     bg-blue-700 rounded-full"></span>
-  </h1>
-
-  <div className="flex flex-col md:flex-row items-center gap-10">
-    
-    <div className="w-full md:w-1/3">
-      <img
-        src="/mrlaw.jpg"
-        alt="About us"
-        className="w-full h-80 md:h-[28rem] rounded-3xl object-cover shadow-2xl 
-        transition-transform duration-500 hover:scale-105"
-      />
-    </div>
-
-    
-    <div className="flex-1 text-black text-justify space-y-4 leading-relaxed">
-      <p>
-        The role of professionalism is key for effective and efficient work
-        delivery. As a 21st-century organisation, we understand the dynamics
-        of the time and the ever-changing world.
-      </p>
-      <p>
-        Our organisation is a cutting-edge solution for organisations, students,
-        corps members, and corporate executives who want to enhance their
-        knowledge in Management and software applications.
-      </p>
-      <p>
-        We have seasoned professionals and experts who are passionate about
-        knowledge delivery alongside coaching, mentorship, and consultancy.
-      </p>
-
-      {/* Optional Highlights */}
-      <div className="mt-6 flex flex-wrap gap-4">
-        <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full 
-        text-sm font-semibold">Mentorship</span>
-        <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full 
-        text-sm font-semibold">Professionalism</span>
-        <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full 
-        text-sm font-semibold">Consultancy</span>
-      </div>
-      <Link
-        href="/about"
-        className="bg-amber-300 text-blue-700 px-2 py-2 rounded-full text-sm
-         font-bold mt-4 inline-block transition-transform duration-500 hover:scale-105"
-      >
-        Read More
-      </Link>
-
-    </div>
-  </div>
-</div>
-      {/* Footer */}
-      <footer className="bg-gradient-to-b from-gray-900 to-gray-950 text-gray-300 pt-16">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div>
-            <h5 className="text-white text-lg font-bold">ZETEO CITADEL CONSULT</h5>
-            <p className="mt-3 text-sm leading-relaxed">Partnering with institutions and learners to deliver high-quality training and assessment support across Nigeria.</p>
-            
-             <p className="text-sm leading-6">
-            Partner with us to tackle your unique challenges and unlock your organization’s full potential.
-          </p>
-            <p className="mt-3 text-sm">North West Zone: No 6 Sabr Plaza Station, Kachia Road</p>
-            <p className="mt-1 text-sm">Email: zeteocitadel08@gmail.com
-              <br></br>• Phone: 08064691255
-              </p>
-          </div>
-
-          <div>
-            <h6 className="text-white font-semibold">Quick Links</h6>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li><Link href="/" className="hover:text-white transition">Home</Link></li>
-              <li><Link href="/about" className="hover:text-white transition">About</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h6 className="text-white font-semibold">Resources</h6>
-            <ul className="mt-3 space-y-2 text-sm">
-              <li><a href="#" className="hover:text-white transition">Blog</a></li>
-              <li><a href="#" className="hover:text-white transition">FAQs</a></li>
-              <li><a href="#" className="hover:text-white transition">Privacy</a></li>
-            </ul>
-          </div>
-
-            {/* Social Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Connect With Us</h3>
-          <div className="  space-x-8">
-            
-            <a href="#" className="  flex gap-3 hover:text-white transition">
-               <img src="/twister.png" className=' w-7 ' alt="logo" />twitter
-            </a>
-            <br />
-            <a href="#" className="  flex gap-3 hover:text-white transition">
-             <img src="/instag.png" className=' w-7 ' alt="logo" /> instagram
-            </a>
-            <br />
-            <a href="https://web.facebook.com/Zeteocitadel" className=" flex gap-3 hover:text-white transition">
-              <img src="/facebook.png" className=' w-7 ' alt="logo" />facebook
-            </a>
-            <br />
-            <a href="#" className=" flex gap-3 hover:text-white transition">
-             <img src="/whatsapp.png" className=' w-7 ' alt="logo" />whatsapp
-            </a>
-          </div>
-        </div>
-
-      </div>
-        <div className="border-t border-gray-800 mt-12 py-8 text-center">
-          <p className="text-sm text-gray-500">© {new Date().getFullYear()} ZETEO CITADEL CONSULT. All rights reserved.</p>
-          <div className="mt-3 flex justify-center gap-4 text-xs text-gray-400">
-            <a href="/privacy-policy" className="hover:text-white transition">Privacy Policy</a>
-            <span>•</span>
-            <a href="/terms-of-service" className="hover:text-white transition">Terms of Service</a>
-          </div>
-        </div>
-      </footer>
+        <section className="bg-gradient-to-r from-[#173777] to-[#087eaf] px-4 py-14 text-white sm:px-6 lg:px-8"><div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 md:flex-row md:items-center"><div><h2 className="text-3xl font-black">Ready to Transform Results?</h2><p className="mt-2 text-sm text-blue-100">Start a program, request institutional support, or connect with our team today.</p></div><Link href="/contact" className="inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-xs font-bold text-[#214397]">Contact Sales <ArrowRight size={14} /></Link></div></section>
+      </main>
+      <Footer />
     </div>
   );
-};
-
-export default Page;
+}

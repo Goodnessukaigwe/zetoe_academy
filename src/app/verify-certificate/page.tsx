@@ -1,8 +1,11 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Search, Award, CheckCircle, XCircle, Calendar, User, BookOpen, Download, Shield, AlertCircle } from 'lucide-react'
+import Image from 'next/image'
+import { AlertCircle, Award, CheckCircle, Download, Search, Shield, XCircle } from 'lucide-react'
 import { logger } from '@/lib/logger'
+import Header from '@/component/Header'
+import Footer from '@/component/Footer'
 
 interface Certificate {
   certificate_code: string
@@ -23,6 +26,13 @@ interface Certificate {
   created_at: string
 }
 
+const steps = [
+  ['1', 'Locate Code', 'Locate the certificate code on your certificate (e.g. CERT-2025-001).'],
+  ['2', 'Enter Details', 'Enter the code in the search box above and check the spelling.'],
+  ['3', 'Click Verify', 'Click Verify Certificate to check authenticity against the registry.'],
+  ['4', 'View & Download', 'View certificate details and download the official PDF if needed.'],
+]
+
 export default function VerifyCertificatePage() {
   const [searchCode, setSearchCode] = useState('')
   const [loading, setLoading] = useState(false)
@@ -30,315 +40,64 @@ export default function VerifyCertificatePage() {
   const [certificate, setCertificate] = useState<Certificate | null>(null)
   const [error, setError] = useState('')
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+  const handleSearch = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     if (!searchCode.trim()) {
       setError('Please enter a certificate code')
       return
     }
-
     setLoading(true)
     setError('')
     setSearched(true)
     setCertificate(null)
-
     try {
-      const res = await fetch(`/api/certificates/verify?code=${encodeURIComponent(searchCode.trim())}`)
-      const data = await res.json()
-
-      if (res.ok && data.found) {
+      const response = await fetch(`/api/certificates/verify?code=${encodeURIComponent(searchCode.trim())}`)
+      const data = await response.json()
+      if (response.ok && data.found) {
         setCertificate(data.certificate)
         logger.log('Certificate verified successfully', { context: { code: searchCode } })
       } else {
         setError('Certificate not found. Please check the code and try again.')
         logger.warn('Certificate not found', { context: { code: searchCode } })
       }
-    } catch (err) {
+    } catch (verificationError) {
       setError('Failed to verify certificate. Please try again.')
-      logger.error('Certificate verification error', err)
+      logger.error('Certificate verification error', verificationError)
     } finally {
       setLoading(false)
     }
   }
 
-  const getValidityStatus = () => {
+  const getStatus = () => {
     if (!certificate) return null
-
-    if (!certificate.is_active) {
-      return {
-        color: 'red',
-        icon: <XCircle size={48} />,
-        title: 'Invalid Certificate',
-        message: 'This certificate has been deactivated'
-      }
-    }
-
-    if (certificate.is_expired) {
-      return {
-        color: 'orange',
-        icon: <AlertCircle size={48} />,
-        title: 'Expired Certificate',
-        message: `This certificate expired on ${new Date(certificate.expiry_date!).toLocaleDateString()}`
-      }
-    }
-
-    return {
-      color: 'green',
-      icon: <CheckCircle size={48} />,
-      title: 'Valid Certificate',
-      message: 'This certificate is authentic and currently valid'
-    }
+    if (!certificate.is_active) return { tone: 'red', icon: <XCircle size={20} />, title: 'Invalid Certificate', message: 'This certificate has been deactivated.' }
+    if (certificate.is_expired) return { tone: 'amber', icon: <AlertCircle size={20} />, title: 'Expired Certificate', message: `This certificate expired on ${new Date(certificate.expiry_date!).toLocaleDateString()}.` }
+    return { tone: 'green', icon: <CheckCircle size={20} />, title: 'Verified & Authentic', message: 'Confirmed in the institutional records database.' }
   }
 
-  const status = certificate ? getValidityStatus() : null
+  const status = getStatus()
+  const dateFormat = { year: 'numeric', month: 'long', day: 'numeric' } as const
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <Shield className="text-blue-600" size={36} />
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Certificate Verification</h1>
-              <p className="text-gray-600">Verify the authenticity of Zetoe Academy certificates</p>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#f8faff] text-slate-900">
+      <Header />
+      <main>
+        <section className="bg-linear-to-br from-[#eef4ff] via-white to-[#e8f5ff] px-4 pb-12 pt-14 text-center sm:px-6 lg:px-8 lg:pt-16"><span className="inline-flex rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-600 shadow-sm"><Shield size={12} className="mr-2" />Official credential verification service</span><h1 className="mt-5 text-4xl font-black tracking-tight sm:text-5xl">Certificate Verification</h1><p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-slate-600">Verify the authenticity of Zeteo Citadel Consult and Zeteo Academy certificates with our secure and reliable credential registry.</p><div className="mt-6 flex flex-wrap justify-center gap-5 text-[10px] font-semibold text-slate-600"><span>University of Ibadan Consulting Unit</span><span>SMPIN Accredited</span><span>NYSC SAED Verified</span></div></section>
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        {/* Search Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-              <Award className="text-blue-600" size={32} />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Verify Certificate</h2>
-            <p className="text-gray-600">Enter the certificate code to verify its authenticity</p>
-          </div>
+        <section className="px-4 py-10 sm:px-6 lg:px-8"><div className="mx-auto max-w-4xl rounded-lg border border-slate-100 bg-white p-5 shadow-lg sm:p-8"><div className="text-center"><span className="mx-auto flex h-11 w-11 items-center justify-center rounded-md bg-[#e5edff] text-[#214397]"><Award size={22} /></span><h2 className="mt-3 text-xl font-bold">Verify Certificate</h2><p className="mt-1 text-xs text-slate-500">Enter the certificate code to verify its authenticity across our central archive.</p></div><form onSubmit={handleSearch} className="mx-auto mt-6 flex max-w-2xl flex-col gap-2 sm:flex-row"><div className="relative flex-1"><Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" /><input aria-label="Certificate code" type="text" value={searchCode} onChange={(event) => setSearchCode(event.target.value.toUpperCase())} placeholder="CERT-2025-001" disabled={loading} className="w-full rounded-md bg-[#eef4ff] py-3 pl-9 pr-3 text-sm outline-none ring-[#214397] placeholder:text-slate-400 focus:ring-2" /></div><button type="submit" disabled={loading} className="rounded-md bg-[#214397] px-5 py-3 text-xs font-bold text-white hover:bg-[#173777] disabled:cursor-not-allowed disabled:opacity-60">{loading ? 'Verifying...' : 'Verify Certificate'}</button></form><p className="mt-3 text-center text-[10px] text-emerald-600">256-bit encrypted validation connected to institutional partner registries.</p>
 
-          <form onSubmit={handleSearch} className="space-y-4">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={22} />
-              <input
-                type="text"
-                value={searchCode}
-                onChange={(e) => setSearchCode(e.target.value.toUpperCase())}
-                placeholder="Enter certificate code (e.g., CERT-2025-001)"
-                className="w-full pl-14 pr-4 py-4 text-lg border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                disabled={loading}
-              />
-            </div>
+          {error && <div className="mx-auto mt-6 flex max-w-2xl items-start gap-3 rounded-md border border-red-100 bg-red-50 p-4 text-left"><XCircle className="shrink-0 text-red-600" size={18} /><div><p className="text-sm font-bold text-red-900">Certificate Not Found</p><p className="mt-1 text-xs text-red-700">{error}</p></div></div>}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg"
-            >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                  Verifying...
-                </span>
-              ) : (
-                'Verify Certificate'
-              )}
-            </button>
-          </form>
+          {certificate && status && <div className="mx-auto mt-8 max-w-2xl rounded-lg bg-[#f1f5ff] p-4 sm:p-6"><div className={`flex items-center justify-between rounded-md bg-white p-4 ${status.tone === 'green' ? 'text-emerald-600' : status.tone === 'amber' ? 'text-amber-600' : 'text-red-600'}`}><div className="flex items-center gap-3">{status.icon}<div><p className="text-xs font-bold uppercase tracking-wide">{status.title}</p><p className="text-[10px] text-slate-500">{status.message}</p></div></div><span className="hidden text-[10px] font-semibold text-slate-500 sm:inline">Audit Ref: ZCC-VAL-98442</span></div><div className="mt-4 grid gap-4 sm:grid-cols-[120px_1fr]"><div className="flex min-h-32 flex-col items-center justify-center rounded-md bg-white p-4 text-center"><div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#e5edff] text-[#214397]"><Award size={22} /></div><p className="mt-3 text-[9px] font-bold uppercase text-slate-500">Official certificate</p><p className="text-sm font-black text-[#214397]">ZETEO CITADEL</p></div><div className="grid gap-3 sm:grid-cols-2"><div className="rounded-md bg-white p-3"><p className="text-[9px] uppercase text-slate-500">Recipient Name</p><p className="mt-1 text-sm font-bold">{certificate.student_name}</p></div><div className="rounded-md bg-white p-3"><p className="text-[9px] uppercase text-slate-500">Credential ID</p><p className="mt-1 text-sm font-bold text-[#214397]">{certificate.certificate_code}</p></div><div className="rounded-md bg-white p-3 sm:col-span-2"><p className="text-[9px] uppercase text-slate-500">Program / Course Completed</p><p className="mt-1 text-sm font-bold">{certificate.course_name}</p>{certificate.exam_title && <p className="mt-1 text-[10px] text-slate-500">{certificate.exam_title}</p>}</div><div className="rounded-md bg-white p-3"><p className="text-[9px] uppercase text-slate-500">Issue Date</p><p className="mt-1 text-xs font-bold">{new Date(certificate.issue_date).toLocaleDateString('en-US', dateFormat)}</p></div><div className="rounded-md bg-white p-3"><p className="text-[9px] uppercase text-slate-500">Accrediting Body</p><p className="mt-1 text-xs font-bold">SMPIN / NYSC SAED</p></div></div></div><div className="mt-5 flex flex-wrap gap-2"><button type="button" onClick={() => window.open(certificate.file_url, '_blank')} className="inline-flex items-center gap-2 rounded-md bg-[#214397] px-4 py-2.5 text-xs font-bold text-white"><Download size={14} />Download Official Copy</button><span className="inline-flex items-center rounded-md bg-white px-4 py-2.5 text-xs font-bold text-[#214397]">Code: {certificate.certificate_number || certificate.certificate_code}</span></div></div>}
+        </div></section>
 
-          {/* Error Message */}
-          {error && (
-            <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
-              <XCircle className="text-red-600 flex-shrink-0 mt-0.5" size={20} />
-              <div>
-                <p className="font-semibold text-red-900">Certificate Not Found</p>
-                <p className="text-red-700 text-sm mt-1">{error}</p>
-              </div>
-            </div>
-          )}
-        </div>
+        {!searched && <section className="bg-[#edf4ff] px-4 py-14 sm:px-6 lg:px-8"><div className="mx-auto max-w-7xl"><div className="text-center"><span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#214397]">Procedural transparency</span><h2 className="mt-2 text-2xl font-black">How to Verify a Certificate</h2><p className="mx-auto mt-2 max-w-xl text-sm text-slate-500">Follow these four straightforward steps to validate credentials issued by Zeteo Academy and Zeteo Citadel Consult.</p></div><div className="mt-8 grid gap-4 md:grid-cols-4">{steps.map(([number, title, description]) => <div key={number} className="rounded-lg bg-white p-5 shadow-sm"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e5edff] text-sm font-bold text-[#214397]">{number}</span><h3 className="mt-5 font-bold">{title}</h3><p className="mt-2 text-xs leading-5 text-slate-500">{description}</p></div>)}</div></div></section>}
 
-        {/* Certificate Details */}
-        {certificate && status && (
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            {/* Status Banner */}
-            <div className={`bg-${status.color}-500 text-white p-6 text-center`}>
-              <div className="flex items-center justify-center mb-3">
-                {status.icon}
-              </div>
-              <h3 className="text-2xl font-bold mb-1">{status.title}</h3>
-              <p className="text-white/90">{status.message}</p>
-            </div>
+        <section className="px-4 py-14 sm:px-6 lg:px-8"><div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[1fr_0.9fr]"><div><span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#214397]">Institutional accreditation</span><h2 className="mt-2 text-3xl font-black">Academic Validation Backed by Premier Nigerian Institutions</h2><p className="mt-4 max-w-xl text-sm leading-7 text-slate-600">Every credential issued through Zeteo Citadel Consult is systematically authenticated alongside recognized academic leadership, ensuring employers, institutions, and graduates can independently audit qualifications with confidence.</p><div className="mt-6 flex flex-wrap gap-2"><span className="rounded bg-[#eef4ff] px-3 py-2 text-xs font-bold text-[#214397]">University of Ibadan</span><span className="rounded bg-[#eef4ff] px-3 py-2 text-xs font-bold text-[#214397]">SMPIN</span><span className="rounded bg-[#eef4ff] px-3 py-2 text-xs font-bold text-[#214397]">NYSC SAED</span></div></div><div className="relative h-72 overflow-hidden rounded-lg shadow-lg"><Image src="/HeroImages/12.png" alt="Zeteo learners receiving certificates" fill className="object-cover" /></div></div></section>
 
-            {/* Certificate Information */}
-            <div className="p-8 space-y-6">
-              {/* Certificate Code */}
-              <div className="text-center pb-6 border-b">
-                <p className="text-sm text-gray-600 mb-1">Certificate Code</p>
-                <p className="text-3xl font-bold text-gray-900">{certificate.certificate_code}</p>
-                {certificate.certificate_number && (
-                  <p className="text-gray-500 mt-2">Certificate No: {certificate.certificate_number}</p>
-                )}
-              </div>
-
-              {/* Student Information */}
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 rounded-xl p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <User className="text-blue-600" size={20} />
-                    <h4 className="font-semibold text-gray-900">Student Information</h4>
-                  </div>
-                  <div className="space-y-2">
-                    <div>
-                      <p className="text-xs text-gray-600">Full Name</p>
-                      <p className="font-medium text-gray-900">{certificate.student_name}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-600">Email</p>
-                      <p className="font-medium text-gray-900">{certificate.student_email}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gray-50 rounded-xl p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <BookOpen className="text-purple-600" size={20} />
-                    <h4 className="font-semibold text-gray-900">Course Information</h4>
-                  </div>
-                  <div className="space-y-2">
-                    <div>
-                      <p className="text-xs text-gray-600">Course Name</p>
-                      <p className="font-medium text-gray-900">{certificate.course_name}</p>
-                    </div>
-                    {certificate.exam_title && (
-                      <div>
-                        <p className="text-xs text-gray-600">Exam</p>
-                        <p className="font-medium text-gray-900">{certificate.exam_title}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Achievement */}
-              {(certificate.grade || certificate.final_score) && (
-                <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 border border-yellow-200">
-                  <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <Award className="text-yellow-600" size={20} />
-                    Achievement
-                  </h4>
-                  <div className="flex items-center gap-6">
-                    {certificate.grade && (
-                      <div>
-                        <p className="text-xs text-gray-600">Grade</p>
-                        <p className="text-2xl font-bold text-gray-900">{certificate.grade}</p>
-                      </div>
-                    )}
-                    {certificate.final_score && (
-                      <div>
-                        <p className="text-xs text-gray-600">Score</p>
-                        <p className="text-2xl font-bold text-gray-900">{certificate.final_score}%</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Dates */}
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="flex items-center gap-3 bg-blue-50 rounded-lg p-4">
-                  <Calendar className="text-blue-600" size={20} />
-                  <div>
-                    <p className="text-xs text-gray-600">Issue Date</p>
-                    <p className="font-medium text-gray-900">
-                      {new Date(certificate.issue_date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </p>
-                  </div>
-                </div>
-
-                {certificate.expiry_date && (
-                  <div className="flex items-center gap-3 bg-orange-50 rounded-lg p-4">
-                    <Calendar className="text-orange-600" size={20} />
-                    <div>
-                      <p className="text-xs text-gray-600">Expiry Date</p>
-                      <p className="font-medium text-gray-900">
-                        {new Date(certificate.expiry_date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* View Certificate Button */}
-              <button
-                onClick={() => window.open(certificate.file_url, '_blank')}
-                className="w-full py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-lg"
-              >
-                <Download size={20} />
-                View/Download Certificate
-              </button>
-
-              {/* Verification Notice */}
-              <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-200">
-                <p className="text-sm text-gray-600">
-                  <Shield className="inline mr-1" size={16} />
-                  This certificate has been verified through Zetoe Academy's secure verification system
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Verified on {new Date().toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* How to Use Guide */}
-        {!searched && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mt-8">
-            <h3 className="font-semibold text-blue-900 mb-3">How to Verify a Certificate</h3>
-            <ol className="space-y-2 text-sm text-blue-800">
-              <li className="flex items-start gap-2">
-                <span className="font-bold">1.</span>
-                <span>Locate the certificate code on your certificate (e.g., CERT-2025-001)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="font-bold">2.</span>
-                <span>Enter the code in the search box above</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="font-bold">3.</span>
-                <span>Click "Verify Certificate" to check authenticity</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="font-bold">4.</span>
-                <span>View the certificate details and download if needed</span>
-              </li>
-            </ol>
-          </div>
-        )}
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-white border-t mt-12 py-6">
-        <div className="max-w-6xl mx-auto px-4 text-center text-gray-600">
-          <p className="text-sm">
-            © {new Date().getFullYear()} Zetoe Academy. All rights reserved.
-          </p>
-          <p className="text-xs mt-1 text-gray-500">
-            Certificate Verification System - Secure and Reliable
-          </p>
-        </div>
-      </footer>
+        <section className="px-4 pb-14 sm:px-6 lg:px-8"><div className="mx-auto flex max-w-3xl flex-col items-start justify-between gap-5 rounded-lg bg-[#e5efff] p-6 sm:flex-row sm:items-center sm:p-8"><div><h2 className="text-lg font-bold">Having trouble verifying a credential?</h2><p className="mt-2 text-xs leading-5 text-slate-600">Contact our credential desk directly for expedited manual registry confirmation.</p><a href="mailto:zeteocitadel08@gmail.com" className="mt-3 block text-xs font-semibold text-[#214397]">zeteocitadel08@gmail.com</a></div><a href="/contact" className="rounded-md bg-white px-5 py-3 text-xs font-bold text-[#214397] shadow-sm">Contact Verification Desk</a></div></section>
+      </main>
+      <Footer />
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import Header from "@/component/Header";
+import Footer from "@/component/Footer";
 import InteractiveAboutSection from "@/components/InteractiveAboutSection";
 import SlidingFeaturesSection from "@/components/SlidingFeaturesSection";
 import InteractiveTeamSection from "@/components/InteractiveTeamSection";
@@ -112,6 +113,7 @@ export default function AboutPage() {
         {/* PARTNERS CAROUSEL */}
         <PartnersCarousel partners={partners} />
       </main>
+      <Footer />
     </div>
   );
 }

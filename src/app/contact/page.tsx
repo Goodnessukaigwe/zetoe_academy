@@ -1,424 +1,63 @@
 "use client";
-import React, { useState } from "react";
-import Link from "next/link";
+
+import { useState } from "react";
+import { ArrowUpRight, CalendarDays, CheckCircle2, Clock3, Mail, MapPin, Phone, Send, UsersRound } from "lucide-react";
 import Header from "@/component/Header";
+import Footer from "@/component/Footer";
+
+const contactInfo = [
+  { name: "RAJUNOR STEPHEN EGBE", title: "Admin Personnel", phone: "08066172156", whatsapp: "08188450748", email: "rajunoregbe1@gmail.com" },
+  { name: "OBADEMI FAVOUR OLUWASEUN", title: "Executive Director", phone: "09165962622", whatsapp: "08173233034", email: "demifavour15@gmail.com" },
+  { name: "IBIRA ADONIS", title: "Executive Director", phone: "09122863165", whatsapp: "09122863165", email: "adonisibira01@gmail.com" },
+];
+
+const faqs = [
+  ["How long does it take to get a response?", "We typically respond to all inquiries within 24 hours during business days."],
+  ["Do you offer free consultations?", "Yes, we offer initial consultations for institutional partnerships and major programs."],
+  ["What are your business hours?", "Monday to Friday, 9:00 AM - 5:00 PM. We also respond to WhatsApp messages."],
+  ["Can I schedule a call with the team?", "Absolutely. Mention your preferred time in the contact form or call us directly."],
+];
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((previous) => ({ ...previous, [name]: value }));
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     console.log("Form submitted:", formData);
-    // Add your form submission logic here
     setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
   };
 
-  const contactInfo = [
-    {
-      name: "RAJUNOR STEPHEN EGBE",
-      title: "Admin   Personnel",
-      phone: "08066172156",
-      whatsapp: "08188450748",
-      email: "rajunoregbe1@gmail.com",
-      icon: "👤",
-    },
-    {
-      name: "OBADEMI FAVOUR OLUWASEUN",
-      title: "EXECUTIVE DIRECTOR",
-      phone: "09165962622",
-      whatsapp: "08173233034",
-      email: "demifavour15@gmail.com",
-      icon: "👤",
-    },
-    {
-      name: "IBIRA ADONIS",
-      title: "EXECUTIVE DIRECTOR",
-      phone: "09122863165",
-      whatsapp: "09122863165",
-      email: "adonisibira01@gmail.com",
-      icon: "👤",
-    },
-  ];
-
-  const offices = [
-    {
-      zone: "North West Zone",
-      address: "No 6 Sabr Plaza Station, Block B, Room 17, Kachia Road",
-    },
-  ];
-
   return (
-    <div className="bg-white">
+    <div className="min-h-screen bg-[#f8faff] text-slate-900">
       <Header />
+      <main>
+        <section className="bg-linear-to-br from-[#eef4ff] via-white to-[#e5f4ff] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <div className="mx-auto max-w-7xl"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#087eaf]">Get in touch</span><h1 className="mt-4 max-w-2xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Let&apos;s Start a Conversation</h1><p className="mt-4 max-w-xl text-base leading-7 text-slate-600">Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible. We typically reply within 24 hours.</p><div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-xs font-semibold text-slate-600"><span className="flex items-center gap-2"><Clock3 size={15} className="text-[#214397]" />24-Hour Guaranteed Turnaround</span><span className="flex items-center gap-2"><Phone size={15} className="text-emerald-600" />Direct WhatsApp Help Desk Available</span><span className="flex items-center gap-2"><CheckCircle2 size={15} className="text-[#214397]" />Nationwide Institutional Support</span></div></div>
+        </section>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-600 to-blue-800 text-white py-12 sm:py-16 md:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">
-            Get In Touch
-          </h1>
-          <p className="text-lg sm:text-xl text-indigo-100 max-w-2xl mx-auto">
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-          </p>
-        </div>
-      </section>
-
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Contact Information */}
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
-              Contact Information
-            </h2>
-
-            {/* Office Location */}
-            <div className="mb-10 p-6 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg border border-indigo-200">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                <span className="text-2xl">📍</span> Our Office
-              </h3>
-              {offices.map((office, idx) => (
-                <div key={idx}>
-                  <p className="text-sm text-indigo-600 font-semibold uppercase tracking-wide mb-2">
-                    {office.zone}
-                  </p>
-                  <p className="text-gray-700 leading-relaxed">{office.address}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* General Contact */}
-            <div className="mb-10">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                General Inquiries
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">📧</span>
-                  <div>
-                    <p className="text-sm text-gray-500 font-medium">Email</p>
-                    <a
-                      href="zeteocitadel08@gmail.com"
-                      className="text-indigo-600 hover:text-indigo-700 font-medium"
-                    >
-                      zeteocitadel08@gmail.com
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">📱</span>
-                  <div>
-                    <p className="text-sm text-gray-500 font-medium">Phone</p>
-                    <a
-                      href="tel:+234 8064691255"
-                      className="text-indigo-600 hover:text-indigo-700 font-medium"
-                    >
-                      +234 8064691255
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Team Members */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Team Contacts
-              </h3>
-              <div className="space-y-4">
-                {contactInfo.map((contact, idx) => (
-                  <div
-                    key={idx}
-                    className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className="text-2xl">{contact.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-gray-900">
-                          {contact.name}
-                        </h4>
-                        <p className="text-sm text-indigo-600 font-medium mb-2">
-                          {contact.title}
-                        </p>
-                        <div className="space-y-1 text-sm">
-                          <p>
-                            <span className="text-gray-600">Phone: </span>
-                            <a
-                              href={`tel:${contact.phone}`}
-                              className="text-indigo-600 hover:underline"
-                            >
-                              {contact.phone}
-                            </a>
-                          </p>
-                          <p>
-                            <span className="text-gray-600">WhatsApp: </span>
-                            <a
-                              href={`https://wa.me/${contact.whatsapp.replace(/\D/g, '')}`}
-                              className="text-indigo-600 hover:underline"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {contact.whatsapp}
-                            </a>
-                          </p>
-                          <p>
-                            <span className="text-gray-600">Email: </span>
-                            <a
-                              href={`mailto:${contact.email}`}
-                              className="text-indigo-600 hover:underline break-all"
-                            >
-                              {contact.email}
-                            </a>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+        <section className="px-4 py-12 sm:px-6 lg:px-8 lg:py-16"><div className="mx-auto grid max-w-7xl items-start gap-8 lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="space-y-6">
+            <div className="rounded-lg border border-slate-100 bg-white p-5 shadow-sm"><div className="flex items-center justify-between"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-md bg-[#e5edff] text-[#214397]"><MapPin size={18} /></span><div><p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#087eaf]">Official headquarters</p><h2 className="text-lg font-bold">North West Zone Office</h2></div></div><span className="rounded-full bg-[#eef4ff] px-3 py-1 text-[10px] font-semibold text-[#214397]">Kaduna Station</span></div><div className="mt-5 rounded-md bg-[#eef4ff] p-4"><p className="text-sm font-semibold text-slate-800">No 6 Sabr Plaza Station, Block B, Room 17, Kachia Road</p><p className="mt-1 text-xs leading-5 text-slate-500">Kaduna South, Kaduna State, Nigeria. Conveniently accessible from major transit corridors and state university centers.</p></div><div className="mt-4 grid gap-3 sm:grid-cols-2"><div className="flex items-center gap-3 rounded-md bg-[#f8faff] p-3"><CalendarDays size={16} className="text-[#214397]" /><span className="text-xs">Working Days<br /><strong>Monday - Friday</strong></span></div><div className="flex items-center gap-3 rounded-md bg-[#f8faff] p-3"><Clock3 size={16} className="text-[#214397]" /><span className="text-xs">Office Hours<br /><strong>9:00 AM - 5:00 PM</strong></span></div></div></div>
+            <div className="rounded-lg border border-slate-100 bg-white p-5 shadow-sm"><h2 className="text-lg font-bold">General Institutional Inquiries</h2><p className="mt-2 text-xs leading-5 text-slate-500">For academic collaborations, NYSC SAED partnerships, or direct student verification requests, reach out via our channels.</p><div className="mt-5 grid gap-3 sm:grid-cols-2"><a href="mailto:zeteocitadel08@gmail.com" className="rounded-md bg-[#f1f5ff] p-4 hover:bg-[#e5edff]"><Mail size={17} className="text-[#214397]" /><span className="mt-4 block text-[9px] font-bold uppercase text-slate-500">Official mail</span><strong className="mt-1 block break-all text-xs text-slate-800">zeteocitadel08@gmail.com</strong></a><a href="tel:+2348064691255" className="rounded-md bg-[#f1f5ff] p-4 hover:bg-[#e5edff]"><Phone size={17} className="text-[#214397]" /><span className="mt-4 block text-[9px] font-bold uppercase text-slate-500">Direct helpline</span><strong className="mt-1 block text-xs text-slate-800">+234 806 469 1255</strong></a></div></div>
+            <div><div className="mb-4 flex items-center justify-between"><h2 className="text-lg font-bold">Direct Team Contacts</h2><span className="rounded-full bg-[#e5edff] px-3 py-1 text-[10px] font-semibold text-[#214397]">3 Officers on Duty</span></div><div className="space-y-3">{contactInfo.map((contact) => <div key={contact.email} className="rounded-lg border border-slate-100 bg-white p-4 shadow-sm"><div className="flex items-start gap-3"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e5edff] text-[#214397]"><UsersRound size={16} /></span><div className="min-w-0 flex-1"><h3 className="text-xs font-bold">{contact.name}</h3><p className="mt-1 text-[10px] font-semibold uppercase text-[#214397]">{contact.title}</p><p className="mt-1 text-[10px] text-slate-500">{contact.email}</p></div><div className="flex shrink-0 gap-2"><a href={`tel:${contact.phone}`} className="rounded bg-[#e5edff] px-2 py-1 text-[10px] font-bold text-[#214397]">Call</a><a href={`https://wa.me/${contact.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noreferrer" className="rounded bg-[#dff8ef] px-2 py-1 text-[10px] font-bold text-emerald-700">WhatsApp</a></div></div></div>)}</div></div>
           </div>
 
-          {/* Contact Form */}
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
-              Send us a Message
-            </h2>
+          <div className="rounded-lg border-t-4 border-[#087eaf] bg-white p-6 shadow-lg sm:p-8"><span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#087eaf]">Online dispatch desk</span><h2 className="mt-2 text-2xl font-black">Send us a Message</h2><p className="mt-2 text-sm text-slate-500">Fill in the details below and our team will get back to you shortly.</p><form onSubmit={handleSubmit} className="mt-7 space-y-4"><div><label htmlFor="name" className="text-xs font-bold text-slate-700">Full Name <span className="text-red-500">*</span></label><input id="name" name="name" value={formData.name} onChange={handleInputChange} required placeholder="e.g. Dr. Amina Bello" className="mt-2 w-full rounded-md border-0 bg-[#eef4ff] px-4 py-3 text-sm outline-none ring-[#214397] placeholder:text-slate-400 focus:ring-2" /></div><div className="grid gap-4 sm:grid-cols-2"><div><label htmlFor="email" className="text-xs font-bold text-slate-700">Email Address <span className="text-red-500">*</span></label><input id="email" type="email" name="email" value={formData.email} onChange={handleInputChange} required placeholder="name@organization.com" className="mt-2 w-full rounded-md border-0 bg-[#eef4ff] px-4 py-3 text-sm outline-none ring-[#214397] placeholder:text-slate-400 focus:ring-2" /></div><div><label htmlFor="phone" className="text-xs font-bold text-slate-700">Phone Number <span className="text-red-500">*</span></label><input id="phone" type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required placeholder="+234 800 000 0000" className="mt-2 w-full rounded-md border-0 bg-[#eef4ff] px-4 py-3 text-sm outline-none ring-[#214397] placeholder:text-slate-400 focus:ring-2" /></div></div><div><label htmlFor="subject" className="text-xs font-bold text-slate-700">Subject <span className="text-red-500">*</span></label><input id="subject" name="subject" value={formData.subject} onChange={handleInputChange} required placeholder="Request for institutional mentorship cohort" className="mt-2 w-full rounded-md border-0 bg-[#eef4ff] px-4 py-3 text-sm outline-none ring-[#214397] placeholder:text-slate-400 focus:ring-2" /></div><div><label htmlFor="message" className="text-xs font-bold text-slate-700">Message <span className="text-red-500">*</span></label><textarea id="message" name="message" value={formData.message} onChange={handleInputChange} required rows={5} placeholder="Kindly elaborate on your questions, batch size, or intended dates..." className="mt-2 w-full resize-none rounded-md border-0 bg-[#eef4ff] px-4 py-3 text-sm outline-none ring-[#214397] placeholder:text-slate-400 focus:ring-2" /></div><button type="submit" className="flex w-full items-center justify-center gap-2 rounded-md bg-[#214397] py-3 text-xs font-bold text-white hover:bg-[#173777]">Send Message <Send size={14} /></button><p className="flex items-center justify-center gap-1 text-[10px] text-slate-500"><CheckCircle2 size={13} className="text-emerald-500" /> We typically respond within 24 hours.</p></form></div>
+        </div></section>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Full Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
-                  placeholder="John Doe"
-                />
-              </div>
+        <section className="border-y border-[#dbe6f6] bg-[#eef4ff] px-4 py-6 sm:px-6 lg:px-8"><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4"><div><p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#087eaf]">Trusted collaboration</p><h2 className="text-lg font-bold">Affiliated Academic & Professional Bodies</h2></div><div className="flex flex-wrap gap-2 text-xs font-semibold text-slate-700"><span className="rounded bg-white px-3 py-2">University of Ibadan</span><span className="rounded bg-white px-3 py-2">SMPIN Strategic Management</span><span className="rounded bg-white px-3 py-2">NYSC SAED</span></div></div></section>
 
-              {/* Email */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email Address <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
-                  placeholder="john@example.com"
-                />
-              </div>
+        <section className="px-4 py-16 sm:px-6 lg:px-8"><div className="mx-auto max-w-3xl"><div className="text-center"><span className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#087eaf]">Inquiry clearance</span><h2 className="mt-2 text-3xl font-black">Frequently Asked Questions</h2><p className="mt-3 text-sm text-slate-500">Find quick answers to our most common operational inquiries, consultation requests, and coordination processes.</p></div><div className="mt-9 space-y-3">{faqs.map(([question, answer], index) => <div key={question} className="overflow-hidden rounded-lg border border-slate-100 bg-white shadow-sm"><button type="button" onClick={() => setOpenFaq(openFaq === index ? null : index)} className="flex w-full items-center justify-between px-5 py-4 text-left text-sm font-bold text-slate-800"><span>{question}</span><span className="text-[#087eaf]">{openFaq === index ? "−" : "+"}</span></button>{openFaq === index && <p className="border-t border-slate-100 px-5 pb-4 pt-3 text-sm leading-6 text-slate-600">{answer}</p>}</div>)}</div></div></section>
 
-              {/* Phone */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Phone Number <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
-                  placeholder="+234 800 000 0000"
-                />
-              </div>
-
-              {/* Subject */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Subject <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
-                  placeholder="What is this about?"
-                />
-              </div>
-
-              {/* Message */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Message <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition text-gray-900 placeholder-gray-500 resize-none"
-                  placeholder="Tell us more about your inquiry..."
-                />
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-bold py-3 rounded-lg hover:from-indigo-700 hover:to-blue-700 transition duration-300 shadow-md hover:shadow-lg"
-              >
-                Send Message
-              </button>
-
-              <p className="text-sm text-gray-500 text-center">
-                We typically respond within 24 hours.
-              </p>
-            </form>
-          </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="bg-gradient-to-r from-gray-50 to-indigo-50 rounded-lg p-8 md:p-12 border border-gray-200">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">
-            Frequently Asked Questions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">
-                How long does it take to get a response?
-              </h3>
-              <p className="text-gray-700">
-                We typically respond to all inquiries within 24 hours during business days.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">
-                Do you offer free consultations?
-              </h3>
-              <p className="text-gray-700">
-                Yes, we offer initial consultations for institutional partnerships and major programs.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">
-                What are your business hours?
-              </h3>
-              <p className="text-gray-700">
-                Monday to Friday, 9:00 AM - 5:00 PM. We also respond to WhatsApp messages.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">
-                Can I schedule a call with the team?
-              </h3>
-              <p className="text-gray-700">
-                Absolutely! Mention your preferred time in the contact form or call us directly.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-
-
-
-      {/* footer working */}
-      <footer
-        id="contact"
-        className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 py-10 mt-16"
-      >
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
-        
-        {/* Brand */}
-        <div>
-          <h2 className="text-25 font-bold text-white mb-3">ZETEO CITADEL CONSULT</h2>
-          <p className="text-sm leading-6">
-            Partner with us to tackle your unique challenges and unlock your organization’s full potential.
-          </p>
-          <br />
-          <p>
-            <span className='text-23 text-white font-bold'>North west zone address:</span> No 6 Sabr Plaza Station, Block B, Room 17 , Kachia Road
-          </p>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-               <li><Link href="/" className="hover:text-white transition">Home</Link></li>
-           \ <li><Link href="/About" className="hover:text-white transition">About</Link></li>
-         
-            
-          </ul>
-        </div>
-
-        {/* Resources */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Resources</h3>
-          <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:text-white transition">Blog</a></li>
-            <li><a href="#" className="hover:text-white transition">FAQs</a></li>
-            <li><a href="#" className="hover:text-white transition">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-white transition">Terms of Service</a></li>
-          </ul>
-        </div>
-
-        {/* Social Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Connect With Us</h3>
-          <div className="  space-x-8">
-            
-            <a href="#" className="  flex gap-3 hover:text-white transition">
-               <img src="/twister.png" className=' w-7 ' alt="logo" />twitter
-            </a>
-            <br />
-            <a href="#" className="  flex gap-3 hover:text-white transition">
-             <img src="/instag.png" className=' w-7 ' alt="logo" /> instagram
-            </a>
-            <br />
-            <a href="#" className=" flex gap-3 hover:text-white transition">
-              <img src="/facebook.png" className=' w-7 ' alt="logo" />facebook
-            </a>
-            <br />
-            <a href="#" className=" flex gap-3 hover:text-white transition">
-             <img src="/whatsapp.png" className=' w-7 ' alt="logo" />whatsapp
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Bottom Section */}
-      <div className="mt-10 border-t border-gray-700 pt-6 text-center text-sm text-gray-400">
-        <p>
-          © {new Date().getFullYear()} <span className="text-white font-semibold">ZETEO CITADEL CONSULT</span>. 
-          All rights reserved.
-        </p>
-      </div>
-      </footer>
-
+        <section className="bg-linear-to-r from-[#173777] to-[#214397] px-4 py-12 text-white sm:px-6 lg:px-8"><div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-5 md:flex-row md:items-center"><div><h2 className="text-2xl font-black">Ready to Elevate Your Institution&apos;s Learning Metrics?</h2><p className="mt-2 text-sm text-blue-100">Reach out directly to our leadership or drop by our Kaduna headquarters.</p></div><a href="tel:+2348064691255" className="inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-xs font-bold text-[#214397]">Call General Support <ArrowUpRight size={14} /></a></div></section>
+      </main>
+      <Footer />
     </div>
   );
 }

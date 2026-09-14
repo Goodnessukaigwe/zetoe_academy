@@ -1,28 +1,61 @@
+"use client";
+
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+
+const navItems = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Verify Certificate", href: "/verify-certificate" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
-      <div className="flex items-center px-0 py-3">
-        
-        <img src="/zetelog.png" alt="Zeteo logo" className="h-16 w-16 object-contain" />
-        <h1 className="text-2xl font-extrabold flex-1 text-blue-700">ZETEO CITADEL CONSULT</h1>
-        
-        <nav className="flex-1 space-x-10 font-bold text-gray-800">
-          <Link href="/" className="hover:text-[#4a03fc] transition">Home</Link>
-          <Link href="/about" className="hover:text-[#4a03fc] transition">About</Link>
-          <Link href="/contact" className="hover:text-[#4a03fc] transition">Contact</Link>
-          <Link href="/verify-certificate" className="hover:text-[#4a03fc] transition">Verify Certificate</Link>
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <Link href="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
+          <img src="/zetelog.png" alt="Zeteo Citadel Consult logo" className="h-10 w-10 object-contain" />
+          <span className="leading-tight">
+            <span className="block text-sm font-extrabold tracking-tight text-slate-900 sm:text-base">Zeteo Citadel Consult</span>
+            <span className="block text-[9px] text-slate-500 sm:text-[10px]">Consulting & Professional Academy</span>
+          </span>
+        </Link>
+
+        <nav className="hidden items-center gap-6 lg:flex" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <Link key={item.href} href={item.href} className="text-xs font-semibold text-slate-700 transition hover:text-[#1d4698] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1d4698]">
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
-        <div className="hidden md:flex items-center">
-          <Link href="/login" className="border-2 border-indigo-600 text-blue-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-100 transition mr-5">Sign In</Link>
+        <div className="hidden items-center gap-4 lg:flex">
+            <Link href="/login" className="text-sm font-bold text-[#1d4698] hover:underline">Sign In</Link>
         </div>
 
-        <div className="md:hidden">
-          <button className="text-gray-700 text-2xl">☰</button>
-        </div>
+        <button type="button" aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"} aria-expanded={isMenuOpen} onClick={() => setIsMenuOpen((open) => !open)} className="rounded-md p-2 text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214397] lg:hidden">
+          {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </div>
+
+      {isMenuOpen && (
+        <nav className="border-t border-slate-100 bg-white px-4 py-4 lg:hidden" aria-label="Mobile navigation">
+          <div className="mx-auto flex max-w-7xl flex-col gap-1">
+            {navItems.map((item) => (
+              <Link key={item.href} href={item.href} onClick={() => setIsMenuOpen(false)} className="rounded-md px-3 py-3 text-sm font-semibold text-slate-700 hover:bg-[#eef4ff] hover:text-[#1d4698]">
+                {item.label}
+              </Link>
+            ))}
+            <div className="mt-2 flex items-center gap-4 border-t border-slate-100 pt-4">
+                <Link href="/login" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-[#1d4698]">Sign In</Link>
+            </div>
+          </div>
+        </nav>
+      )}
     </header>
   );
 }
