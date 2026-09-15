@@ -52,17 +52,6 @@ const Page = () => {
   const [scores, setScores] = useState<Score[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [focusSeconds, setFocusSeconds] = useState(25 * 60)
-  const [focusRunning, setFocusRunning] = useState(false)
-  const [checklist, setChecklist] = useState([
-    { id: 'goal-1', label: 'Review lesson notes', done: false },
-    { id: 'goal-2', label: 'Complete 1 practice exam', done: false },
-    { id: 'goal-3', label: 'Summarize key concepts', done: false },
-  ])
-  const [streakCount, setStreakCount] = useState(0)
-  const [checkedInToday, setCheckedInToday] = useState(false)
-  const [flashcardIndex, setFlashcardIndex] = useState(0)
-  const [flashcardFlipped, setFlashcardFlipped] = useState(false)
   const [tipIndex, setTipIndex] = useState(0)
   const router = useRouter()
 
@@ -149,20 +138,6 @@ const Page = () => {
     fetchStudentData()
   }, [fetchStudentData])
 
-  useEffect(() => {
-    if (!focusRunning) return
-    if (focusSeconds === 0) {
-      setFocusRunning(false)
-      return
-    }
-
-    const timer = window.setInterval(() => {
-      setFocusSeconds((prev) => (prev > 0 ? prev - 1 : 0))
-    }, 1000)
-
-    return () => window.clearInterval(timer)
-  }, [focusRunning, focusSeconds])
-
   const getPaymentStatusColor = (status: string) => {
     switch (status) {
       case 'paid':
@@ -213,65 +188,12 @@ const Page = () => {
     return Math.round(totalScore / scores.length)
   }
 
-  const formatTime = (totalSeconds: number) => {
-    const minutes = Math.floor(totalSeconds / 60)
-    const seconds = totalSeconds % 60
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`
-  }
-
-  const setFocusPreset = (minutes: number) => {
-    setFocusRunning(false)
-    setFocusSeconds(minutes * 60)
-  }
-
-  const toggleChecklist = (id: string) => {
-    setChecklist((items) =>
-      items.map((item) => (item.id === id ? { ...item, done: !item.done } : item))
-    )
-  }
-
-  const handleCheckIn = () => {
-    if (checkedInToday) return
-    setCheckedInToday(true)
-    setStreakCount((prev) => prev + 1)
-  }
-
-  const resetStreak = () => {
-    setCheckedInToday(false)
-    setStreakCount(0)
-  }
-
-  const flashcards = [
-    {
-      question: 'Define active recall.',
-      answer: 'A study method where you try to retrieve information from memory without cues.',
-    },
-    {
-      question: 'What improves long-term retention most?',
-      answer: 'Spaced repetition across multiple sessions over time.',
-    },
-    {
-      question: 'When is a good time to review notes?',
-      answer: 'Within 24 hours after learning to reinforce memory.',
-    },
-  ]
-
   const studyTips = [
     'Start with a 25 minute focus session to build momentum.',
     'Teach a concept aloud to uncover gaps in understanding.',
     'Mix topics instead of studying one topic for too long.',
     'End each session by planning the next step.',
   ]
-
-  const handleNextFlashcard = () => {
-    setFlashcardFlipped(false)
-    setFlashcardIndex((prev) => (prev + 1) % flashcards.length)
-  }
-
-  const handlePrevFlashcard = () => {
-    setFlashcardFlipped(false)
-    setFlashcardIndex((prev) => (prev - 1 + flashcards.length) % flashcards.length)
-  }
 
   const handleNextTip = () => {
     setTipIndex((prev) => (prev + 1) % studyTips.length)
@@ -534,75 +456,6 @@ const Page = () => {
               )}
             </div>
 
-            {/* Learning Toolkit */}
-            <div className="grid lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-                <div className="flex items-center justify-between mb-5">
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-900">Daily Checklist</h3>
-                    <p className="text-sm text-slate-600">Keep your study plan on track</p>
-                  </div>
-                  <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Today</span>
-                </div>
-                <div className="space-y-3">
-                  {checklist.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => toggleChecklist(item.id)}
-                      className={`w-full flex items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
-                        item.done
-                          ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                          : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
-                      }`}
-                    >
-                      <span className="text-sm font-medium">{item.label}</span>
-                      <span className={`text-xs font-semibold ${item.done ? 'text-emerald-600' : 'text-slate-400'}`}>
-                        {item.done ? 'Done' : 'Mark'}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-                <div className="flex items-center justify-between mb-5">
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-900">Flashcards</h3>
-                    <p className="text-sm text-slate-600">Quick recall practice</p>
-                  </div>
-                  <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                    {flashcardIndex + 1} / {flashcards.length}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setFlashcardFlipped((prev) => !prev)}
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-8 text-left transition hover:bg-slate-100"
-                >
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                    {flashcardFlipped ? 'Answer' : 'Question'}
-                  </p>
-                  <p className="mt-3 text-base font-semibold text-slate-900">
-                    {flashcardFlipped ? flashcards[flashcardIndex].answer : flashcards[flashcardIndex].question}
-                  </p>
-                  <p className="mt-4 text-xs text-slate-500">Click to flip</p>
-                </button>
-                <div className="mt-4 flex items-center justify-between">
-                  <button
-                    onClick={handlePrevFlashcard}
-                    className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100"
-                  >
-                    Previous
-                  </button>
-                  <button
-                    onClick={handleNextFlashcard}
-                    className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100"
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            </div>
-
             {/* Recent Scores */}
             <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
               <div className="flex items-center justify-between mb-6">
@@ -688,105 +541,6 @@ const Page = () => {
                     <span className="truncate">{primaryEnrollment.course.name}</span>
                   </div>
                 )}
-              </div>
-            </div>
-
-            {/* Focus Timer */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold text-slate-900">Focus Timer</h3>
-                  <p className="text-sm text-slate-600">Short, intentional sessions</p>
-                </div>
-                <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Timer</span>
-              </div>
-              <div className="mt-5 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-6 text-center">
-                <p className="text-3xl font-semibold text-slate-900 tracking-tight">{formatTime(focusSeconds)}</p>
-                <p className="text-xs text-slate-500 mt-1">minutes : seconds</p>
-              </div>
-              <div className="mt-4 flex items-center justify-center gap-2">
-                {[25, 45, 60].map((preset) => (
-                  <button
-                    key={preset}
-                    onClick={() => setFocusPreset(preset)}
-                    className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100"
-                  >
-                    {preset}m
-                  </button>
-                ))}
-              </div>
-              <div className="mt-4 flex items-center gap-3">
-                <button
-                  onClick={() => setFocusRunning((prev) => !prev)}
-                  className="flex-1 rounded-2xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
-                >
-                  {focusRunning ? 'Pause' : 'Start'}
-                </button>
-                <button
-                  onClick={() => setFocusPreset(25)}
-                  className="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-
-            {/* Streak Tracker */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="font-semibold text-slate-900">Skill Streak</h3>
-                  <p className="text-sm text-slate-600">Build daily consistency</p>
-                </div>
-                <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Streak</span>
-              </div>
-              <div className="flex items-center justify-between rounded-2xl bg-slate-50 border border-slate-200 px-4 py-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Current</p>
-                  <p className="text-3xl font-semibold text-slate-900 mt-1">{streakCount}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-slate-500">Check in today</p>
-                  <p className="text-sm font-semibold text-slate-900">{checkedInToday ? 'Completed' : 'Not yet'}</p>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-3">
-                <button
-                  onClick={handleCheckIn}
-                  className="flex-1 rounded-2xl bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-amber-400"
-                >
-                  {checkedInToday ? 'Checked in' : 'Check in'}
-                </button>
-                <button
-                  onClick={resetStreak}
-                  className="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100"
-                >
-                  Reset
-                </button>
-              </div>
-            </div>
-
-            {/* Study Tips */}
-            <div className="bg-white rounded-3xl p-6 shadow-lg ring-1 ring-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="font-semibold text-slate-900">Study Tip</h3>
-                  <p className="text-sm text-slate-600">Small changes, big wins</p>
-                </div>
-                <span className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                  {tipIndex + 1} / {studyTips.length}
-                </span>
-              </div>
-              <div className="rounded-2xl bg-slate-50 border border-slate-200 px-4 py-5">
-                <p className="text-sm text-slate-700">{studyTips[tipIndex]}</p>
-              </div>
-              <div className="mt-4 flex items-center justify-end">
-                <button
-                  onClick={handleNextTip}
-                  className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100"
-                >
-                  Next tip
-                </button>
               </div>
             </div>
 
