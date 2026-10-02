@@ -10,6 +10,7 @@ interface TeamMember {
   image: string;
   bio: string;
   expertise: string[];
+  portfolio?: string;
 }
 
 interface InteractiveTeamSectionProps {
@@ -57,12 +58,24 @@ export default function InteractiveTeamSection({ team }: InteractiveTeamSectionP
                     </span>
                   ))}
                 </div>
-                <button
-                  onClick={() => setSelectedMember(member)}
-                  className="text-blue-600 hover:text-blue-800 font-medium text-sm underline"
-                >
-                  Read More
-                </button>
+                <div className="flex flex-wrap items-center gap-4">
+                  <button
+                    onClick={() => setSelectedMember(member)}
+                    className="text-blue-600 hover:text-blue-800 font-medium text-sm underline"
+                  >
+                    Read More
+                  </button>
+                  {member.portfolio && (
+                    <a
+                      href={member.portfolio}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 font-medium text-sm underline"
+                    >
+                      View Portfolio
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -87,6 +100,16 @@ export default function InteractiveTeamSection({ team }: InteractiveTeamSectionP
                   <div>
                     <h3 className="text-3xl font-bold text-gray-900 mb-2">{selectedMember.name}</h3>
                     <p className="text-blue-600 font-semibold text-lg">{selectedMember.role}</p>
+                    {selectedMember.portfolio && (
+                      <a
+                        href={selectedMember.portfolio}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-block text-blue-600 hover:text-blue-800 font-medium text-sm underline"
+                      >
+                        View Portfolio
+                      </a>
+                    )}
                   </div>
                 </div>
                 <button

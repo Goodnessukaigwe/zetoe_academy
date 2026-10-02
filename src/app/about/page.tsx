@@ -57,7 +57,15 @@ bio: "Mr. Audam Joseph Yaba ACA is a Chartered Accountant with practical experie
 bio: "Obademi Favour Oluwaseun, CPM, CHRM, AMSMPIN is a purpose-driven individual with a strong background in capacity building as well as academic research. He believes in the capacity that a growing individual is a transforming individual. He is a graduate of the prestigious Federal University of Technology, Minna.\n\nHe is a project manager who has strong background knowledge in data analytical tools as well as problem-solving skills. He is also a trained HIV/AIDS Testing Counsellor with a few achievements to his name. Favour is a dynamic and results-driven trainer with experience in designing and delivering professional courses, workshops, and training programs. He has a proven track record of enhancing skills and knowledge of professionals across various industries. He is also a trainer with the National Youth Service Corps (NYSC). He has expertise in the following skills: Professional training and development, Human Resources Management, Project Management, Leadership development, Team building and collaboration, Communication and presentation skills, Data analytics skills and Inventory software installation and training. He is the Executive Director of Zeteo Citadel Consult, Minna, North Central Zone of Nigeria. As a seasoned consultant, he has spoken to about 6,000 Corps members over the years and he is still consistently doing that.",
     expertise: ["Client Relations", "Project Management", "Consulting", "Corporate Training"],
   },
-  
+  {
+    id: 6,
+    name: "Mr. Goodness Ukaigwe",
+    role: "Full-Stack Engineer & Technical Tutor",
+    image: "/About/teams/mr goodness.jpg",
+    portfolio: "https://ukaigwe-goodness.onrender.com/",
+    bio: "Ukaigwe Goodness Chibuikem is a Full-Stack Engineer and Technical Tutor at Zeteo Citadel Academy. He designs, builds, and maintains the academy’s learning platform, and he teaches web development through hands-on, project-based sessions covering HTML, CSS, JavaScript, React, and backend fundamentals. He works with the academy team to ship features, resolve issues, and keep the codebase reliable through sound version control and clear technical practice.\n\nHe holds a Bachelor of Science in Mechatronics Engineering (Second Class Upper Division) from Landmark University. His work spans web and mobile products built with TypeScript, React, Next.js, and React Native (Expo), including production integrations for payments, product analytics, and application monitoring, as well as REST APIs and databases. He has also taught Python at CoLab Innovation Hub and facilitated blockchain and artificial intelligence learning in the Kaduna technology community. Goodness is driven by building dependable, user-focused software and helping learners take a clearer next step.",
+    expertise: ["Full-Stack Development", "Technical Training", "Web & Mobile Engineering", "System Architecture"],
+  },
 ];
 
 const statistics = [
